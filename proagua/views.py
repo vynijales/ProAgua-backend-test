@@ -7,3 +7,10 @@ def home(request):
         request=request,
         template_name="landing_page.html"
     )
+
+
+def login(request):
+    return render(
+        request=request,
+        template_name="login.html"
+    )

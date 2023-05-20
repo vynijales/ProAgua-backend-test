@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ProÁgua - Login</title>
+        <link rel="stylesheet" href="{% static 'stylesheets/login.css' %}">
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div id="login-container">
+            <div id="login-aside-logo">
+                <img src="{% static '/images/Logo.svg' %}" alt="Logo do projeto" height="250px">
+                <h1>ProÁgua</h1>
+            </div>
+
+            <form id="login-form">
+                <h1>LOGIN</h1>
+                
+                <label>E-mail</label>
+                <input 
+                    type="text"
+                    name="username"
+                    id="username-input"
+                    placeholder="E-mail"
+                />
+                
+                <label for="password-input">Senha</label>
+                <input
+                    type="text"
+                    name="password-input"
+                    id="password-input"
+                    placeholder="Senha"
+                />
+                
+                <a href="#">Esqueceu a senha?</a>
+                <input type="button" value="Entrar">
+            </form>
+        </div>
+    </body>
+</html>
