@@ -9,28 +9,6 @@ body {
     justify-content: center;
 }
 
-button, input[type=button] {
-    border: 1px solid transparent;
-    background-color: #027BD0;
-    border-radius: 6px;
-    padding: 1rem 0.5rem;
-    color: white;
-    font-family: 'Inter', sans-serif;
-    font-size: 20px;
-}
-
-input[type=text], input[type=password] {
-    border: 1px solid #ABABAB;
-    background-color: white;
-    padding: 1rem 0.6rem;
-    border-radius: 6px;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
-}
-
 #login-container {
     width: 1240px;
     height: 800px;
