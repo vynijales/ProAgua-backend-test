@@ -14,3 +14,9 @@ def login(request):
         request=request,
         template_name="login.html"
     )
+
+def privado(request):
+    return render(
+        request=request,
+        template_name="privado/coletas.html"
+    )
