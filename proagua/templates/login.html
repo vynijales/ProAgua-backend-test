@@ -18,23 +18,24 @@
 
             <form id="login-form">
                 <h1>LOGIN</h1>
-                
-                <label>E-mail</label>
-                <input 
+                <div class="input-box">
+                    <input 
                     type="text"
-                    name="username"
-                    id="username-input"
-                    placeholder="E-mail"
-                />
-                
-                <label for="password-input">Senha</label>
-                <input
-                    type="text"
+                    name="email-input"
+                    id="email-input"
+                    required
+                    />
+                    <label for="email-input">E-mail</label>
+                </div>
+                <div class="input-box">
+                    <input
+                    type="password"
                     name="password-input"
                     id="password-input"
-                    placeholder="Senha"
-                />
-                
+                    required
+                    />
+                    <label for="password-input">Senha</label>
+                </div>
                 <a href="#">Esqueceu a senha?</a>
                 <input type="button" value="Entrar">
             </form>

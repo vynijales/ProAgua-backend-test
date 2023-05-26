@@ -16,7 +16,11 @@ button, input[type=button] {
     padding: 1rem 0.5rem;
     color: white;
     font-family: 'Inter', sans-serif;
-    font-size: 20px;
+    font-size: 1.4em;
+}
+button:hover, input[type=button]:hover {
+    background-color: #0896fd;
+    cursor: pointer;
 }
 
 input[type=text], input[type=password] {
@@ -26,14 +30,17 @@ input[type=text], input[type=password] {
     border-radius: 6px;
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
+    /* font-weight: 700; */
+    /* font-size: 1em; */
     line-height: 24px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #login-container {
-    width: 1240px;
-    height: 800px;
+    width: 70vw;
+    height: 80vh;
     background: #027BD0;
     box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.25);
     border-radius: 12px;
@@ -48,7 +55,7 @@ input[type=text], input[type=password] {
     flex-grow: 1;
     justify-content: center;
     align-items: center;
-    
+    background: url('../images/Blob.svg') #027BD0 no-repeat bottom right;
 }
 
 #login-aside-logo h1{
@@ -58,11 +65,12 @@ input[type=text], input[type=password] {
     font-size: 60px;
     line-height: 73px;
     color: #FFFFFF;
+    user-select: none;
 }
 
-#login-form {
+#login-form { 
     background-color: #ffffff;
-    width: 580px;
+    width: 45%;
     padding: 
         68px
         100px
@@ -79,17 +87,18 @@ input[type=text], input[type=password] {
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 1em;
     line-height: 24px;
     color: #1098F7;
     align-self: flex-end;
+    margin: 25px;
 }
 
 #login-form h1 {
     font-family: 'Montserrat', sans-serif;
     font-style: normal;
     font-weight: 500;
-    font-size: 40px;
+    font-size: 2em;
     line-height: 49px;
     align-self: center;
     margin-bottom: 72px;
@@ -99,7 +108,7 @@ input[type=text], input[type=password] {
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
-    font-size: 24px;
+    /* font-size: 24px; */
     line-height: 29px;
 }
 
@@ -107,11 +116,48 @@ input[type=text], input[type=password] {
     font-family: 'Montserrat';
     font-style: normal;
     font-weight: 500;
-    font-size: 24px;
+    font-size: 1em;
     line-height: 29px;
     color: #007ED7;
     text-decoration: none;
     position: absolute;
     top: 1rem;
     left: 1rem;
+}
+
+/* Floating Labels */
+
+.input-box{
+    position: relative;
+    height: 65px;
+    width: 100%;
+    margin: 25px 0;
+    padding: 0;
+  }
+
+  .input-box input:focus,
+  .input-box input:valid{
+    border-color: #4070F4;
+  }
+  
+  .input-box label {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2em;
+    color: #a6a6a6;
+    transition: all 0.3s ease;
+    left: 15px;
+    font-weight: 400;
+    background: #ffffff;
+    padding: 0 6px;
+    pointer-events: none;
+  }
+  
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label{
+  top: 0;
+  font-size: 1em;
+  color: #4070F4;
 }

@@ -22,6 +22,7 @@ nav {
     background: #027BD0;
     height: 8vh;
     width: 100vw;
+    z-index: 1;
 }
 .logo {
     display: flex;
@@ -182,6 +183,6 @@ footer .container h5 {
     font-size: 1em;
 }
 footer .logo-container img {
-    height: 15vh;
+    height: 8vh;
     padding-right: 8vw;
-}
+    color: #fff;}
