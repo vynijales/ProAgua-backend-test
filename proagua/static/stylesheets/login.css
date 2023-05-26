@@ -16,11 +16,7 @@ button, input[type=button] {
     padding: 1rem 0.5rem;
     color: white;
     font-family: 'Inter', sans-serif;
-    font-size: 1.4em;
-}
-button:hover, input[type=button]:hover {
-    background-color: #0896fd;
-    cursor: pointer;
+    font-size: 20px;
 }
 
 input[type=text], input[type=password] {
@@ -30,12 +26,9 @@ input[type=text], input[type=password] {
     border-radius: 6px;
     font-family: 'Inter';
     font-style: normal;
-    /* font-weight: 700; */
-    /* font-size: 1em; */
+    font-weight: 700;
+    font-size: 20px;
     line-height: 24px;
-    outline: none;
-    width: 100%;
-    box-sizing: border-box;
 }
 
 #login-container {
