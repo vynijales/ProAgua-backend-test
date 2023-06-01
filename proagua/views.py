@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from .models import PontoColeta
 # Create your views here.
 
 def home(request):
@@ -8,8 +8,13 @@ def home(request):
         template_name="landing_page.html"
     )
 
-def privado(request):
+def coletas(request):
+    context = {
+        'pontos_coletas': PontoColeta.objects.all()
+    }
+
     return render(
         request=request,
-        template_name="privado/coletas.html"
+        template_name="privado/coletas.html",
+        context=context
     )

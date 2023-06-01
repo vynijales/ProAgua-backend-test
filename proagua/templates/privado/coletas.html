@@ -1,7 +1,21 @@
 {% extends 'privado/base.html' %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'stylesheets/privado/coletas.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="card">
-    
+<div id="search-bar">
+
+</div>
+<div id="board">
+    {% for ponto in pontos_coletas %}
+        <div class="card">
+            {{ ponto.edificacao.nome }}
+            {{ ponto.edificacao.codigo }}
+            <button>Detalhes</button>
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}
