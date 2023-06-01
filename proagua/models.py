@@ -12,6 +12,9 @@ class Edificacao(models.Model):
         max_length=80
     )
 
+    def __str__(self):
+        return f'{self.codigo} - {self.nome}'
+
 
 class PontoColeta(models.Model):
     edificacao = models.ForeignKey(
@@ -28,4 +31,4 @@ class PontoColeta(models.Model):
     )
 
     def __str__(self):
-        return f'Ponto de Coleta - {self.edificacao.nome} - {self.ambiente}'
+        return f'{self.edificacao.nome} - {self.ambiente}'
