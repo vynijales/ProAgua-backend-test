@@ -9,13 +9,21 @@
 <div id="search-bar">
 
 </div>
-<div id="board">
-    {% for ponto in pontos_coletas %}
-        <div class="card">
-            {{ ponto.edificacao.nome }}
-            {{ ponto.edificacao.codigo }}
-            <button>Detalhes</button>
-        </div>
-    {% endfor %}
+<div class="content">
+    <div id="board">
+        {% for ponto in pontos_coletas %}
+            <div class="card">
+                <p>{{ ponto.edificacao.codigo }}</p>
+                <h2>{{ ponto.edificacao.nome }}</h2>
+                <p>{{ ponto.ambiente}}</p>
+                {%if ponto.torneira %}
+                <p>Torneira</p>
+                {% else %}
+                <p>Bebedouro</p>
+                {% endif %}
+                <button><i class="bi bi-eye"></i> Detalhes</button>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
