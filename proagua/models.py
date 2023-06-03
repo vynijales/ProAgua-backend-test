@@ -65,6 +65,8 @@ class Coleta(models.Model):
 
     amostragem = models.PositiveIntegerField(
         verbose_name="amostragem",
+        default=0,
+
     )
 
     def __str__(self):
