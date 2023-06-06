@@ -1,8 +1,9 @@
 from django.urls import path, include
 from . import views
+from .api import api
 
 urlpatterns = [
     path('', views.home),
-    path('coletas/', views.coletas),
-    path('accounts/', include('django.contrib.auth.urls'))
+    path('pontos_coletas/', views.pontos_coletas),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

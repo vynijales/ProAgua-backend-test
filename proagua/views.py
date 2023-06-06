@@ -8,13 +8,13 @@ def home(request):
         template_name="landing_page.html"
     )
 
-def coletas(request):
+def pontos_coletas(request):
     context = {
         'pontos_coletas': PontoColeta.objects.all()
     }
 
     return render(
         request=request,
-        template_name="privado/coletas.html",
+        template_name="privado/pontos_coletas.html",
         context=context
     )
