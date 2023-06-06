@@ -49,6 +49,33 @@ class Coleta(models.Model):
         verbose_name='ponto de coleta',
         on_delete=models.PROTECT,
     )
+    temperatura = models.FloatField(
+        verbose_name="temperatura",
+    )
+    cloro_residual_livre = models.FloatField(
+        verbose_name="cloro residual livre",
+    )
+
+    cloro_total = models.FloatField(
+        verbose_name="cloro total",
+    )
+
+    turbidez = models.FloatField(
+        verbose_name="turbidez",
+    )
+
+    coliformes_totais = models.BooleanField(
+        verbose_name="coliformes totais",
+    )
+
+    escherichia = models.BooleanField(
+        verbose_name="escherichia",
+    )
+
+    cor = models.CharField(
+        verbose_name="cor",
+        max_length=20,
+    )
     date = models.DateTimeField(
         verbose_name="data da coleta",
         db_comment="Data e hora de quando foi realizada a coleta",
