@@ -1,3 +1,15 @@
+h1 {
+    font-family: Montserrat, sans-serif;
+    font-size: 770px;
+}
+
+#search-bar{
+    font-family: Montserrat, sans-serif;
+    font-size: 1000px;
+    font-style: normal;
+
+}
+
 #board {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

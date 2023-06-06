@@ -6,9 +6,33 @@
 {% endblock %}
 
 {% block content %}
-<div id="search-bar">
 
+
+<h1 id="titulo">Pontos de Coleta</h1>
+<input id="search-bar" name="ponto_coleta" type="text"/>
+<div class="dropdown">
+    <div class="select">
+        <span class="selected">Campus</span>
+    </div>
+    <ul>
+        <li>Oeste</li>
+        <li>Leste</li>
+    </ul>
 </div>
+
+<div class="dropdown">
+    <div class="select">
+        <span class="selected">Prédio</span>
+    </div>
+    <ul>
+        <li>p1</li>
+        <li>p2</li>
+        <li>p3</li>
+        <li>p4</li>
+        <li>p5</li>
+    </ul>
+</div>
+
 <div class="content">
     <div id="board">
         {% for ponto in pontos_coletas %}
