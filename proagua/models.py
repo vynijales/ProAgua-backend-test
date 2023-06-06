@@ -78,7 +78,7 @@ class Coleta(models.Model):
     )
     date = models.DateTimeField(
         verbose_name="data da coleta",
-        db_comment="Data e hora de quando foi realizada a coleta",
+        # db_comment="Data e hora de quando foi realizada a coleta",
     )
     responsavel = models.ManyToManyField(
         to=User,

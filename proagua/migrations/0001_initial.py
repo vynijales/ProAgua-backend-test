@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('coliformes_totais', models.BooleanField(verbose_name='coliformes totais')),
                 ('escherichia', models.BooleanField(verbose_name='escherichia')),
                 ('cor', models.CharField(max_length=20, verbose_name='cor')),
-                ('date', models.DateTimeField(db_comment='Data e hora de quando foi realizada a coleta', verbose_name='data da coleta')),
+                ('date', models.DateTimeField(verbose_name='data da coleta')),
                 ('ordem', models.CharField(choices=[('C', 'Coleta'), ('R', 'Recoleta')], default=('C', 'Coleta'), max_length=1)),
                 ('amostragem', models.PositiveIntegerField(default=0, verbose_name='amostragem')),
                 ('ponto_coleta', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='proagua.pontocoleta', verbose_name='ponto de coleta')),
