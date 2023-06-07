@@ -12,9 +12,19 @@ class Edificacao(models.Model):
         verbose_name='nome da edificação',
         max_length=80,
     )
+    bloco = models.CharField(
+        max_length=1,
+        verbose_name='bloco',
+        choices=(
+            ('L', 'leste'),
+            ('O', 'oeste')
+        ),
+        default=('L', 'leste')
+    )
 
     def __str__(self):
         return f'{self.codigo} - {self.nome}'
+
 
 class PontoColeta(models.Model):
     edificacao = models.ForeignKey(
