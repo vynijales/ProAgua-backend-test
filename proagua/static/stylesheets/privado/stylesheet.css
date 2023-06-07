@@ -129,3 +129,7 @@ body {
 .proagua-logo img {
     width: 25px;
 }
+
+th, td, tr {
+    border: 1px solid black;
+}
