@@ -37,16 +37,26 @@ class PontoColeta(models.Model):
         max_length=120,
     )
     tipo = models.CharField(
-        max_length=1,
+        max_length=2,
         choices=(
-            ("B", "Bebedouro"),
-            ("T", "Torneira")
+            ("BE", "Bebedouro"),
+            ("TO", "Torneira"),
+            ("RS", "Reservatório superior"),
+            ("RI", "Reservatório inferior")
         ),
-        default= ("B", "Bebedouro")
+        default=("BE", "Bebedouro")
+    )
+    pai = models.ForeignKey(
+        to='PontoColeta',
+        verbose_name='Ponto de coleta pai',
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True
     )
 
     def __str__(self):
         return f'{self.edificacao.nome} - {self.ambiente}'
+
 
 class Coleta(models.Model):
     id = models.AutoField(
