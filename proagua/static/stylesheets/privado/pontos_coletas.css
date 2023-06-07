@@ -1,24 +1,42 @@
 h1 {
-    font-family: Montserrat, sans-serif;
-    /*font-size: 770px;*/
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: 100;
+    padding-left: 5vw;
+    font-size: 4.5vh;
+    text-align: center;
+    color: #525252;
 }
 
 #search-bar{
     font-family: Montserrat, sans-serif;
-    /*font-size: 1000px;*/
-    font-style: normal;
+    font-weight: 100;
+    width: 80%;
+    height: 1.5vh;
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
 
+select {
+    background-color: #ffffff;
+    border-radius: 8px;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 2vh;
+    height: 5vh;
+    margin: 1.5vh -65% 4vh 66%; /*top right bottom left */
+    padding-right: 4.5vw;
 }
 
 #board {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 46px;
-    margin: 0 240px;
+    margin: 0 240px 0 10vw;
 }
 
 .card {
-    height: 350px;
+    height: 300px;
     padding: 20px;
     box-sizing: border-box;
     border-radius: 8px;
@@ -28,5 +46,35 @@ h1 {
 
 .card button {
     border-radius: 50px;
+    margin-top: 3vh;
+    margin-left: 3vw;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 2vh;
     height: 54px;
+}
+
+.codigo {
+    font-family: Inter;
+    color:black;
+    font-size: 2vh;
+    margin-top: -0.7vh;
+    text-align: center;
+}
+
+.nome-edif {
+    font-family: Inter;
+    font-size: 2.75vh;
+    text-align: center;
+    margin-top: 5vh;
+}
+
+p {
+    font-family: Inter;
+    color:#525252;
+    text-align: center;
+}
+
+.ambiente {
+    margin-top: -2vh;
 }

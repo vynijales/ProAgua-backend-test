@@ -10,36 +10,29 @@
 
 <h1 id="titulo">Pontos de Coleta</h1>
 <input id="search-bar" name="ponto_coleta" type="text"/>
-<div class="dropdown">
-    <div class="select">
-        <span class="selected">Campus</span>
-    </div>
-    <ul>
-        <li>Oeste</li>
-        <li>Leste</li>
-    </ul>
-</div>
 
-<div class="dropdown">
-    <div class="select">
-        <span class="selected">Prédio</span>
-    </div>
-    <ul>
-        <li>p1</li>
-        <li>p2</li>
-        <li>p3</li>
-        <li>p4</li>
-        <li>p5</li>
-    </ul>
-</div>
+<select>
+    <option>Campus</option>
+    <option>Leste</option>
+    <option>Oeste</option>
+</select>
+
+<select>
+    <option>Edificação</option>
+    <option>p1</option>
+    <option>p2</option>
+    <option>p3</option>
+    <option>p4</option>
+</select>
+
 
 <div class="content">
     <div id="board">
         {% for ponto in pontos_coletas %}
             <div class="card">
-                <p>{{ ponto.edificacao.codigo }}</p>
-                <h2>{{ ponto.edificacao.nome }}</h2>
-                <p>{{ ponto.ambiente}}</p>
+                <p class="codigo">{{ ponto.edificacao.codigo }}</p>
+                <h2 class="nome-edif">{{ ponto.edificacao.nome }}</h2>
+                <p class="ambiente">{{ ponto.ambiente}}</p>
                 {%if ponto.torneira %}
                 <p>Torneira</p>
                 {% else %}
