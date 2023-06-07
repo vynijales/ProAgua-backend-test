@@ -24,7 +24,7 @@ class Edificacao(models.Model):
 
     def __str__(self):
         return f'{self.codigo} - {self.nome}'
-
+    
 
 class PontoColeta(models.Model):
     edificacao = models.ForeignKey(
@@ -66,6 +66,7 @@ class Coleta(models.Model):
     )
     ponto_coleta = models.ForeignKey(
         to=PontoColeta,
+        related_name='coletas',
         verbose_name='ponto de coleta',
         on_delete=models.PROTECT,
     )
