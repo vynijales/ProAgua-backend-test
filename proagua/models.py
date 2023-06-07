@@ -46,6 +46,7 @@ class PontoColeta(models.Model):
         ),
         default=("BE", "Bebedouro")
     )
+    mes = models.IntegerField(verbose_name="Mês do cronograma")
     pai = models.ForeignKey(
         to='PontoColeta',
         verbose_name='Ponto de coleta pai',
@@ -116,7 +117,6 @@ class Coleta(models.Model):
     amostragem = models.PositiveIntegerField(
         verbose_name="amostragem",
         default=0,
-
     )
 
     def __str__(self):
