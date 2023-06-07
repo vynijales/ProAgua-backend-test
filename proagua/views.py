@@ -51,7 +51,7 @@ def ponto_coleta_relatorio(request, ponto_id: int, amostragem: int):
 
     return render(
         request=request,
-        template_name="privado/ponto_coleta.html",
+        template_name="privado/ponto_coleta_relatorio.html",
         context=context
     )
 
