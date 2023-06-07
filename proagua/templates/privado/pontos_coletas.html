@@ -1,0 +1,53 @@
+{% extends 'privado/base.html' %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'stylesheets/privado/pontos_coletas.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+<h1 id="titulo">Pontos de Coleta</h1>
+<input id="search-bar" name="ponto_coleta" type="text"/>
+<div class="dropdown">
+    <div class="select">
+        <span class="selected">Campus</span>
+    </div>
+    <ul>
+        <li>Oeste</li>
+        <li>Leste</li>
+    </ul>
+</div>
+
+<div class="dropdown">
+    <div class="select">
+        <span class="selected">Prédio</span>
+    </div>
+    <ul>
+        <li>p1</li>
+        <li>p2</li>
+        <li>p3</li>
+        <li>p4</li>
+        <li>p5</li>
+    </ul>
+</div>
+
+<div class="content">
+    <div id="board">
+        {% for ponto in pontos_coletas %}
+            <div class="card">
+                <p>{{ ponto.edificacao.codigo }}</p>
+                <h2>{{ ponto.edificacao.nome }}</h2>
+                <p>{{ ponto.ambiente}}</p>
+                {%if ponto.torneira %}
+                <p>Torneira</p>
+                {% else %}
+                <p>Bebedouro</p>
+                {% endif %}
+                <button><i class="bi bi-eye"></i> Detalhes</button>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
