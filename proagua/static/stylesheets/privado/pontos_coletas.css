@@ -77,3 +77,18 @@ p {
 .ambiente {
     margin-top: -2vh;
 }
+
+.add-card {
+    background-color: #efefef;
+    color: #525252;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    transition: background-color 0.15s;
+}
+.add-card:hover {
+    background-color: #dde1e4;
+}
