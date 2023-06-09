@@ -8,13 +8,13 @@ body {
     background-color: #f4f4f4;
 }
 
-
 a.button {
     display: block;
     box-sizing: border-box;
     text-decoration: none;
     width: fit-content;
 }
+
 button, input[type=button], input[type=submit], a.button {
     border: 1px solid transparent;
     background-color: #027BD0;
@@ -23,7 +23,7 @@ button, input[type=button], input[type=submit], a.button {
     padding: 1rem 0.5rem;
     color: white;
     font-family: 'Inter', sans-serif;
-    font-size: 20px;
+    font-size: 1.5rem;
 }
 
 button:hover,
@@ -31,16 +31,20 @@ input[type=button]:hover,
 input[type=submit]:hover,
 a.button:hover {
     background-color: #07508b;
+    cursor: pointer;
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], select {
     border: 1px solid #ABABAB;
     background-color: white;
     padding: 1rem 0.6rem;
     border-radius: 6px;
+
     font-family: 'Inter';
-    font-style: normal;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
+    
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    height: 1.5rem;
+    box-sizing: content-box;
 }
