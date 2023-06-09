@@ -1,16 +1,20 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpRequest
+from django.db.models import Count
 
 from .models import (
-    PontoColeta
+    PontoColeta,
+    Coleta
 )
+
 
 def home(request):
     return render(
         request=request,
         template_name="landing_page.html"
     )
+
 
 def pontos_coletas(request):
     context = {
@@ -20,6 +24,25 @@ def pontos_coletas(request):
     return render(
         request=request,
         template_name="privado/pontos_coletas.html",
+        context=context
+    )
+
+
+def ponto_coleta(request, ponto_id: int):
+    ponto = get_object_or_404(
+        PontoColeta,
+        id=ponto_id
+    )
+
+    count = ponto.coletas.aggregate(Count("amostragem", distinct=True))
+
+    context = {
+        "amostragens": range(1, count["amostragem__count"] + 1)
+    }
+
+    return render(
+        request=request,
+        template_name="privado/ponto_coleta.html",
         context=context
     )
 

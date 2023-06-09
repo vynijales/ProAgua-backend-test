@@ -1,0 +1,15 @@
+{% extends 'privado/base.html' %}
+
+{% block content %}
+<table>
+    {% for amostragem in amostragens %}
+        <tr>
+            <td>{{ amostragem }}ª amostragem</td>
+            <td><a href="{{ amostragem }}/">Visualizar</a></td>
+        </tr>
+    {% empty %}
+        <p>Ainda não há coletas.</p>
+    {% endfor %}
+</table>
+
+{% endblock %}
