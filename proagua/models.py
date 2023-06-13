@@ -60,11 +60,6 @@ class PontoColeta(models.Model):
 
 
 class Coleta(models.Model):
-    id = models.AutoField(
-        primary_key=True,
-        verbose_name="ID",
-        editable=False,
-    )
     ponto_coleta = models.ForeignKey(
         to=PontoColeta,
         related_name='coletas',
