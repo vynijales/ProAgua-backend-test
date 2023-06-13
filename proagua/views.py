@@ -37,7 +37,8 @@ def ponto_coleta(request, ponto_id: int):
     count = ponto.coletas.aggregate(Count("amostragem", distinct=True))
 
     context = {
-        "amostragens": range(1, count["amostragem__count"] + 1)
+        "amostragens": range(1, count["amostragem__count"] + 1),
+        "ponto": ponto
     }
 
     return render(
