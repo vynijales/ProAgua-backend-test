@@ -1,0 +1,46 @@
+{% extends 'privado/base.html' %}
+
+{% block content %}
+<h1>Configurações</h1>
+<div>
+    <h2>Usuários</h2>
+    <table>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.first_name }} {{ user.last_name }}</td>
+                <td><button>delete</button></td>
+                <td><button>editar</button></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        
+    </table>
+    <button>Adicionar usuário</button>
+</div>
+<div>
+    <h2>Parâmetros de referência</h2>
+    <div style="display: grid; grid-template-columns: auto 1fr 1fr;">
+        <label>Turbidez da água (NTU)</label>
+        <input type="number" placeholder="Mínimo">
+        <input type="number" placeholder="Máximo">
+
+        <label>Temperatura da água (cº)</label>
+        <input type="number" placeholder="Mínimo">
+        <input type="number" placeholder="Máximo">
+
+        <label>Quantidade de coliformios (mol/ml)</label>
+        <input type="number" placeholder="Mínimo">
+        <input type="number" placeholder="Máximo">
+
+        <label>Quandidade escherichia coli</label>
+        <input type="number" placeholder="Mínimo">
+        <input type="number" placeholder="Máximo">
+
+        <label>Cor</label>
+        <input type="number" placeholder="Mínimo">
+        <input type="number" placeholder="Máximo">
+    </div>
+</div>
+{% endblock %}
