@@ -48,3 +48,35 @@ input[type=text], input[type=password], select {
     height: 1.5rem;
     box-sizing: content-box;
 }
+
+
+#dialog-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 40%);
+}
+
+.dialog {
+    position: absolute;
+    min-width: 600px;
+    min-height: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 20%);
+}
+
+.dialog #close-bt {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 24px;
+    color: #505050;
+    user-select: none;
+    cursor: pointer;
+}
