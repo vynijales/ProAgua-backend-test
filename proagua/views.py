@@ -7,7 +7,9 @@ from .models import (
     PontoColeta,
     Coleta
 )
-
+from .forms import (
+    CreatePontoColeta
+)
 
 def home(request):
     return render(
@@ -17,8 +19,14 @@ def home(request):
 
 
 def pontos_coletas(request):
+    if request.method == 'POST':
+        create_form = CreatePontoColeta(request.POST)
+        create_form.save()
+    
+    create_form = CreatePontoColeta()
     context = {
-        'pontos_coletas': PontoColeta.objects.all()
+        'pontos_coletas': PontoColeta.objects.all(),
+        'create_ponto_coleta_form': create_form
     }
 
     return render(
