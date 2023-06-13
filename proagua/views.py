@@ -20,14 +20,8 @@ def home(request):
 
 
 def pontos_coletas(request):
-    if request.method == 'POST':
-        create_form = CreatePontoColeta(request.POST)
-        create_form.save()
-    
-    create_form = CreatePontoColeta()
     context = {
         'pontos_coletas': PontoColeta.objects.all(),
-        'create_ponto_coleta_form': create_form
     }
 
     return render(
@@ -37,6 +31,17 @@ def pontos_coletas(request):
     )
 
 
+def criar_ponto(request):
+    if request.method == 'POST':
+        form = CreatePontoColeta(request.POST)
+        form.save()
+    form = CreatePontoColeta()
+
+    return render(
+        request=request,
+        template_name="privado/criar_ponto.html",
+        context={ 'form': form }
+    )
 def ponto_coleta(request, ponto_id: int):
     ponto = get_object_or_404(
         PontoColeta,
