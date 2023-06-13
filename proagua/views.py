@@ -67,14 +67,6 @@ def ponto_coleta_relatorio(request, ponto_id: int, amostragem: int):
         PontoColeta,
         id=ponto_id
     )
-    
-    if request.method == 'POST':
-        coleta = Coleta()
-        coleta.ponto_coleta = ponto
-        create_form = CreateColeta(request.POST, instance=coleta)
-        create_form.save()
-    create_form = CreateColeta()
-
     pontos = []
     
     while ponto != None:
@@ -92,13 +84,27 @@ def ponto_coleta_relatorio(request, ponto_id: int, amostragem: int):
 
     context = {
         "pontos": pontos,
-        "create_coleta_form": create_form
     }
 
     return render(
         request=request,
         template_name="privado/ponto_coleta_relatorio.html",
         context=context
+    )
+
+
+def criar_coleta(request):
+    if request.method == 'POST':
+        coleta = Coleta()
+        # coleta.ponto_coleta = ponto
+        form = CreateColeta(request.POST, instance=coleta)
+        form.save()
+    form = CreateColeta()
+    
+    return render(
+        request=request,
+        template_name='privado/criar_coleta.html',
+        context={ 'form': form }
     )
 
 
