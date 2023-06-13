@@ -9,5 +9,8 @@ urlpatterns = [
     path('ponto_coleta/<int:ponto_id>/<int:amostragem>/', views.ponto_coleta_relatorio, name='admin_ponto_coleta_amostragem'),
     path('criar_ponto/', views.criar_ponto, name='criar_ponto'),
     path('configuracoes/', views.configuracoes, name='admin_configuracoes'),
+    path('edificacoes/', views.edificacoes, name='admin_edificacoes'),
+
+    path('criar_edificacao/', views.criar_edificacao, name='criar_edificacao'),
     path('accounts/', include('django.contrib.auth.urls')),
 ]

@@ -22,3 +22,8 @@ class FormColeta(ModelForm):
             "ordem",
             "amostragem"
         ]
+
+class FormEdificacao(ModelForm):
+    class Meta:
+        model = models.Edificacao
+        fields = ['codigo', 'nome', 'bloco']

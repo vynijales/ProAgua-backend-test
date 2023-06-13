@@ -5,12 +5,15 @@ from django.db.models import Count
 
 from .models import (
     PontoColeta,
-    Coleta
+    Coleta,
+    Edificacao
 )
 from .forms import (
     FormPontoColeta,
     FormColeta,
+    FormEdificacao
 )
+
 
 def home(request):
     return render(
@@ -116,4 +119,28 @@ def configuracoes(request):
         request=request,
         template_name="privado/configuracoes.html",
         context=context
+    )
+
+
+def edificacoes(request):
+    context = {
+        'edificacoes': Edificacao.objects.all()
+    }
+
+    return render(
+        request=request,
+        template_name='privado/edificacoes.html',
+        context=context
+    )
+
+def criar_edificacao(request):
+    if request.method == 'POST':
+        form = FormEdificacao(request.POST)
+        form.save()
+    form = FormEdificacao()
+
+    return render(
+        request=request,
+        template_name='privado/criar_edificacao.html',
+        context={ 'form': form}
     )
