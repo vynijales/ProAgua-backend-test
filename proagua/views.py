@@ -8,8 +8,8 @@ from .models import (
     Coleta
 )
 from .forms import (
-    CreatePontoColeta,
-    CreateColeta
+    FormPontoColeta,
+    FormColeta,
 )
 
 def home(request):
@@ -33,9 +33,9 @@ def pontos_coletas(request):
 
 def criar_ponto(request):
     if request.method == 'POST':
-        form = CreatePontoColeta(request.POST)
+        form = FormPontoColeta(request.POST)
         form.save()
-    form = CreatePontoColeta()
+    form = FormPontoColeta()
 
     return render(
         request=request,
@@ -97,9 +97,9 @@ def criar_coleta(request):
     if request.method == 'POST':
         coleta = Coleta()
         # coleta.ponto_coleta = ponto
-        form = CreateColeta(request.POST, instance=coleta)
+        form = FormColeta(request.POST, instance=coleta)
         form.save()
-    form = CreateColeta()
+    form = FormColeta()
     
     return render(
         request=request,
