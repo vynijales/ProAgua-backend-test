@@ -1,4 +1,5 @@
 {% extends 'privado/base.html' %}
+{% load static %}
 
 {% block content %}
 <h1>Relatório</h1>
@@ -39,6 +40,20 @@
         </tbody>
     </table>
 </div>
-
 {% endfor %}
+<button onclick="openDialog('create-coleta-dialog')">Adicionar coleta</button>
+
+<div id="dialog-backdrop" hidden>
+    <div id="create-coleta-dialog" class="dialog" hidden>
+        <h1>Adicionar coleta</h1>
+        <i id="close-bt" class="bi bi-x" onclick="closeDialog('create-coleta-dialog')"></i>
+        <form method="post">
+            {% csrf_token %}
+            {{ create_coleta_form }}
+            <input type="submit" value="Adicionar">
+        </form>
+    </div>
+</div>
+
+<script src="{% static 'js/dialog.js' %}"></script>
 {% endblock %}
