@@ -35,6 +35,7 @@
                     <td>{{ coleta.escherichia }}</td>
                     <td>{{ coleta.cor }}</td>
                     <td>{{ coleta.date }}</td>
+                    <td><a href="{% url 'editar_coleta' coleta.id %}?next={{ request.path }}">editar</a></td>
                 </tr>
             {% endfor %}
         </tbody>

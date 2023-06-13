@@ -1,4 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import (
+    render,
+    get_object_or_404,
+    HttpResponseRedirect
+)
 from django.contrib.auth.models import User
 from django.http import HttpRequest
 from django.db.models import Count
@@ -107,6 +111,26 @@ def criar_coleta(request):
     return render(
         request=request,
         template_name='privado/criar_coleta.html',
+        context={ 'form': form }
+    )
+
+
+def editar_coleta(request, coleta_id: int):
+    coleta = Coleta.objects.get(id=coleta_id)
+    form = FormColeta(instance=coleta)
+
+    if request.method == 'POST':
+        form = FormColeta(request.POST, instance=coleta)
+        form.save()
+
+        next_url = request.GET.get('next')
+        if next_url:
+            return HttpResponseRedirect(next_url)
+
+
+    return render(
+        request=request,
+        template_name='privado/editar_coleta.html',
         context={ 'form': form }
     )
 
