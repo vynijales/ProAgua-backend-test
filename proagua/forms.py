@@ -10,6 +10,7 @@ class FormColeta(ModelForm):
     class Meta:
         model = models.Coleta
         fields = [
+            "ponto_coleta",
             "temperatura",
             "cloro_residual_livre",
             "cloro_total",

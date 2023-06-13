@@ -42,6 +42,6 @@
     </table>
 </div>
 {% endfor %}
-<button onclick="window.location.href = '{% url 'criar_coleta' %}'">Adicionar coleta</button>
+<button onclick="window.location.href = '{% url 'criar_coleta' %}?next={{ request.path }}'">Adicionar coleta</button>
 
 {% endblock %}

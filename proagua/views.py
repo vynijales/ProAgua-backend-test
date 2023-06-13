@@ -102,10 +102,13 @@ def ponto_coleta_relatorio(request, ponto_id: int, amostragem: int):
 
 def criar_coleta(request):
     if request.method == 'POST':
-        coleta = Coleta()
-        # coleta.ponto_coleta = ponto
-        form = FormColeta(request.POST, instance=coleta)
+        form = FormColeta(request.POST)
         form.save()
+
+        next_url = request.GET.get('next')
+        if next_url:
+            return HttpResponseRedirect(next_url)
+    
     form = FormColeta()
     
     return render(
@@ -156,6 +159,7 @@ def edificacoes(request):
         template_name='privado/edificacoes.html',
         context=context
     )
+
 
 def criar_edificacao(request):
     if request.method == 'POST':
