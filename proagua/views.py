@@ -18,6 +18,7 @@ from .forms import (
     FormEdificacao
 )
 
+from .utils import get_hierarquia
 
 def home(request):
     return render(
@@ -74,23 +75,9 @@ def ponto_coleta_relatorio(request, ponto_id: int, amostragem: int):
         PontoColeta,
         id=ponto_id
     )
-    pontos = []
-    
-    while ponto != None:
-        coletas = ponto.coletas.filter(amostragem=amostragem)
-        
-        if coletas.count() == 0:
-            break
-
-        pontos.append({
-            "edificacao": ponto.edificacao,
-            "ambiente": ponto.ambiente,
-            "coletas": coletas
-        })
-        ponto = ponto.pai
 
     context = {
-        "pontos": pontos,
+        "pontos": get_hierarquia(ponto, amostragem),
     }
 
     return render(
