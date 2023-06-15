@@ -31,11 +31,7 @@
                 <p class="codigo">{{ ponto.edificacao.codigo }}</p>
                 <h2 class="nome-edif">{{ ponto.edificacao.nome }}</h2>
                 <p class="ambiente">{{ ponto.ambiente}}</p>
-                {%if ponto.torneira %}
-                <p>Torneira</p>
-                {% else %}
-                <p>Bebedouro</p>
-                {% endif %}
+                <p>{{ ponto.get_tipo_display }}</p>
                 <a href="/ponto_coleta/{{ponto.id}}/" class="button"><i class="bi bi-eye"></i> Detalhes</a>
             </div>
         {% endfor %}
