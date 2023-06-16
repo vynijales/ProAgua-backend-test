@@ -15,8 +15,10 @@ from .models import (
 from .forms import (
     FormPontoColeta,
     FormColeta,
-    FormEdificacao
+    FormEdificacao,
 )
+
+from django.forms import ChoiceField
 
 from .utils import get_hierarquia
 
@@ -50,6 +52,8 @@ def criar_ponto(request):
         template_name="privado/criar_ponto.html",
         context={ 'form': form }
     )
+
+
 def ponto_coleta(request, ponto_id: int):
     ponto = get_object_or_404(
         PontoColeta,
@@ -78,6 +82,7 @@ def ponto_coleta_relatorio(request, ponto_id: int, amostragem: int):
 
     context = {
         "pontos": get_hierarquia(ponto, amostragem),
+        "amostragem": amostragem,
     }
 
     return render(
@@ -88,7 +93,12 @@ def ponto_coleta_relatorio(request, ponto_id: int, amostragem: int):
 
 
 def criar_coleta(request):
+    ponto_id = request.GET.get('p')
+    amostragem = request.GET.get('amostragem')
+    ponto = PontoColeta.objects.get(id = int(ponto_id))
+
     if request.method == 'POST':
+        # form = FormColeta(request.POST, pontos = get_hierarquia(ponto, amostragem))
         form = FormColeta(request.POST)
         form.save()
 
@@ -96,7 +106,15 @@ def criar_coleta(request):
         if next_url:
             return HttpResponseRedirect(next_url)
     
+    pontos = get_hierarquia(ponto, amostragem)
+    # print(f"PONTOS 110: {pontos}")
+
     form = FormColeta()
+    #teste
+    if pontos:
+        choices = [(p['id'], p['nome']) for p in pontos]
+        # print(f"CHOICES 116: {choices}")
+        form.fields['ponto_coleta'] = ChoiceField(choices=choices)
     
     return render(
         request=request,
