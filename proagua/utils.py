@@ -1,14 +1,12 @@
-def get_hierarquia(ponto, amostragem: int): 
+def get_hierarquia(ponto, amostragem: int):
+    pontos = []
 
-    while ponto != None:
+    while ponto is not None:
         coletas = ponto.coletas.filter(amostragem=amostragem)
-        
-        if coletas.count() == 0:
-            break
-
-        pontos = []
 
         pontos.append({
+            "id": ponto.id,
+            "nome": str(ponto),
             "edificacao": ponto.edificacao,
             "ambiente": ponto.ambiente,
             "coletas": coletas
