@@ -1,0 +1,38 @@
+{% extends 'privado/base.html' %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'stylesheets/privado/pontos_coletas.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+    {% if ponto_coleta %}
+        <h1 id="titulo">Resultado da Pesquisa "{{ ponto_coleta }}"</h1>
+        <br/>
+
+        {% for ponto in resultado%}
+            {{ponto}} <br/>
+        {% endfor %}
+
+    {% else %}
+        <h1 id="titulo">Novidades em breve.</h1>
+    {% endif %}
+
+    <input id="search-bar" name="ponto_coleta" type="text" />
+    <select>
+        <option>Campus</option>
+        <option>Leste</option>
+        <option>Oeste</option>
+    </select>
+    <select>
+        <option>Edificação</option>
+        <option>p1</option>
+        <option>p2</option>
+        <option>p3</option>
+        <option>p4</option>
+    </select>
+    
+</div>
+
+{% endblock %}

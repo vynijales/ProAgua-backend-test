@@ -9,7 +9,9 @@
 <h1 id="titulo">Pontos de Coleta</h1>
 
 <div>
+    <form class="d-flex" method=POST action="{% url 'pesquisa' %}">
     <input id="search-bar" name="ponto_coleta" type="text" />
+    {% csrf_token %}
     <select>
         <option>Campus</option>
         <option>Leste</option>
@@ -22,6 +24,7 @@
         <option>p3</option>
         <option>p4</option>
     </select>
+</form>
 </div>
 
 <div class="content">

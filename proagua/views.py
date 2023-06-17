@@ -43,6 +43,13 @@ def pontos_coletas(request):
         context=context
     )
 
+def pesquisa(request):
+    if request.method == "POST": 
+        ponto_coleta = request.POST['ponto_coleta']
+        pontos = Edificacao.objects.filter(nome__contains=ponto_coleta)
+        return render(request, 'privado/pesquisa.html', {'ponto_coleta':ponto_coleta, 'pontos':pontos})
+    else:
+        return render(request, 'privado/pesquisa.html', {})
 
 @login_required
 def criar_ponto(request):
