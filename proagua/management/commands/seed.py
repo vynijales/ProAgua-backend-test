@@ -15,7 +15,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         # Criação de usuários
-        admin = User.objects.create_user('admin', password='password')
+        admin = User.objects.create_superuser("admin", password="admin")
         user1 = User.objects.create_user('user1', password='password1')
         user2 = User.objects.create_user('user2', password='password2')
 
