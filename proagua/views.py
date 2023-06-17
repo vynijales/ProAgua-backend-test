@@ -4,6 +4,7 @@ from django.shortcuts import (
     HttpResponseRedirect
 )
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.db.models import Count
 
@@ -22,6 +23,7 @@ from django.forms import ChoiceField
 
 from .utils import get_hierarquia
 
+
 def home(request):
     return render(
         request=request,
@@ -29,6 +31,7 @@ def home(request):
     )
 
 
+@login_required
 def pontos_coletas(request):
     context = {
         'pontos_coletas': PontoColeta.objects.all(),
@@ -41,6 +44,7 @@ def pontos_coletas(request):
     )
 
 
+@login_required
 def criar_ponto(request):
     if request.method == 'POST':
         form = FormPontoColeta(request.POST)
@@ -54,6 +58,7 @@ def criar_ponto(request):
     )
 
 
+@login_required
 def ponto_coleta(request, ponto_id: int):
     ponto = get_object_or_404(
         PontoColeta,
@@ -74,6 +79,7 @@ def ponto_coleta(request, ponto_id: int):
     )
 
 
+@login_required
 def ponto_coleta_relatorio(request, ponto_id: int, amostragem: int):
     ponto = get_object_or_404(
         PontoColeta,
@@ -92,6 +98,7 @@ def ponto_coleta_relatorio(request, ponto_id: int, amostragem: int):
     )
 
 
+@login_required
 def criar_coleta(request):
     ponto_id = request.GET.get('p')
     amostragem = request.GET.get('amostragem')
@@ -123,6 +130,7 @@ def criar_coleta(request):
     )
 
 
+@login_required
 def editar_coleta(request, coleta_id: int):
     coleta = Coleta.objects.get(id=coleta_id)
     form = FormColeta(instance=coleta)
@@ -143,6 +151,7 @@ def editar_coleta(request, coleta_id: int):
     )
 
 
+@login_required
 def configuracoes(request):
     context = {
         'users': User.objects.all()
@@ -154,6 +163,7 @@ def configuracoes(request):
     )
 
 
+@login_required
 def edificacoes(request):
     context = {
         'edificacoes': Edificacao.objects.all()
@@ -166,6 +176,7 @@ def edificacoes(request):
     )
 
 
+@login_required
 def criar_edificacao(request):
     if request.method == 'POST':
         form = FormEdificacao(request.POST)
