@@ -11,5 +11,5 @@
         <p>Ainda não há coletas.</p>
     {% endfor %}
 </table>
-
+<button onclick="window.location.href = '{% url 'criar_coleta' %}?next={{ request.path }}&p={{ ponto.id }}'">Adicionar coleta</button>
 {% endblock %}
