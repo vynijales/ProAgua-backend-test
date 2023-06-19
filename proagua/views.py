@@ -5,8 +5,8 @@ from django.shortcuts import (
 )
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
 from django.db.models import Count
+from django.forms import ChoiceField
 
 from .models import (
     PontoColeta,
@@ -18,8 +18,6 @@ from .forms import (
     FormColeta,
     FormEdificacao,
 )
-
-from django.forms import ChoiceField
 
 from .utils import get_hierarquia
 
@@ -33,8 +31,10 @@ def home(request):
 
 @login_required
 def pontos_coletas(request):
+    # Retornar somente bebedouros e torneiras
+    pontos = PontoColeta.objects.filter(tipo__in=['BE', 'TO'])
     context = {
-        'pontos_coletas': PontoColeta.objects.all(),
+        'pontos_coletas': pontos,
     }
 
     return render(
