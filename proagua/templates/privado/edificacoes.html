@@ -20,7 +20,7 @@
         <td>{{ edificacao.codigo }}</td>
         <td>{{ edificacao.nome }}</td>
         <td>{{ edificacao.get_bloco_display | capfirst }}</td>
-        <td><a href="#{{ edificacao.codigo }}">editar</a></td>
+        <td><a href="{% url 'editar_edificacao' edificacao.id %}">editar</a></td>
     </tr>
     {% endfor %}
 </table>

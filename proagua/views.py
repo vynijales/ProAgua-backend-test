@@ -196,3 +196,22 @@ def criar_edificacao(request):
         template_name='privado/criar_edificacao.html',
         context={ 'form': form}
     )
+
+def edificacao(request, edificacao_id: int):
+    edificacao = get_object_or_404(Edificacao, id=edificacao_id)
+    form = FormEdificacao(instance=edificacao)
+    
+    if request.method == 'POST':
+        form = FormEdificacao(request.POST, instance=edificacao)
+        form.save()
+
+        next_url = request.GET.get('next')
+        if next_url:
+            return HttpResponseRedirect(next_url)
+
+    
+    return render(
+        request=request,
+        template_name='privado/editar_edificacao.html',
+        context={ 'edificacao': edificacao, 'form': form }
+    )
