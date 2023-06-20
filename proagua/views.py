@@ -197,6 +197,8 @@ def criar_edificacao(request):
         context={ 'form': form}
     )
 
+
+@login_required
 def edificacao(request, edificacao_id: int):
     edificacao = get_object_or_404(Edificacao, id=edificacao_id)
     form = FormEdificacao(instance=edificacao)
