@@ -3,20 +3,27 @@
 
 {% block content %}
 <h1>Edificações</h1>
+
+<form method="get">
+    <input type="text" name="q" placeholder="Pesquisar" />
+    <input type="submit" value="Pesquisar">
+</form>
+
 <table>
-        <tr>
-            <th>Código</th>
-            <th>Nome</th>
-            <th>Bloco</th>
-        </tr>
+    <tr>
+        <th>Código</th>
+        <th>Nome</th>
+        <th>Bloco</th>
+    </tr>
     {% for edificacao in edificacoes %}
-        <tr>
-            <td>{{ edificacao.codigo }}</td>
-            <td>{{ edificacao.nome }}</td>
-            <td>{{ edificacao.bloco }}</td>
-        </tr>
+    <tr>
+        <td>{{ edificacao.codigo }}</td>
+        <td>{{ edificacao.nome }}</td>
+        <td>{{ edificacao.get_bloco_display | capfirst }}</td>
+        <td><a href="#{{ edificacao.codigo }}">editar</a></td>
+    </tr>
     {% endfor %}
 </table>
-<button onclick="window.location.href = '{% url 'criar_edificacao' %}'">Adicionar edificação</button>
+<button onclick="window.location.href = `{% url 'criar_edificacao' %}`">Adicionar edificação</button>
 
 {% endblock %}

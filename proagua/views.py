@@ -5,7 +5,7 @@ from django.shortcuts import (
 )
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.forms import ChoiceField
 
 from .models import (
@@ -165,8 +165,16 @@ def configuracoes(request):
 
 @login_required
 def edificacoes(request):
+    search = request.GET.get("q")
+    if search:
+        edificacoes = Edificacao.objects.filter(
+            Q(nome__contains=search) | Q(codigo__contains=search)
+        )
+    else:
+        edificacoes = Edificacao.objects.all()
+
     context = {
-        'edificacoes': Edificacao.objects.all()
+        'edificacoes': edificacoes
     }
 
     return render(
