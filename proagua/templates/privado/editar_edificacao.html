@@ -1,8 +1,7 @@
 {% extends 'privado/base.html' %}
 
-{% block title %}ProÁgua | Editar Coleta{% endblock %}
-{% block content%}
-<h1>Editar Coleta</h1>
+{% block content %}
+<h1>Edificação: {{ edificacao.codigo }} - {{ edificacao.nome }}</h1>
 <form method="post" class="simple-form">
     {% csrf_token %}
     {{ form }}

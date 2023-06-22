@@ -5,8 +5,8 @@ from django.shortcuts import (
 )
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest
-from django.db.models import Count
+from django.db.models import Count, Q
+from django.forms import ChoiceField
 
 from .models import (
     PontoColeta,
@@ -18,8 +18,6 @@ from .forms import (
     FormColeta,
     FormEdificacao,
 )
-
-from django.forms import ChoiceField
 
 from .utils import get_hierarquia
 
@@ -33,8 +31,10 @@ def home(request):
 
 @login_required
 def pontos_coletas(request):
+    # Retornar somente bebedouros e torneiras
+    pontos = PontoColeta.objects.filter(tipo__in=['BE', 'TO'])
     context = {
-        'pontos_coletas': PontoColeta.objects.all(),
+        'pontos_coletas': pontos,
     }
 
     return render(
@@ -172,8 +172,16 @@ def configuracoes(request):
 
 @login_required
 def edificacoes(request):
+    search = request.GET.get("q")
+    if search:
+        edificacoes = Edificacao.objects.filter(
+            Q(nome__contains=search) | Q(codigo__contains=search)
+        )
+    else:
+        edificacoes = Edificacao.objects.all()
+
     context = {
-        'edificacoes': Edificacao.objects.all()
+        'edificacoes': edificacoes
     }
 
     return render(
@@ -194,4 +202,25 @@ def criar_edificacao(request):
         request=request,
         template_name='privado/criar_edificacao.html',
         context={ 'form': form}
+    )
+
+
+@login_required
+def edificacao(request, edificacao_id: int):
+    edificacao = get_object_or_404(Edificacao, id=edificacao_id)
+    form = FormEdificacao(instance=edificacao)
+    
+    if request.method == 'POST':
+        form = FormEdificacao(request.POST, instance=edificacao)
+        form.save()
+
+        next_url = request.GET.get('next')
+        if next_url:
+            return HttpResponseRedirect(next_url)
+
+    
+    return render(
+        request=request,
+        template_name='privado/editar_edificacao.html',
+        context={ 'edificacao': edificacao, 'form': form }
     )

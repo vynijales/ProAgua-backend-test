@@ -9,7 +9,7 @@
         Coleta no {{ ponto.edificacao.nome }}
     </h1>
     <h2>
-        {{ ponto.ambiente }}
+        {{ ponto.get_tipo_display }} - {{ ponto.ambiente }}
     </h2>
     <table>
         <thead>
