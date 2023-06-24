@@ -22,12 +22,12 @@ class Command(BaseCommand):
         # Criação de objetos Edificacao
         edificacao1 = Edificacao.objects.create(
             codigo='EDIF1',
-            nome='LCC',
+            nome='Lab. Computação (LCC)',
             bloco='L'
         )
         edificacao2 = Edificacao.objects.create(
             codigo='EDIF2',
-            nome='CE',
+            nome='Centro de Engenharias (CE)',
             bloco='L'
         )
 

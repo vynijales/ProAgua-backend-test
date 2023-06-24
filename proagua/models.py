@@ -86,7 +86,7 @@ class Coleta(models.Model):
     )
 
     escherichia = models.BooleanField(
-        verbose_name="escherichia",
+        verbose_name="escherichia coli",
     )
 
     cor = models.CharField(
