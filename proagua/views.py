@@ -31,8 +31,15 @@ def home(request):
 
 @login_required
 def pontos_coletas(request):
-    # Retornar somente bebedouros e torneiras
-    pontos = PontoColeta.objects.filter(tipo__in=['BE', 'TO'])
+    search = request.GET.get("q")
+    if search:
+        pontos = PontoColeta.objects.filter(
+            Q(edificacao__nome__contains=search)
+        )
+    else:
+        # Retornar somente bebedouros e torneiras
+        pontos = PontoColeta.objects.filter(tipo__in=['BE', 'TO'])
+        
     context = {
         'pontos_coletas': pontos,
     }
@@ -42,7 +49,6 @@ def pontos_coletas(request):
         template_name="privado/pontos_coletas.html",
         context=context
     )
-
 
 @login_required
 def criar_ponto(request):
