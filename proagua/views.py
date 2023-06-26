@@ -17,6 +17,7 @@ from .forms import (
     FormPontoColeta,
     FormColeta,
     FormEdificacao,
+    FormSearchPontos,
 )
 
 from .utils import get_hierarquia
@@ -32,16 +33,31 @@ def home(request):
 @login_required
 def pontos_coletas(request):
     search = request.GET.get("q")
+    form_search = FormSearchPontos(request.GET)
+    pontos = PontoColeta.objects
+
     if search:
-        pontos = PontoColeta.objects.filter(
+        pontos = pontos.filter(
             Q(edificacao__nome__contains=search)
         )
-    else:
-        # Retornar somente bebedouros e torneiras
-        pontos = PontoColeta.objects.filter(tipo__in=['BE', 'TO'])
+    q = Q()
+
+    if form_search.is_valid():
+        if form_search.cleaned_data.get("bloco"):
+            q &= Q(edificacao__bloco = form_search.cleaned_data["bloco"])
+        if form_search.cleaned_data.get("tipo"):
+            q &= Q(tipo__in = form_search.cleaned_data["tipo"])
         
+        if form_search.cleaned_data.get("data_minima"):
+            q &= Q(coletas__date__gt = form_search.cleaned_data["data_minima"])
+
+        if form_search.cleaned_data.get("data_maxima"):
+            q &= Q(coletas__date__lt = form_search.cleaned_data["data_maxima"])
+
+    pontos = pontos.filter(q)
     context = {
         'pontos_coletas': pontos,
+        'form_search': form_search,
     }
 
     return render(
@@ -111,7 +127,6 @@ def criar_coleta(request):
     ponto = PontoColeta.objects.get(id = int(ponto_id))
 
     if request.method == 'POST':
-        # form = FormColeta(request.POST, pontos = get_hierarquia(ponto, amostragem))
         form = FormColeta(request.POST)
         form.save()
 
@@ -120,13 +135,10 @@ def criar_coleta(request):
             return HttpResponseRedirect(next_url)
     
     pontos = get_hierarquia(ponto, amostragem)
-    # print(f"PONTOS 110: {pontos}")
 
     form = FormColeta()
-    #teste
     if pontos:
         choices = [(p['id'], p['nome']) for p in pontos]
-        # print(f"CHOICES 116: {choices}")
         form.fields['ponto_coleta'] = ChoiceField(choices=choices)
     
     return render(
