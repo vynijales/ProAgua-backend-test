@@ -3,7 +3,7 @@ import django
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.management.base import BaseCommand
-from proagua.models import Edificacao, PontoColeta, Coleta
+from proagua.models import Edificacao, PontoColeta, Coleta, Amostragem
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
@@ -89,6 +89,10 @@ class Command(BaseCommand):
             pai=ponto5
         )
 
+        # Criação de amostragens
+
+        amostragem1 = Amostragem.objects.create()
+
         # Criação de objetos Coleta
     
         now = timezone.now()
@@ -104,7 +108,7 @@ class Command(BaseCommand):
         cor='Azul',
         date=now,
         ordem='C',
-        amostragem=1
+        amostragem=amostragem1
     )
         coleta1.responsavel.add(user1, user2)
 
@@ -119,7 +123,7 @@ class Command(BaseCommand):
             cor='Vermelho',
             date=now,
             ordem='C',
-            amostragem=1
+            amostragem=amostragem1
         )
         coleta2.responsavel.add(user2)
 
@@ -134,7 +138,7 @@ class Command(BaseCommand):
             cor='Vermelho',
             date=now,
             ordem='C',
-            amostragem=1
+            amostragem=amostragem1
         )
         coleta3.responsavel.add(user2)
 
@@ -150,7 +154,7 @@ class Command(BaseCommand):
             cor='Vermelho',
             date=now,
             ordem='C',
-            amostragem=1
+            amostragem=amostragem1
         )
         coleta4.responsavel.add(user1, user2)
 
@@ -165,7 +169,7 @@ class Command(BaseCommand):
             cor='Vermelho',
             date=now,
             ordem='C',
-            amostragem=1
+            amostragem=amostragem1
         )
 
         coleta5.responsavel.add(user1, user2)
@@ -181,7 +185,7 @@ class Command(BaseCommand):
             cor='Vermelho',
             date=now,
             ordem='R',
-            amostragem=1
+            amostragem=amostragem1
         )
 
         coleta6.responsavel.add(user1, user2)
@@ -197,7 +201,7 @@ class Command(BaseCommand):
             cor='Vermelho',
             date=now,
             ordem='R',
-            amostragem=1
+            amostragem=amostragem1
         )
 
         coleta7.responsavel.add(user1, user2)
