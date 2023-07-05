@@ -24,7 +24,15 @@ class Edificacao(models.Model):
 
     def __str__(self):
         return f'{self.codigo} - {self.nome}'
-    
+
+  
+class Amostragem(models.Model):
+    amostragem = models.AutoField(
+        verbose_name='amostragem',
+        primary_key=True,
+        unique=True
+    )
+
 
 class PontoColeta(models.Model):
     edificacao = models.ForeignKey(
@@ -54,6 +62,7 @@ class PontoColeta(models.Model):
         blank=True,
         null=True
     )
+    amostragens = models.ManyToManyField(to=Amostragem)
 
     def __str__(self):
         return f'{self.edificacao.nome} - {self.ambiente}'
@@ -109,9 +118,11 @@ class Coleta(models.Model):
         ),
         default=("C", "Coleta"),
     )
-    amostragem = models.PositiveIntegerField(
-        verbose_name="amostragem",
-        default=0,
+    amostragem = models.ForeignKey(
+        to=Amostragem,
+        verbose_name='amostragem',
+        related_name='coletas',
+        on_delete=models.DO_NOTHING
     )
 
     def __str__(self):
