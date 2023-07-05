@@ -1,8 +1,10 @@
 from django.shortcuts import (
     render,
     get_object_or_404,
-    HttpResponseRedirect
+    HttpResponseRedirect,
+    redirect
 )
+
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
@@ -11,7 +13,8 @@ from django.forms import ChoiceField
 from .models import (
     PontoColeta,
     Coleta,
-    Edificacao
+    Edificacao,
+    Amostragem
 )
 from .forms import (
     FormPontoColeta,
@@ -87,10 +90,7 @@ def ponto_coleta(request, ponto_id: int):
         id=ponto_id
     )
 
-    count = ponto.coletas.aggregate(Count("amostragem", distinct=True))
-
     context = {
-        "amostragens": range(1, count["amostragem__count"] + 1),
         "ponto": ponto
     }
 
@@ -149,6 +149,19 @@ def criar_coleta(request):
 
 
 @login_required
+def criar_amostragem(request, ponto_id: int):
+    ponto = get_object_or_404(
+        PontoColeta,
+        id=ponto_id
+    )
+    amostragem, created = Amostragem.objects.get_or_create(
+        amostragem=ponto.amostragens.count() + 1
+    )
+    ponto.amostragens.add(amostragem)
+    return redirect(ponto_coleta, ponto_id=ponto_id)
+
+
+@login_required
 def editar_coleta(request, coleta_id: int):
     coleta = Coleta.objects.get(id=coleta_id)
     form = FormColeta(instance=coleta)
@@ -160,8 +173,7 @@ def editar_coleta(request, coleta_id: int):
         next_url = request.GET.get('next')
         if next_url:
             return HttpResponseRedirect(next_url)
-
-
+    
     return render(
         request=request,
         template_name='privado/editar_coleta.html',
