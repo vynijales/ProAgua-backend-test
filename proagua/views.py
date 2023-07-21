@@ -270,3 +270,9 @@ def edificacao(request, edificacao_id: int):
         template_name='privado/editar_edificacao.html',
         context={ 'edificacao': edificacao, 'form': form }
     )
+
+@login_required
+def excluir_usuario(request, id:int):
+    if request.POST:
+        User.objects.filter(pk=id).delete()
+    return redirect(configuracoes)
