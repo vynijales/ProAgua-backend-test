@@ -22,11 +22,16 @@ edificacao_urls = [
     path('criar/', views.criar_edificacao, name='criar_edificacao'),
 ]
 
+accounts_urls = [
+    path('<int:id>/excluir', views.excluir_usuario, name='excluir_usuario'),
+]
+
 urlpatterns = [
     path('', views.home),
     path('ponto/', include(ponto_coleta_urls)),
     path('coleta/', include(coleta_urls)),
     path('edificacao/', include(edificacao_urls)),
     path('configuracoes/', views.configuracoes, name='configuracoes'),
-    path('accounts/', include('django.contrib.auth.urls'))
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('users/', include(accounts_urls)),
 ]

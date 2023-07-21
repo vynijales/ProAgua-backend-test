@@ -1,4 +1,5 @@
 {% extends 'privado/base.html' %}
+{% load static %}
 
 {% block content %}
 <h1>Configurações</h1>
@@ -10,7 +11,28 @@
             <tr>
                 <td>{{ user.username }}</td>
                 <td>{{ user.first_name }} {{ user.last_name }}</td>
-                <td><button>delete</button></td>
+                <td>
+                    <button onclick="openDialog('simple-dialog')">Excluir</button>
+                        <div id="dialog-backdrop" hidden>
+                            <div id="simple-dialog" class="dialog" hidden>
+                                <button 
+                                    style="background-color:#E84855;
+                                        margin-left:93%; 
+                                        margin-top:1%; height:40px;
+                                        weight:40px; padding:5px;"
+                                    onclick="closeDialog('simple-dialog')"
+                                ><i class="bi bi-x-lg"></i></button>
+
+                                <form method="POST" action="{% url 'excluir_usuario' id=user.id %}">
+                                    {% csrf_token %}
+                                    <p>Deseja excluir o usuário {{user.first_name}}? Esta ação será permanente!</p>
+                                    <p>Senha: <input type="password"></p>
+                                    <button style="background:#888">Cancelar</button> 
+                                    <button type="submit" name="user_delete" value="Deletar usuário">Excluir</button> 
+                                </form>
+                            </div>
+                        </div>
+                </td>
                 <td><button>editar</button></td>
             </tr>
         {% endfor %}
@@ -43,4 +65,6 @@
         <input type="number" placeholder="Máximo">
     </div>
 </div>
+
+<script src="{% static 'js/dialog.js' %}"></script>
 {% endblock %}
