@@ -10,7 +10,11 @@ h1 {
 
 #search-bar{
     font-family: Montserrat, sans-serif;
-    width: 80%;
+    font-weight: 100;
+    height: 2vh;
+    width: 93%;
+    margin-right: 0.25vw;
+    margin-bottom: 1vh;
     /*
     font-weight: 100;
     height: 1.5vh;
@@ -19,10 +23,17 @@ h1 {
     */
 }
 
+button{
+    font-size: 2.1vh;
+    height: 6.4vh;
+}
+
 #board {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 46px;
+    margin-top: 4vh;
+    margin-bottom: 10vh;
     /*margin: 0 240px 0 10vw;*/
 }
 
