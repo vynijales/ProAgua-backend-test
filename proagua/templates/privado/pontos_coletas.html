@@ -27,7 +27,7 @@
                 <h2 class="nome-edif">{{ ponto.edificacao.nome }}</h2>
                 <p class="ambiente">{{ ponto.ambiente}}</p>
                 <p>{{ ponto.get_tipo_display }}</p>
-                <a href="/ponto_coleta/{{ponto.id}}/" class="button"><i class="bi bi-eye"></i> Detalhes</a>
+                <a href="{% url 'visualizar_ponto' ponto.id %}" class="button"><i class="bi bi-eye"></i> Detalhes</a>
             </div>
         {% endfor %}
         <div 

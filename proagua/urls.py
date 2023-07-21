@@ -1,24 +1,31 @@
 from django.urls import path, include
 from . import views
 
+ponto_coleta_urls = [
+    path('', views.pontos_coletas, name='visualizar_pontos'),
+    path('<int:ponto_id>/', views.ponto_coleta, name='visualizar_ponto'),
+    path('<int:ponto_id>/amostragem/<int:amostragem>/', views.ponto_coleta_relatorio, name='visualizar_relatorio'),
+    path('<int:ponto_id>/amostragem/criar', views.criar_amostragem, name='criar_amostragem'),
+    path('criar/', views.criar_ponto, name='criar_ponto'),
+]
+
+coleta_urls = [
+    path('criar/', views.criar_coleta, name='criar_coleta'),
+    path('<int:coleta_id>/editar/', views.editar_coleta, name='editar_coleta')
+]
+
+edificacao_urls = [
+    path('', views.edificacoes, name='visualizar_edificacoes'),
+    path('<int:edificacao_id>/editar/', views.edificacao, name='editar_edificacao'),
+    path('<int:edificacao_id>/excluir/', views.excluir_edificacao, name='excluir_edificacao'),
+    path('criar/', views.criar_edificacao, name='criar_edificacao'),
+]
 
 urlpatterns = [
     path('', views.home),
-    
-    path('pontos_coletas/', views.pontos_coletas, name='admin_pontos_coletas'),
-    path('ponto_coleta/<int:ponto_id>/', views.ponto_coleta, name='admin_ponto_coleta'),
-    path('ponto_coleta/<int:ponto_id>/criar_amostragem/', views.criar_amostragem, name='criar_amostragem'),
-    path('ponto_coleta/<int:ponto_id>/<int:amostragem>/', views.ponto_coleta_relatorio, name='admin_ponto_coleta_amostragem'),
-    path('criar_ponto/', views.criar_ponto, name='criar_ponto'),
-    
-    path('criar_coleta/', views.criar_coleta, name='criar_coleta'),
-    path('editar_coleta/<int:coleta_id>/', views.editar_coleta, name='editar_coleta'),
-    
-    path('configuracoes/', views.configuracoes, name='admin_configuracoes'),
-    
-    path('edificacoes/', views.edificacoes, name='admin_edificacoes'),
-    path('edificacao/<int:edificacao_id>/', views.edificacao, name='editar_edificacao'),
-    path('criar_edificacao/', views.criar_edificacao, name='criar_edificacao'),
-
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('ponto/', include(ponto_coleta_urls)),
+    path('coleta/', include(coleta_urls)),
+    path('edificacao/', include(edificacao_urls)),
+    path('configuracoes/', views.configuracoes, name='configuracoes'),
+    path('accounts/', include('django.contrib.auth.urls'))
 ]

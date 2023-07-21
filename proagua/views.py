@@ -229,6 +229,11 @@ def criar_edificacao(request):
 
 
 @login_required
+def excluir_edificacao(request, edificacao_id: int):
+    pass
+
+
+@login_required
 def edificacao(request, edificacao_id: int):
     edificacao = get_object_or_404(Edificacao, id=edificacao_id)
     form = FormEdificacao(instance=edificacao)

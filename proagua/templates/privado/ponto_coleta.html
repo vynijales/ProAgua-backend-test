@@ -8,7 +8,7 @@
         {% for amostragem in ponto.amostragens.all %}
             <tr>
                 <td>{{ amostragem.amostragem }}ª amostragem</td>
-                <td><a href="{% url 'admin_ponto_coleta_amostragem' ponto_id=ponto.id amostragem=amostragem.amostragem %}">Visualizar</a></td>
+                <td><a href="{% url 'visualizar_relatorio' ponto_id=ponto.id amostragem=amostragem.amostragem %}">Visualizar</a></td>
             </tr>
         {% empty %}
             <p>Ainda não há coletas.</p>
