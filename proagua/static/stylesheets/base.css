@@ -90,3 +90,7 @@ select {
     user-select: none;
     cursor: pointer;
 }
+
+span{
+    font-weight: 100;
+}

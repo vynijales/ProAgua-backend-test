@@ -39,18 +39,21 @@ h2{
     box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
 }
 
-table, th, td{
+table, th{
+    width: 100%;
     font-family: Roboto, sans-serif;
     color: #525252;
-    border-style: hidden;
-    
 }
 
+td{
+    border-left-style: hidden;
+    border-right-style: hidden;
+}
 
 #add-edif{
     font-size: 2.5vh;
-    margin-top: 16vh;
-    margin-left: 10vw;
+    margin-top: 10vh;
+    margin-left: 32.5%;
     font-family: Roboto, sans-serif;
 }
 

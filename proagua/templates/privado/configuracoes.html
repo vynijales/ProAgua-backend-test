@@ -1,6 +1,10 @@
 {% extends 'privado/base.html' %}
 {% load static %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'stylesheets/privado/configuracoes.css' %}">
+{% endblock %}
+
 {% block content %}
 <h1>Configurações</h1>
 <div>
