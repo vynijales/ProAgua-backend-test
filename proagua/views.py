@@ -84,6 +84,24 @@ def criar_ponto(request):
 
 
 @login_required
+def editar_ponto(request, ponto_id: int):
+    ponto = get_object_or_404(
+        PontoColeta,
+        id=ponto_id
+    )
+
+    if request.method == 'POST':
+        form = FormPontoColeta(request.POST, instance=ponto)
+        if form.is_valid():
+            form.save()
+            return redirect(pontos_coletas)
+    else:
+        form = FormPontoColeta(instance=ponto)
+
+    return render(request, 'privado/editar_ponto.html', {'form': form})
+
+
+@login_required
 def ponto_coleta(request, ponto_id: int):
     ponto = get_object_or_404(
         PontoColeta,
