@@ -1,0 +1,63 @@
+h1{
+    text-align: center;
+    font-family: Roboto, sans-serif;
+    font-weight: 100;
+    color: #525252;
+    font-size: 4.5vh;
+    padding-left: 5vw;
+}
+h2{
+    text-align: center;
+    font-family: Roboto, sans-serif;
+    font-weight: 100;
+    color: #525252;
+    margin-top: 1vh;
+    padding-left: 1vw;
+}
+
+#search-bar2{
+    font-family: Roboto, sans-serif;
+    flex-grow: 1;
+    height: 2vh;
+    margin-right: 0.25vw;
+    margin-bottom: 4vh;
+    font-weight: 100;
+}
+
+#botao-pesquisar{
+    font-size: 2vh;
+    height: 6.2vh;
+}
+
+.card{
+    height: 45vh;
+    padding: 20px;
+    margin-left: 17.4vw;
+    width: 50%;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
+}
+
+table, th, td{
+    font-family: Roboto, sans-serif;
+    color: #525252;
+    border-style: hidden;
+    
+}
+
+
+#add-edif{
+    font-size: 2.5vh;
+    margin-top: 16vh;
+    margin-left: 10vw;
+    font-family: Roboto, sans-serif;
+}
+
+#edit{
+    font-size: 3vh;
+}
+#delete{
+    font-size: 3vh;
+    color: red;
+}
