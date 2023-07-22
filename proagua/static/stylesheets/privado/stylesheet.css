@@ -28,6 +28,7 @@ body {
 
 #header-bar .proagua-logo {
     justify-self: center;
+    padding-right: 64px;
 }
 
 .header-icon {
@@ -109,6 +110,10 @@ body {
     padding-right: 1rem;
 }
 
+#content {
+    margin: 0 10%;
+}
+
 .proagua-logo {
     display: flex;
     width: fit-content;
@@ -130,6 +135,14 @@ body {
     width: 25px;
 }
 
-th, td, tr {
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
     border: 1px solid black;
+}
+
+td, th {    
+    padding: 0.5rem 1rem;
 }

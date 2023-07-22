@@ -1,44 +1,19 @@
 {% extends 'privado/base.html' %}
 
 {% block content %}
-<h1>Relatório</h1>
-{% for ponto in pontos %}
+<h1>{{ ponto.get_tipo_display }} | {{ ponto.edificacao.nome }} - {{ ponto.ambiente }}</h1>
 <div>
-    <h1>
-        Coleta no {{ ponto.edificacao.nome }}
-    </h1>
-    <h2>
-        {{ ponto.ambiente }}
-    </h2>
+    <h2>Amostragens</h2>
     <table>
-        <thead>
+        {% for amostragem in ponto.amostragens.all %}
             <tr>
-                <th>Ordem da coleta</th>
-                <th>Temperatura</th>
-                <th>Cloro Residual Livre (ml/L)</th>
-                <th>Turbidez</th>
-                <th>Coliformes Totais (presença / ausência) </th>
-                <th>Escherichia Coli (presença / ausência) </th>
-                <th>Cor aparente</th>
-                <th>Data da Coleta</th>
+                <td>{{ amostragem.amostragem }}ª amostragem</td>
+                <td><a href="{% url 'visualizar_relatorio' ponto_id=ponto.id amostragem=amostragem.amostragem %}">Visualizar</a></td>
             </tr>
-        </thead>
-        <tbody>
-            {% for coleta in ponto.coletas %}
-                <tr>
-                    <td> Coleta </td>
-                    <td>{{ coleta.temperatura }}</td>
-                    <td>{{ coleta.cloro_residual_livre }}</td>
-                    <td>{{ coleta.turbidez }}</td>
-                    <td>{{ coleta.coliformes_totais }}</td>
-                    <td>{{ coleta.escherichia }}</td>
-                    <td>{{ coleta.cor }}</td>
-                    <td>{{ coleta.date }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
+        {% empty %}
+            <p>Ainda não há coletas.</p>
+        {% endfor %}
     </table>
+    <button onclick="window.location.href = '{% url 'criar_amostragem' ponto_id=ponto.id %}'">Adicionar amostragem</button>
 </div>
-
-{% endfor %}
 {% endblock %}

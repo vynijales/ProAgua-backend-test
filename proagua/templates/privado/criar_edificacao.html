@@ -1,0 +1,10 @@
+{% extends 'privado/base.html' %}
+
+{% block content %}
+<h1>Criar Edificação</h1>
+<form method="post" class="simple-form">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Criar">
+</form>
+{% endblock %}

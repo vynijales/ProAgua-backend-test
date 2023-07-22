@@ -1,41 +1,7 @@
 body {
-    padding: 0;
-    margin: 0;
-    background-color: #f4f4f4;
-    height: 100%;
-    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-button, input[type=button] {
-    border: 1px solid transparent;
-    background-color: #027BD0;
-    border-radius: 6px;
-    padding: 1rem 0.5rem;
-    color: white;
-    font-family: 'Inter', sans-serif;
-    font-size: 1.4em;
-}
-button:hover, input[type=button]:hover {
-    background-color: #0896fd;
-    cursor: pointer;
-}
-
-input[type=text], input[type=password] {
-    border: 1px solid #ABABAB;
-    background-color: white;
-    padding: 1rem 0.6rem;
-    border-radius: 6px;
-    font-family: 'Inter';
-    font-style: normal;
-    /* font-weight: 700; */
-    /* font-size: 1em; */
-    line-height: 24px;
-    outline: none;
-    width: 100%;
-    box-sizing: border-box;
 }
 
 #login-container {

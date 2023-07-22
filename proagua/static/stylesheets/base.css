@@ -8,24 +8,89 @@ body {
     background-color: #f4f4f4;
 }
 
-button, input[type=button], input[type=submit] {
+a.button {
+    display: block;
+    box-sizing: border-box;
+    text-decoration: none;
+    width: fit-content;
+    user-select: none;
+}
+
+button, input[type=button], input[type=submit], a.button {
     border: 1px solid transparent;
     background-color: #027BD0;
+    transition: background-color 0.1s;
     border-radius: 6px;
     padding: 1rem 0.5rem;
     color: white;
     font-family: 'Inter', sans-serif;
-    font-size: 20px;
+    font-size: 1.5rem;
 }
 
-input[type=text], input[type=password] {
+button:hover,
+input[type=button]:hover,
+input[type=submit]:hover,
+a.button:hover {
+    background-color: #07508b;
+    cursor: pointer;
+}
+
+input[type=text],
+input[type=password],
+input[type=number],
+select {
     border: 1px solid #ABABAB;
     background-color: white;
     padding: 1rem 0.6rem;
     border-radius: 6px;
+
     font-family: 'Inter';
-    font-style: normal;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
+    
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    height: 1.5rem;
+    box-sizing: content-box;
+}
+
+.simple-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 600px;
+}
+
+#dialog-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 40%);
+}
+
+.dialog {
+    position: absolute;
+    min-width: 600px;
+    min-height: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 20%);
+}
+
+.dialog #close-bt {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 24px;
+    color: #505050;
+    user-select: none;
+    cursor: pointer;
+}
+
+span{
+    font-weight: 100;
 }
