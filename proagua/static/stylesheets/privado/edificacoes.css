@@ -4,7 +4,6 @@ h1{
     font-weight: 100;
     color: #525252;
     font-size: 4.5vh;
-    padding-left: 5vw;
 }
 h2{
     text-align: center;
@@ -12,7 +11,7 @@ h2{
     font-weight: 100;
     color: #525252;
     margin-top: 1vh;
-    padding-left: 1vw;
+
 }
 
 #search-bar2{
@@ -24,15 +23,16 @@ h2{
     font-weight: 100;
 }
 
-#botao-pesquisar{
-    font-size: 2vh;
-    height: 6.2vh;
+
+#content{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
 }
 
 .card{
     height: 45vh;
     padding: 20px;
-    margin-left: 17.4vw;
     width: 50%;
     border-radius: 8px;
     background-color: white;

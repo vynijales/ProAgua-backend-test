@@ -2,6 +2,11 @@ h1{
     font-family: Roboto, sans-serif;
     text-align: center;
     font-weight: 100;
-    padding-left: 5vw;
     color: #525252;
+}
+
+#dialog-excluir{
+    font-family: Roboto, sans-serif;
+    font-size: 30px;
+    
 }
