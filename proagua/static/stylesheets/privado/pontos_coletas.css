@@ -30,7 +30,14 @@ h1 {
     /*margin: 0 240px 0 10vw;*/
 }
 
+.card-options {
+    position: absolute;
+    top: 1rem;
+    right: 0.75rem;
+}
+
 .card {
+    position: relative;
     height: 300px;
     padding: 20px;
     box-sizing: border-box;

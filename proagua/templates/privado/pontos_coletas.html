@@ -3,6 +3,7 @@
 
 {% block stylesheets %}
 <link rel="stylesheet" href="{% static 'stylesheets/privado/pontos_coletas.css' %}">
+<link rel="stylesheet" href="{% static 'stylesheets/dropdown.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -23,6 +24,16 @@
     <div id="board">
         {% for ponto in pontos_coletas %}
             <div class="card">
+                <div class="dropdown card-options">
+                    <button id="dropdown-bt">
+                        <i class="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <div id="dropdown-content">
+                        <a href="{% url 'editar_ponto' ponto.id %}">Editar</a>
+                        <a href="#excluir">Excluir</a>
+                    </div>
+                </div>
+                
                 <p class="codigo">{{ ponto.edificacao.codigo }}</p>
                 <h2 class="nome-edif">{{ ponto.edificacao.nome }}</h2>
                 <p class="ambiente">{{ ponto.ambiente}}</p>
@@ -39,11 +50,14 @@
     </div>
 </div>
 
+<script src="{% static 'js/dropdown.js' %}">
+</script>
 <script>
     const filtros = document.getElementById("filters")
 
     function mostrarFiltros() {
         filtros.hidden = !filtros.hidden
     }
+    setupDropdown()
 </script>
 {% endblock %}
