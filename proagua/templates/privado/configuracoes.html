@@ -7,7 +7,7 @@
 
 {% block content %}
 <h1>Configurações</h1>
-<div>
+<div class="card">
     <h2>Usuários</h2>
     <table>
         <tbody>
@@ -15,7 +15,7 @@
             <tr>
                 <td>{{ user.username }}</td>
                 <td>{{ user.first_name }} {{ user.last_name }}</td>
-                <td>
+                <td><button>editar</button>
                     <button onclick="openDialog('simple-dialog')">Excluir</button>
                         <div id="dialog-backdrop" hidden>
                             <div id="simple-dialog" class="dialog" hidden>
@@ -37,7 +37,6 @@
                             </div>
                         </div>
                 </td>
-                <td><button>editar</button></td>
             </tr>
         {% endfor %}
         </tbody>
@@ -45,9 +44,10 @@
     </table>
     <button>Adicionar usuário</button>
 </div>
-<div>
+
+<div class="card">
     <h2>Parâmetros de referência</h2>
-    <div style="display: grid; grid-template-columns: auto 1fr 1fr;">
+    <div id="parametros">
         <label>Turbidez da água (NTU)</label>
         <input type="number" placeholder="Mínimo">
         <input type="number" placeholder="Máximo">
@@ -69,6 +69,8 @@
         <input type="number" placeholder="Máximo">
     </div>
 </div>
+<footer style="margin-top: 7em;"></footer>
+
 
 <script src="{% static 'js/dialog.js' %}"></script>
 {% endblock %}

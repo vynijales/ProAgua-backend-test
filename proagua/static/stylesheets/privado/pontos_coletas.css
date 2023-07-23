@@ -2,7 +2,7 @@ h1 {
     font-family: Roboto, sans-serif;
     font-style: normal;
     font-weight: 100;
-    font-size: 4.5vh;
+    font-size: 2rem;
     text-align: center;
     color: #525252;
 }
@@ -10,21 +10,15 @@ h1 {
 #search-bar{
     font-family: Roboto, sans-serif;
     font-weight: 100;
-    height: 2vh;
-    width: 93%;
-    margin-right: 0.25vw;
-    margin-bottom: 1vh;
+    height: 0.72rem;
+    width: 92%;
+    margin-bottom: 0.5rem;
     /*
     font-weight: 100;
     height: 1.5vh;
     margin-left: 10vw;
     margin-right: 10vw;
     */
-}
-
-button{
-    font-size: 2.1vh;
-    height: 6.4vh;
 }
 
 #board {

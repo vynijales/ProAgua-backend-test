@@ -8,11 +8,11 @@
 {% block content %}
 <h1>Edificações</h1>
 
-<form method="get" style="display:flex;">
-    <input id="search-bar2" type="text" name="q" placeholder="Pesquisar" />
-    <input id="botao-pesquisar" type="submit" value="Pesquisar">
+<form method="get">
+    <input id="search-bar" type="text" name="q" placeholder="Pesquisar" />
+    <button><i class="bi bi-search"></i></button>
+    <!--<input id="botao-pesquisar" type="submit" value="Pesquisar">-->
 </form>
-
 
 <div class="card">
     <h2>Lista de edificações</h2>
@@ -28,7 +28,7 @@
         </tr>
         {% endfor %}
     </table>
-    <button id="add-edif" onclick="window.location.href = `{% url 'criar_edificacao' %}`">Adicionar edificação</button>
+    <button id="b-add" onclick="window.location.href = `{% url 'criar_edificacao' %}`">Adicionar edificação</button>
 </div>
 
 

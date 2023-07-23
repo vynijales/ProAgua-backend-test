@@ -5,8 +5,64 @@ h1{
     color: #525252;
 }
 
+h2{
+    text-align: center;
+    font-family: Roboto, sans-serif;
+    font-weight: 100;
+    color: #525252;
+    margin-top: 0.5em;
+}
+
+#content{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.card{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    height: 28rem;
+    padding: 1.5em;
+    width: 50%;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
+    margin-bottom: 2em;
+}
+
+table, th{
+    width: 100%;
+    font-family: Roboto, sans-serif;
+    color: #525252;
+    margin-bottom: 2em;
+}
+
+td{
+    text-align: center;
+    border-left-style: hidden;
+    border-right-style: hidden;
+}
+
 #dialog-excluir{
     font-family: Roboto, sans-serif;
     font-size: 30px;
+    
+}
+
+#parametros{
+    display: grid;
+    margin-top: 1em;
+    grid-template-columns: auto auto 1fr;
+    grid-row-gap: 1.5em;
+    text-align: center;
+    grid-column-gap: 0.5em;
+}
+
+label{
+    padding-top: 0.8em;
+    font-family: Roboto, sans-serif;
+    color: #525252;
     
 }

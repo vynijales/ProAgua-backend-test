@@ -21,10 +21,10 @@ button, input[type=button], input[type=submit], a.button {
     background-color: #027BD0;
     transition: background-color 0.1s;
     border-radius: 6px;
-    padding: 1rem 0.5rem;
+    padding: 0.7rem 0.7rem;
     color: white;
     font-family: 'Inter', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1rem; 
 }
 
 button:hover,
@@ -37,7 +37,6 @@ a.button:hover {
 
 input[type=text],
 input[type=password],
-input[type=number],
 select {
     border: 1px solid #ABABAB;
     background-color: white;
@@ -50,6 +49,22 @@ select {
     font-size: 1.25rem;
     line-height: 1.5rem;
     height: 1.5rem;
+    box-sizing: content-box;
+}
+
+input[type=number]{
+    border: 1px solid #ABABAB;
+    background-color: white;
+    padding: 0.8rem 0.5rem;
+    border-radius: 6px;
+
+    font-family: Roboto, sans-serif;
+    font-weight: 100;
+    
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    height: 1rem;
+    width: 7rem;
     box-sizing: content-box;
 }
 
