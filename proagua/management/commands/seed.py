@@ -108,7 +108,8 @@ class Command(BaseCommand):
         cor='Azul',
         date=now,
         ordem='C',
-        amostragem=amostragem1
+        amostragem=amostragem1,
+        fluxo=1,
     )
         coleta1.responsavel.add(user1, user2)
 
@@ -123,7 +124,8 @@ class Command(BaseCommand):
             cor='Vermelho',
             date=now,
             ordem='C',
-            amostragem=amostragem1
+            amostragem=amostragem1,
+            fluxo=1,
         )
         coleta2.responsavel.add(user2)
 
@@ -138,7 +140,8 @@ class Command(BaseCommand):
             cor='Vermelho',
             date=now,
             ordem='C',
-            amostragem=amostragem1
+            amostragem=amostragem1,
+            fluxo=1,
         )
         coleta3.responsavel.add(user2)
 
@@ -154,7 +157,8 @@ class Command(BaseCommand):
             cor='Vermelho',
             date=now,
             ordem='C',
-            amostragem=amostragem1
+            amostragem=amostragem1,
+            fluxo=1,
         )
         coleta4.responsavel.add(user1, user2)
 
@@ -169,7 +173,8 @@ class Command(BaseCommand):
             cor='Vermelho',
             date=now,
             ordem='C',
-            amostragem=amostragem1
+            amostragem=amostragem1,
+            fluxo=1,
         )
 
         coleta5.responsavel.add(user1, user2)
@@ -185,7 +190,8 @@ class Command(BaseCommand):
             cor='Vermelho',
             date=now,
             ordem='R',
-            amostragem=amostragem1
+            amostragem=amostragem1,
+            fluxo=1,
         )
 
         coleta6.responsavel.add(user1, user2)
@@ -201,7 +207,8 @@ class Command(BaseCommand):
             cor='Vermelho',
             date=now,
             ordem='R',
-            amostragem=amostragem1
+            amostragem=amostragem1,
+            fluxo=1,
         )
 
         coleta7.responsavel.add(user1, user2)

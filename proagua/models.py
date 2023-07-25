@@ -124,6 +124,11 @@ class Coleta(models.Model):
         related_name='coletas',
         on_delete=models.DO_NOTHING
     )
+    fluxo = models.IntegerField(
+        verbose_name='fluxo',
+        null=False,
+        blank=False
+    )
 
     def __str__(self):
         return f'ID {self.id}: {self.ordem} - {self.date}'
