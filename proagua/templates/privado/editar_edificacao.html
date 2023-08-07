@@ -1,10 +1,19 @@
 {% extends 'privado/base.html' %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'stylesheets/privado/editar_edificacao.css' %}">
+{% endblock %}
+
 
 {% block content %}
 <h1>Edificação: {{ edificacao.codigo }} - {{ edificacao.nome }}</h1>
-<form method="post" class="simple-form">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Salvar">
-</form>
+<div class="card">
+    <form method="post" class="simple-form">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Salvar">
+    </form>
+</div>
+
 {% endblock %}
