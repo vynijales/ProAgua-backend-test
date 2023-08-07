@@ -32,7 +32,7 @@
                                     <p id="excluir-frase">Deseja excluir o usuário {{user.first_name}}? Esta ação será permanente!</p>
                                     <p>Senha: <input type="password"></p>
 
-                                    <!-- consertar: botão cancelar exclui usuários-->
+                                    <!-- consertar botão cancelar exclui usuários-->
                                     <button style="background:#888" onclick="closeDialog('simple-dialog')">Cancelar</button> 
                                     <button type="submit" name="user_delete" value="Deletar usuário">Excluir</button> 
                                 </form>
@@ -44,7 +44,8 @@
         </tbody>
         
     </table>
-    <button>Adicionar usuário</button>
+    <button onclick="openDialog('add-user')">Adicionar usuário</button>
+    <dialog id="add-user"><p>Criar novo usuário</p></dialog>
 </div>
 
 <div class="card">
