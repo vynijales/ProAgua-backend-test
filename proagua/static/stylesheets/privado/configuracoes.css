@@ -70,4 +70,23 @@ label{
     font-family: Roboto, sans-serif;
     color: #525252;
     
+}     
+
+#excluir_x-icon{
+    background-color:#E84855;
+    margin-left:93%; 
+    margin-top:1%; 
+    height:2rem;
+    weight:40px; 
+    padding: 0.5px 5px;
+}
+
+#x-icon{
+    color: #FC1B44;
+    font-size: 8em;
+}
+
+#excluir-frase{
+    font-size: large;
+    color: black;
 }

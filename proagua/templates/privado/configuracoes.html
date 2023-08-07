@@ -24,19 +24,16 @@
                     <button onclick="openDialog('simple-dialog')">Excluir</button>
                         <div id="dialog-backdrop" hidden>
                             <div id="simple-dialog" class="dialog" hidden>
-                                <button 
-                                    style="background-color:#E84855;
-                                        margin-left:93%; 
-                                        margin-top:1%; height:40px;
-                                        weight:40px; padding:5px;"
-                                    onclick="closeDialog('simple-dialog')"
-                                ><i class="bi bi-x-lg"></i></button>
-
+                                <button id="excluir_x-icon" onclick="closeDialog('simple-dialog')">
+                                    <i class="bi bi-x-lg"></i></button>
                                 <form method="POST" action="{% url 'excluir_usuario' id=user.id %}">
                                     {% csrf_token %}
-                                    <p>Deseja excluir o usuário {{user.first_name}}? Esta ação será permanente!</p>
+                                    <i class="bi bi-x-circle" id="x-icon"></i>
+                                    <p id="excluir-frase">Deseja excluir o usuário {{user.first_name}}? Esta ação será permanente!</p>
                                     <p>Senha: <input type="password"></p>
-                                    <button style="background:#888">Cancelar</button> 
+
+                                    <!-- consertar: botão cancelar exclui usuários-->
+                                    <button style="background:#888" onclick="closeDialog('simple-dialog')">Cancelar</button> 
                                     <button type="submit" name="user_delete" value="Deletar usuário">Excluir</button> 
                                 </form>
                             </div>
