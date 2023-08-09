@@ -3,13 +3,13 @@
 
 {% block content %}
 <h1>Relatório</h1>
+<h1>
+    Coleta no {{ pontos.0.edificacao.nome }} - {{ pontos.0.edificacao.codigo }}
+</h1>   
 {% for ponto in pontos %}
 <div>
-    <h1>
-        Coleta no {{ ponto.edificacao.nome }}
-    </h1>
     <h2>
-        {{ ponto.get_tipo_display }} - {{ ponto.ambiente }}
+        {{ ponto.tipo }} - {{ ponto.ambiente }}
     </h2>
     <table>
         <thead>

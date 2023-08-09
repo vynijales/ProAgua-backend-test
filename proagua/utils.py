@@ -9,7 +9,8 @@ def get_hierarquia(ponto, amostragem: int):
             "nome": str(ponto),
             "edificacao": ponto.edificacao,
             "ambiente": ponto.ambiente,
-            "coletas": coletas
+            "coletas": coletas,
+            "tipo": ponto.get_tipo_display()
         })
 
         ponto = ponto.pai
