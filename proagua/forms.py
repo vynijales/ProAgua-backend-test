@@ -32,7 +32,7 @@ class FormEdificacao(forms.ModelForm):
         fields = ['codigo', 'nome', 'bloco']
 
 class FormSearchPontos(forms.Form):
-    bloco = forms.ChoiceField(choices=[('L', "Leste"), ("O", "Oeste")], required=False)
+    bloco = forms.ChoiceField(choices=[('', '---'), ('L', "Leste"), ("O", "Oeste")], required=False)
     tipo = forms.MultipleChoiceField(
         choices=(
             ("BE", "Bebedouro"),
@@ -41,10 +41,6 @@ class FormSearchPontos(forms.Form):
         ),
         required= False,
         widget=forms.CheckboxSelectMultiple,
-        initial=(
-            ("BE", "Bebedouro"),
-            ("TO", "Torneira"),
-        )
     )
 
     data_minima = forms.DateField(label="Data Mínima", widget=forms.SelectDateWidget(years=range(2010, datetime.datetime.now().year + 1)), required=False, initial=(1,0,2000))
