@@ -43,9 +43,23 @@
         {% endfor %}
         </tbody>
         
+    
     </table>
-    <button onclick="openDialog('add-user')">Adicionar usuário</button>
-    <dialog id="add-user"><p>Criar novo usuário</p></dialog>
+        <button onclick="openDialog('add-user')">Adicionar usuário</button>
+        <div id="add-user" class="dialog" hidden>
+            <button id="excluir_x-icon" onclick="closeDialog('add-user')">
+                <i class="bi bi-x-lg"></i></button>
+            <form method="POST" action="{% url 'excluir_usuario' id=user.id %}">
+                {% csrf_token %}
+                <i class="bi bi-x-circle" id="x-icon"></i>
+                <p id="excluir-frase">Adicionar Adicionar {{user.first_name}}? Esta ação será permanente!</p>
+                <p>Senha: <input type="password"></p>
+    
+                <!-- consertar botão cancelar exclui usuários-->
+                <button style="background:#888" onclick="closeDialog('add-user')">Cancelar</button> 
+                <button type="submit" name="user_delete" value="Deletar usuário">Excluir</button> 
+        </div>
+        
 </div>
 
 <div class="card">
