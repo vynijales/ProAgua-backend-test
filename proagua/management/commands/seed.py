@@ -73,6 +73,11 @@ class Command(BaseCommand):
             pai=ponto4
         )
 
+        """
+        # Ainda é necessário pontos de coleta do tipo torneira?
+        # 
+        # 
+
         ponto6 = PontoColeta.objects.create(
             edificacao=edificacao2,
             ambiente='Banheiro Feminino, térreo',
@@ -88,6 +93,7 @@ class Command(BaseCommand):
             mes=2,
             pai=ponto5
         )
+        """
 
         # Criação de amostragens
 
@@ -179,6 +185,7 @@ class Command(BaseCommand):
 
         coleta5.responsavel.add(user1, user2)
 
+        """
         coleta6 = Coleta.objects.create(
             ponto_coleta=ponto6,
             temperatura=27.0,
@@ -212,7 +219,7 @@ class Command(BaseCommand):
         )
 
         coleta7.responsavel.add(user1, user2)
-
+        """
         self.stdout.write(self.style.SUCCESS('Seed data created successfully.'))
 
 if __name__ == '__main__':

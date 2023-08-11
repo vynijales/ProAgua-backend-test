@@ -36,7 +36,6 @@ class FormSearchPontos(forms.Form):
     tipo = forms.MultipleChoiceField(
         choices=(
             ("BE", "Bebedouro"),
-            ("TO", "Torneira"),
             ("RS", "Reservatório superior"),
             ("RI", "Reservatório inferior")
         ),

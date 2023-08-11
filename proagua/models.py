@@ -48,7 +48,6 @@ class PontoColeta(models.Model):
         max_length=2,
         choices=(
             ("BE", "Bebedouro"),
-            ("TO", "Torneira"),
             ("RS", "Reservatório superior"),
             ("RI", "Reservatório inferior")
         ),
