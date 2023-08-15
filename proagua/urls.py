@@ -1,5 +1,6 @@
 from django.urls import path, include
 from . import views
+from . import api
 
 ponto_coleta_urls = [
     path('', views.pontos_coletas, name='visualizar_pontos'),
@@ -34,4 +35,5 @@ urlpatterns = [
     path('configuracoes/', views.configuracoes, name='configuracoes'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('users/', include(accounts_urls)),
+    path('api/', api.api.urls)
 ]
