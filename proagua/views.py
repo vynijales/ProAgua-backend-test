@@ -154,7 +154,10 @@ def criar_coleta(request):
     
     pontos = get_hierarquia(ponto, amostragem)
 
-    form = FormColeta()
+    form = FormColeta(initial={
+        'amostragem': amostragem
+    })
+    
     if pontos:
         choices = [(p['id'], p['nome']) for p in pontos]
         form.fields['ponto_coleta'] = ChoiceField(choices=choices)

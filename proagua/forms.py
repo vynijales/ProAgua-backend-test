@@ -22,7 +22,7 @@ class FormColeta(forms.ModelForm):
             "date",
             "responsavel",
             "ordem",
-            "amostragem",
+            # "amostragem",
             "fluxo",
         ]
 
