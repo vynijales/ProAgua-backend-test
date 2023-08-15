@@ -46,8 +46,8 @@ def pontos_coletas(request):
     q = Q()
 
     if form_search.is_valid():
-        if form_search.cleaned_data.get("bloco"):
-            q &= Q(edificacao__bloco = form_search.cleaned_data["bloco"])
+        if form_search.cleaned_data.get("campus"):
+            q &= Q(edificacao__campus = form_search.cleaned_data["campus"])
         if form_search.cleaned_data.get("tipo"):
             q &= Q(tipo__in = form_search.cleaned_data["tipo"])
         

@@ -12,9 +12,9 @@ class Edificacao(models.Model):
         verbose_name='nome da edificação',
         max_length=80,
     )
-    bloco = models.CharField(
+    campus = models.CharField(
         max_length=1,
-        verbose_name='bloco',
+        verbose_name='campus',
         choices=(
             ('L', 'leste'),
             ('O', 'oeste')

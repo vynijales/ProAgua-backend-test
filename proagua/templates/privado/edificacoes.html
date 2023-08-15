@@ -21,7 +21,7 @@
         <tr>
             <td>{{ edificacao.codigo }}</td>
             <td>{{ edificacao.nome }}</td>
-            <td>{{ edificacao.get_bloco_display | capfirst }}</td>
+            <td>{{ edificacao.get_campus_display | capfirst }}</td>
             <td><a href="{% url 'editar_edificacao' edificacao.id %}" style="text-decoration: none; color:#0362fc" title="editar">
                 <i id="edit" class="bi bi-pencil-square"></i>&nbsp&nbsp&nbsp&nbsp</a><i id="delete" class="bi bi-x-circle"></i>
             </td>   

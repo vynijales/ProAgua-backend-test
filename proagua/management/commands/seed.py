@@ -23,12 +23,12 @@ class Command(BaseCommand):
         edificacao1 = Edificacao.objects.create(
             codigo='EDIF1',
             nome='Lab. Computação (LCC)',
-            bloco='L'
+            campus='L'
         )
         edificacao2 = Edificacao.objects.create(
             codigo='EDIF2',
             nome='Centro de Engenharias (CE)',
-            bloco='L'
+            campus='L'
         )
 
         # Criação de objetos PontoColeta

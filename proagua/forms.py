@@ -29,10 +29,10 @@ class FormColeta(forms.ModelForm):
 class FormEdificacao(forms.ModelForm):
     class Meta:
         model = models.Edificacao
-        fields = ['codigo', 'nome', 'bloco']
+        fields = ['codigo', 'nome', 'campus']
 
 class FormSearchPontos(forms.Form):
-    bloco = forms.ChoiceField(choices=[('', '---'), ('L', "Leste"), ("O", "Oeste")], required=False)
+    campus = forms.ChoiceField(choices=[('', '---'), ('L', "Leste"), ("O", "Oeste")], required=False)
     tipo = forms.MultipleChoiceField(
         choices=(
             ("BE", "Bebedouro"),
