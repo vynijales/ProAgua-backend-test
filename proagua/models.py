@@ -7,6 +7,7 @@ class Edificacao(models.Model):
     codigo = models.CharField(
         verbose_name='código',
         max_length=20,
+        primary_key=True
     )
     nome = models.CharField(
         verbose_name='nome da edificação',
