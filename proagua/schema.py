@@ -1,6 +1,8 @@
-from ninja import Schema
 from datetime import date
 from typing import List
+
+from django.urls import reverse
+from ninja import Schema
 
 # SchemasIn
 
@@ -10,11 +12,11 @@ class EdificacaoIn(Schema):
     campus: str
 
 class PontoColetaIn(Schema):
-    edificacao: EdificacaoIn
+    edificacao_codigo: str = None
     ambiente: str
     tipo: str
     mes: int
-    pai: int
+    # pai: int = None
 
 class ColetaIn(Schema):
     id: int
@@ -40,10 +42,12 @@ class EdificacaoOut(Schema):
 
 class PontoColetaOut(Schema):
     id: int
-    edificacao: EdificacaoIn
+    edificacao: str
     ambiente: str
     tipo: str
     mes: int
-    pai: int
+    # pai: int
 
-
+    @staticmethod
+    def resolve_edificacao(obj):
+        return reverse("api-1.0.0:get_edificacao", kwargs={"cod_edificacao":obj.edificacao.codigo})
