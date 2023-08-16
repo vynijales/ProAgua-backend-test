@@ -35,7 +35,7 @@ def update_edificacoes(request, cod_edificacao: str, payload: EdificacaoIn):
 
 @api.delete("/edificacoes/{cod_edificacao}")
 def delete_edificacao(request, cod_edificacao: str):
-    edificacao = get_object_or_404(models.Edificacao, campus=cod_edificacao)
+    edificacao = get_object_or_404(models.Edificacao, codigo=cod_edificacao)
     edificacao.delete()
     return {"success": True}
 
