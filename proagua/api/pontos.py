@@ -1,14 +1,11 @@
 from typing import List
 
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
-from ninja import NinjaAPI, Router
-from ninja.security import django_auth
+from ninja import Router
 
 from .schema import *
 from proagua import models
 
-# api = NinjaAPI(auth=django_auth, csrf=True)
 router = Router()
 
 @router.get("/", response=List[PontoColetaOut])
@@ -41,7 +38,7 @@ def update_ponto(request, id_ponto: int, payload: PontoColetaIn):
     ponto.save()
     return {"success": True}
 
-@router.delete("/pontos/{id_ponto}")
+@router.delete("/{id_ponto}")
 def delete_ponto(request, id_ponto: int):
     ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
     ponto.delete()

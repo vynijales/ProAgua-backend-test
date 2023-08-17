@@ -1,14 +1,11 @@
 from typing import List
 
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
-from ninja import NinjaAPI, Router
-from ninja.security import django_auth
+from ninja import Router
 
 from .schema import *
 from proagua import models
 
-# api = NinjaAPI(auth=django_auth, csrf=True)
 router = Router()
 
 @router.get("", response=List[EdificacaoOut])
