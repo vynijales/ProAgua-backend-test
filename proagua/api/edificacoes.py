@@ -8,7 +8,7 @@ from proagua import models
 
 router = Router()
 
-@router.get("", response=List[EdificacaoOut])
+@router.get("/", response=List[EdificacaoOut])
 def list_edificacoes(request):
     qs = models.Edificacao.objects.all()
     return qs
