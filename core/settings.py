@@ -25,8 +25,9 @@ SECRET_KEY = 'django-insecure-@wdcz01ob76mp2-w#ikk6^6_2n517i8pv-cwz7fv$i(m(3o!-q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+# SECURITY WARNING: Uso somente durante fase de desenvolvimento.
+# informe somente os hosts de sua aplicação.
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -37,12 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'proagua'
+    'proagua',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -124,3 +127,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/ponto'
+
+# SECURITY WARNING: Não deve ser usado em produção.
+CORS_ALLOW_ALL_ORIGINS = True
