@@ -1,79 +1,84 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
 class Edificacao(models.Model):
     codigo = models.CharField(
-        verbose_name='código',
-        max_length=20,
-        primary_key=True
-    )
+        verbose_name="código",
+        max_length=8,
+        primary_key=True)
     nome = models.CharField(
-        verbose_name='nome da edificação',
-        max_length=80,
-    )
+        verbose_name="nome",
+        max_length=30)
     campus = models.CharField(
-        max_length=1,
-        verbose_name='campus',
-        choices=(
-            ('L', 'leste'),
-            ('O', 'oeste')
-        ),
-        default=('L', 'leste')
+        verbose_name="campus",
+        max_length=2,
+        choices=(("LE", "Leste"), ("OE", "Oeste")),
+        default=(("LE", "Leste")))
+    cronograma = models.PositiveIntegerField(
+        verbose_name="cronograma",
     )
 
-    def __str__(self):
-        return f'{self.codigo} - {self.nome}'
+    def __str__(self) -> str:
+        return f"Edificacao {self.codigo}"
 
-  
-class Amostragem(models.Model):
-    amostragem = models.AutoField(
-        verbose_name='amostragem',
-        primary_key=True,
-        unique=True
-    )
-
-
-class PontoColeta(models.Model):
+class Ponto(models.Model):
+    id = models.AutoField(primary_key=True)
     edificacao = models.ForeignKey(
         to=Edificacao,
-        verbose_name='edificação',
+        related_name="Ponto",
+        verbose_name="código da edificação", 
         on_delete=models.PROTECT,
-    )
+        blank=False)
     ambiente = models.CharField(
-        verbose_name='ambiente',
-        max_length=120,
-    )
-    tipo = models.CharField(
-        max_length=2,
+        verbose_name="ambiente",
+        max_length=20)
+    tipo = models.IntegerField(
+        verbose_name="tipo",
         choices=(
-            ("BE", "Bebedouro"),
-            ("RS", "Reservatório superior"),
-            ("RI", "Reservatório inferior")
+            (1, "Bebedouro"),
+            (2, "Reservatório predial superior"),
+            (3, "Reservatório predial inferior"),
+            (4, "Reservatório de distribuição superior"),
+            (5, "Reservatório de distribuição inferior"),
+            (6, "CAERN")
         ),
-        default=("BE", "Bebedouro")
+        default=(1, "Bebedouro")
     )
-    mes = models.IntegerField(verbose_name="Mês do cronograma")
-    pai = models.ForeignKey(
-        to='PontoColeta',
-        verbose_name='Ponto de coleta pai',
+    amontante = models.ForeignKey(
+        to="Ponto",
+        verbose_name="ponto amontante",
         on_delete=models.PROTECT,
         blank=True,
         null=True
     )
-    amostragens = models.ManyToManyField(to=Amostragem)
 
-    def __str__(self):
-        return f'{self.edificacao.nome} - {self.ambiente}'
+    def __str__(self) -> str:
+        return f"Ponto {self.id}"
 
+class SequenciaColetas(models.Model): 
+    id = models.AutoField(primary_key=True)
+    amostragem = models.PositiveIntegerField(
+        verbose_name="amostragem"
+    )
+
+    def __str__(self) -> str:
+        return f"Sequencia Coletas {self.id}"
 
 class Coleta(models.Model):
-    ponto_coleta = models.ForeignKey(
-        to=PontoColeta,
-        related_name='coletas',
-        verbose_name='ponto de coleta',
+    id = models.AutoField(primary_key=True)
+    sequencia = models.ForeignKey(
+        to=SequenciaColetas,
+        verbose_name="sequência de Coletas",
         on_delete=models.PROTECT,
+        blank=False,
+        null=False
+    )
+    ponto = models.ForeignKey(
+        to=Ponto,
+        verbose_name="Ponto de Coleta",
+        on_delete=models.PROTECT,
+        blank=False,
+        null=False
     )
     temperatura = models.FloatField(
         verbose_name="temperatura",
@@ -81,30 +86,17 @@ class Coleta(models.Model):
     cloro_residual_livre = models.FloatField(
         verbose_name="cloro residual livre",
     )
-
-    cloro_total = models.FloatField(
-        verbose_name="cloro total",
-    )
-
     turbidez = models.FloatField(
         verbose_name="turbidez",
     )
-
     coliformes_totais = models.BooleanField(
         verbose_name="coliformes totais",
     )
-
     escherichia = models.BooleanField(
         verbose_name="escherichia coli",
     )
-
-    cor = models.CharField(
-        verbose_name="cor",
-        max_length=20,
-    )
     date = models.DateTimeField(
         verbose_name="data da coleta",
-        # db_comment="Data e hora de quando foi realizada a coleta",
     )
     responsavel = models.ManyToManyField(
         to=User,
@@ -118,17 +110,7 @@ class Coleta(models.Model):
         ),
         default=("C", "Coleta"),
     )
-    amostragem = models.ForeignKey(
-        to=Amostragem,
-        verbose_name='amostragem',
-        related_name='coletas',
-        on_delete=models.DO_NOTHING
-    )
-    fluxo = models.IntegerField(
-        verbose_name='fluxo',
-        null=False,
-        blank=False
-    )
 
-    def __str__(self):
-        return f'ID {self.id}: {self.ordem} - {self.date}'
+    def __str__(self) -> str:
+        return f"Coleta {self.id}"
+  
