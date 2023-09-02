@@ -5,4 +5,4 @@ from . import models
 admin.site.register(models.Edificacao)
 admin.site.register(models.PontoColeta)
 admin.site.register(models.Coleta)
-admin.site.register(models.Amostragem)
+admin.site.register(models.SequenciaColetas)

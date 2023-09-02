@@ -14,7 +14,7 @@ from .models import (
     PontoColeta,
     Coleta,
     Edificacao,
-    Amostragem
+    SequenciaColetas
 )
 from .forms import (
     FormPontoColeta,
@@ -175,10 +175,10 @@ def criar_amostragem(request, ponto_id: int):
         PontoColeta,
         id=ponto_id
     )
-    amostragem, created = Amostragem.objects.get_or_create(
-        amostragem=ponto.amostragens.count() + 1
-    )
-    ponto.amostragens.add(amostragem)
+    # amostragem, created = Amostragem.objects.get_or_create(
+    #     amostragem=ponto.amostragens.count() + 1
+    # )
+    # ponto.amostragens.add(amostragem)
     return redirect(ponto_coleta, ponto_id=ponto_id)
 
 

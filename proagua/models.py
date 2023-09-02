@@ -21,11 +21,11 @@ class Edificacao(models.Model):
     def __str__(self) -> str:
         return f"Edificacao {self.codigo}"
 
-class Ponto(models.Model):
+class PontoColeta(models.Model):
     id = models.AutoField(primary_key=True)
     edificacao = models.ForeignKey(
         to=Edificacao,
-        related_name="Ponto",
+        related_name="PontoColeta",
         verbose_name="código da edificação", 
         on_delete=models.PROTECT,
         blank=False)
@@ -45,7 +45,7 @@ class Ponto(models.Model):
         default=(1, "Bebedouro")
     )
     amontante = models.ForeignKey(
-        to="Ponto",
+        to="PontoColeta",
         verbose_name="ponto amontante",
         on_delete=models.PROTECT,
         blank=True,
@@ -74,7 +74,7 @@ class Coleta(models.Model):
         null=False
     )
     ponto = models.ForeignKey(
-        to=Ponto,
+        to=PontoColeta,
         verbose_name="Ponto de Coleta",
         on_delete=models.PROTECT,
         blank=False,
@@ -100,7 +100,7 @@ class Coleta(models.Model):
     )
     responsavel = models.ManyToManyField(
         to=User,
-        verbose_name="responsáveis",
+        verbose_name="responsaveis",
     )
     ordem = models.CharField(
         max_length=1,

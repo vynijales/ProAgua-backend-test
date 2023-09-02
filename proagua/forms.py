@@ -5,31 +5,28 @@ import datetime
 class FormPontoColeta(forms.ModelForm):
     class Meta:
         model = models.PontoColeta
-        fields = ["edificacao", "ambiente", "tipo", "mes", "pai"]
+        fields = ["edificacao", "ambiente", "tipo", "amontante"]
 
 class FormColeta(forms.ModelForm):
     class Meta:
         model = models.Coleta
         fields = [
-            "ponto_coleta",
+            # "ponto_coleta",
             "temperatura",
             "cloro_residual_livre",
-            "cloro_total",
             "turbidez",
             "coliformes_totais",
             "escherichia",
-            "cor",
+            # "cor",
             "date",
             "responsavel",
             "ordem",
-            # "amostragem",
-            "fluxo",
         ]
 
 class FormEdificacao(forms.ModelForm):
     class Meta:
         model = models.Edificacao
-        fields = ['codigo', 'nome', 'campus']
+        fields = ['codigo', 'nome', 'campus', 'cronograma']
 
 class FormSearchPontos(forms.Form):
     campus = forms.ChoiceField(choices=[('', '---'), ('L', "Leste"), ("O", "Oeste")], required=False)
