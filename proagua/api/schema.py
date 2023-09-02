@@ -29,7 +29,7 @@ class ColetaIn(Schema):
     coliformes_totais: bool
     escherichia: bool
     cor: float
-    date: date
+    data: date
     responsavel: List[int]
     ordem: str
 
@@ -66,7 +66,7 @@ class ColetaOut(Schema):
     coliformes_totais: bool
     escherichia: bool
     cor: float
-    date: date
+    data: date
     responsavel: List[int]
     ordem: str
 

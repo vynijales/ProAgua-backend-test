@@ -95,7 +95,10 @@ class Coleta(models.Model):
     escherichia = models.BooleanField(
         verbose_name="escherichia coli",
     )
-    date = models.DateTimeField(
+    cor = models.FloatField(
+        verbose_name="cor"
+    )
+    data = models.DateTimeField(
         verbose_name="data da coleta",
     )
     responsavel = models.ManyToManyField(
