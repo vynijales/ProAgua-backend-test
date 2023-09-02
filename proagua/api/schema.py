@@ -9,18 +9,20 @@ from ninja import Schema
 class EdificacaoIn(Schema):
     codigo: str
     nome: str
-    campus: str
+    campus: str 
+    cronograma: int
 
 class PontoColetaIn(Schema):
-    edificacao_codigo: str = None
+    id: int 
+    edificacao_codigo: str
     ambiente: str
-    tipo: str
-    mes: int
-    # pai: int = None
+    tipo: int
+    amontante_id: int = None
 
 class ColetaIn(Schema):
     id: int
-    ponto_coleta: PontoColetaIn
+    sequencia_id: int
+    ponto_id: int
     temperatura: float
     cloro_residual_livre: float
     turbidez: float
@@ -30,24 +32,48 @@ class ColetaIn(Schema):
     date: date
     responsavel: List[int]
     ordem: str
+
+class SequenciaColetasIn(Schema):
+    id: int
     amostragem: int
-    fluxo: int
-    
+
 # SchemasOut
 
 class EdificacaoOut(Schema):
     codigo: str
     nome: str
-    campus: str
+    campus: str 
+    cronograma: int
 
 class PontoColetaOut(Schema):
-    id: int
-    edificacao: str
+    id: int 
+    edificacao_codigo: str = None
     ambiente: str
-    tipo: str
-    mes: int
-    # pai: int
+    tipo: int
+    amontante_id: int = None
 
     @staticmethod
     def resolve_edificacao(obj):
         return reverse("api-1.0.0:get_edificacao", kwargs={"cod_edificacao":obj.edificacao.codigo})
+
+class ColetaOut(Schema):
+    id: int
+    sequencia_id: int
+    ponto_id: int
+    temperatura: float
+    cloro_residual_livre: float
+    turbidez: float
+    coliformes_totais: bool
+    escherichia: bool
+    cor: float
+    date: date
+    responsavel: List[int]
+    ordem: str
+
+    @staticmethod
+    def resolve_ponto(obj):
+        return reverse("api-1.0.0:get_ponto", kwargs={"id":obj.ponto_coleta.id})
+
+class SequenciaColetasOut(Schema):
+    id: int
+    amostragem: int

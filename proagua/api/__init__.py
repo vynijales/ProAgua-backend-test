@@ -3,7 +3,7 @@ from ninja.security import django_auth
 
 from .schema import *
 
-from . import edificacoes, pontos
+from . import edificacoes, pontos, coletas
 
 api = NinjaAPI(auth=django_auth, csrf=True)
 
