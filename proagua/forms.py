@@ -17,8 +17,8 @@ class FormColeta(forms.ModelForm):
             "turbidez",
             "coliformes_totais",
             "escherichia",
-            # "cor",
-            "date",
+            "cor",
+            "data",
             "responsavel",
             "ordem",
         ]
