@@ -10,12 +10,12 @@ router = Router()
 
 @router.get("/", response=List[ColetaOut])
 def list_coleta(request):
-    qs = models.PontoColeta.objects.all()
+    qs = models.Coleta.objects.all()
     return qs
 
 @router.get("/{id_coleta}", response=ColetaOut)
 def get_coleta(request, id_coleta: int):
-    qs = get_object_or_404(models.PontoColeta, id=id_coleta)
+    qs = get_object_or_404(models.Coleta, id=id_coleta)
     return qs
 
 @router.post("/")
