@@ -3,7 +3,7 @@ import django
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.management.base import BaseCommand
-from proagua.models import Edificacao, PontoColeta, Coleta, Amostragem
+from proagua_api.models import Edificacao, PontoColeta, Coleta, Amostragem
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")

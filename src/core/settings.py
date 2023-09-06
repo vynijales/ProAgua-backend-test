@@ -38,8 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'proagua',
-    'corsheaders'
+    'corsheaders',
+    'apps.frontend',
+    'apps.proagua_api',
 ]
 
 MIDDLEWARE = [

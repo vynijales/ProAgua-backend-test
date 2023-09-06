@@ -18,5 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('proagua.urls'))
+    path('', include('apps.frontend.urls')),
+    path('', include('apps.proagua_api.urls'))
 ]
