@@ -1,11 +1,7 @@
 import os
 import shutil
-import django
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
-django.setup()
 
 class Command(BaseCommand):
     help = 'Reset migrations and delete the SQLite database file.'
