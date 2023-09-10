@@ -17,3 +17,9 @@ Para rodar o servidor use o seguinte comando:
 ```sh
 python3 src/manage.py runserver
 ```
+
+# Resetar o Banco de Dados
+Se precisar limpar o banco de dados, execute o seguinte comando:
+```sh
+python3 src/manage.py reset
+```
