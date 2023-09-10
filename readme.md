@@ -18,8 +18,20 @@ Para rodar o servidor use o seguinte comando:
 python3 src/manage.py runserver
 ```
 
-# Resetar o Banco de Dados
+# Limpar o Banco de Dados
 Se precisar limpar o banco de dados, execute o seguinte comando:
 ```sh
-python3 src/manage.py reset
+python3 src/manage.py clear
+```
+
+# Criar superuser padrão
+Se precisar criar um superuser padrão, execute o seguinte comando:
+```sh
+python3 src/manage.py createadmin
+```
+
+# Configurar o Banco de Dados
+Para garantir a integridade do Banco de Dados, execute o seguinte comando:
+```sh
+python3 src/manage.py config
 ```
