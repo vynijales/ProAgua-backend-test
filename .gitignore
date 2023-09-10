@@ -17,4 +17,4 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-proagua/migrations
+src/apps/proagua_api/migrations
