@@ -1,6 +1,7 @@
 from typing import List
 
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 from ninja import Router
 
 from .schemas.coleta import *
@@ -20,19 +21,53 @@ def get_coleta(request, id_coleta: int):
 
 @router.post("/")
 def create_coleta(request, payload: ColetaIn):
-    coleta = models.Coleta.objects.create(**payload.dict())
+    data_dict = payload.dict()
+    responsavel_ids = data_dict.get("responsavel", [])
+    
+    # Removendo a lista de responsáveis do dicionário para criar a instância da Coleta
+    del data_dict["responsavel"]
+    
+    obj_seq = get_object_or_404(models.SequenciaColetas, id=data_dict.get("sequencia_id"))
+    
+    # Criando a instância da Coleta sem os responsáveis
+    obj_coleta = models.Coleta.objects.create(**data_dict, sequencia=obj_seq)
+    
+    # Use o método set para adicionar os responsáveis após a criação
+    for responsavel_id in responsavel_ids:
+        user = User.objects.filter(id=responsavel_id).first()
+        if user:
+            obj_coleta.responsavel.add(user)
+
     return {"success": True}
+
 
 @router.put("/{id_coleta}")
 def update_coleta(request, id_coleta: int, payload: ColetaIn):
-    coleta = get_object_or_404(models.Coleta, id=id_coleta)
-    for attr, value in payload.dict().items():
-        setattr(coleta, attr, value)
-    coleta.save()
+    obj_coleta = get_object_or_404(models.Coleta, id=id_coleta)
+    data_dict = payload.dict()
+    responsavel_ids = data_dict.get("responsavel", [])
+
+    # Removendo a lista de responsáveis do dicionário
+    del data_dict["responsavel"]
+
+    # Iterando sobre os campos no payload e atualizar os valores correspondentes na instância
+    for attr, value in data_dict.items():
+        setattr(obj_coleta, attr, value)
+     
+
+    # Atualizando os responsáveis
+    obj_coleta.responsavel.clear()
+    for responsavel_id in responsavel_ids:
+        user = User.objects.filter(id=responsavel_id).first()
+        if user:
+            obj_coleta.responsavel.add(user)
+
+    obj_coleta.save()
+
     return {"success": True}
 
 @router.delete("/{id_coleta}")
 def delete_coleta(request, id_coleta: int):
-    coleta = get_object_or_404(models.Edificacao, id=id_coleta)
-    coleta.delete()
+    obj_coleta = get_object_or_404(models.Coleta, id=id_coleta)
+    obj_coleta.delete()
     return {"success": True}
