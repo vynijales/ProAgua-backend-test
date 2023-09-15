@@ -4,7 +4,9 @@ class Edificacao(models.Model):
     codigo = models.CharField(
         verbose_name="código",
         max_length=8,
-        primary_key=True)
+        unique=True,
+        null=False,
+        blank=False)
     nome = models.CharField(
         verbose_name="nome",
         max_length=30)
