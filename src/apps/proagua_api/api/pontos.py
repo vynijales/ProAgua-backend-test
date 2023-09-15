@@ -28,7 +28,7 @@ def create_ponto(request, payload: PontoColetaIn):
 
     qs = models.PontoColeta.objects.create(**data_dict)
 
-    return qs
+    return {"success": True}
 
 @router.put("/{id_ponto}")
 def update_ponto(request, id_ponto: int, payload: PontoColetaIn):

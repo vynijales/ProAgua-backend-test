@@ -1,10 +1,10 @@
 from ninja import Schema
 from django.urls import reverse
 
+from ... import models
 
 class PontoColetaIn(Schema):
-    id: int 
-    edificacao_codigo: str
+    codigo_edificacao: str
     ambiente: str
     tipo: int
     amontante_id: int = None
@@ -12,11 +12,16 @@ class PontoColetaIn(Schema):
 
 class PontoColetaOut(Schema):
     id: int 
-    edificacao_codigo: str = None
     ambiente: str
     tipo: int
-    amontante_id: int = None
+    amontante_id: int
+    links: dict = {}
 
     @staticmethod
-    def resolve_edificacao(obj):
-        return reverse("api-1.0.0:get_edificacao", kwargs={"cod_edificacao":obj.edificacao.codigo})
+    def resolve_links(obj: models.PontoColeta):
+        return {
+            "edificacao": { 
+                "codigo_edificacao": obj.edificacao.codigo,
+                "url_edificacao": reverse("api-1.0.0:get_edificacao", kwargs={"cod_edificacao":obj.edificacao.codigo})
+            }
+        }
