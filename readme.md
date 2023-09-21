@@ -35,3 +35,9 @@ Para garantir a integridade do Banco de Dados, execute o seguinte comando:
 ```sh
 python3 src/manage.py config
 ```
+
+# Testando a API
+Para testar a API, mova o arquivo "SI para PowerBi.xlsm" para a pasta "src/datasync". Certifique-se de estar logado como superuser e com o servidor em execução. Em seguida, execute o seguinte comando:
+```sh
+python3 src/datasync/sync_edficacoes.py
+```
