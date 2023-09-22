@@ -6,11 +6,9 @@ from csrf_utils import obter_token_csrf
 from api_utils import enviar_dados_para_api, receber_dados_da_api
 
 def main():
-    address = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(address, 'SI para PowerBI.xlsm')
     api_url = 'http://localhost:8000/api/v1/edificacoes/'
 
-    df = obter_dados_excel(file_path)
+    df = obter_dados_excel()
     codigos_existentes = set()
     url_csrf = 'http://localhost:8000/api/v1/csrf'
 
