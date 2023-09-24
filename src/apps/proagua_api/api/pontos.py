@@ -18,12 +18,12 @@ def get_ponto(request, id_ponto: int):
     qs = get_object_or_404(models.PontoColeta, id=id_ponto)
     return qs
 
-@router.post("/", response=PontoColetaOut)
+@router.post("/")
 def create_ponto(request, payload: PontoColetaIn):
-    edificacao = get_object_or_404(models.Edificacao, codigo=payload.edificacao_codigo)
+    edificacao = get_object_or_404(models.Edificacao, codigo=payload.codigo_edificacao)
 
     data_dict = payload.dict()
-    data_dict.pop("edificacao_codigo")
+    data_dict.pop("codigo_edificacao")
     data_dict["edificacao"] = edificacao
 
     qs = models.PontoColeta.objects.create(**data_dict)
