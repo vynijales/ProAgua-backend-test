@@ -22,25 +22,49 @@
 
 <div class="content">
     <div id="board">
-        {% for ponto in pontos_coletas %}
-            <div class="card">
-                <div class="dropdown card-options">
-                    <button id="dropdown-bt">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                    <div id="dropdown-content">
-                        <a href="{% url 'editar_ponto' ponto.id %}">Editar</a>
-                        <a href="#excluir">Excluir</a>
+        <script>
+            const board = document.getElementById("board");
+            
+            async function createCardPonto(ponto) {
+                let card = document.createElement('div');
+                let edificacao= await fetch(ponto.links.edificacao.url_edificacao).then(resp => resp.json());
+
+                card.innerHTML = `
+                    <div class="card">
+                        <div class="dropdown card-options">
+                            <button id="dropdown-bt">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <div id="dropdown-content">
+                                <a href="#editar">Editar</a>
+                                <a href="#excluir">Excluir</a>
+                            </div>
+                        </div>
+                        
+                        <p class="codigo">${ edificacao.codigo }</p>
+                        <h2 class="nome-edif">${ edificacao.nome }</h2>
+                        <p class="ambiente">${ ponto.ambiente}</p>
+                        <p>${ ponto.tipo }</p>
+                        <a href="#" class="button"><i class="bi bi-eye"></i> Detalhes</a>
                     </div>
-                </div>
-                
-                <p class="codigo">{{ ponto.edificacao.codigo }}</p>
-                <h2 class="nome-edif">{{ ponto.edificacao.nome }}</h2>
-                <p class="ambiente">{{ ponto.ambiente}}</p>
-                <p>{{ ponto.get_tipo_display }}</p>
-                <a href="{% url 'visualizar_ponto' ponto.id %}" class="button"><i class="bi bi-eye"></i> Detalhes</a>
-            </div>
-        {% endfor %}
+                `;
+                return card;
+            }
+
+            async function main() {
+                let resp = await fetch('/api/v1/pontos');
+                let pontos = await resp.json();
+            
+                console.log(pontos);
+                pontos.forEach(async (ponto) => {
+                    let card = await createCardPonto(ponto);
+                    board.insertAdjacentElement('afterbegin', card);
+                });
+            }
+
+            main();
+        </script>
+
         <div 
             class="card add-card" 
             onclick="window.location.href = '{% url 'criar_ponto' %}'"
