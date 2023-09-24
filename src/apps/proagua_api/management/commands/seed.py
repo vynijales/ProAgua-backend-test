@@ -54,7 +54,7 @@ class Command(BaseCommand):
 
             self.create_edificacao(cronograma, codigo, nome, campus)
 
-    def create_ponto(self, edificacao, ambiente, tipo, amontante = None):
+    def create_ponto(self, edificacao, ambiente, tipo, tombo, amontante = None):
         # Checa se o ponto existe, tendo como parâmetros edificacao, ambiente, tipo e amontante como chaves compostas
         ponto_exists = models.PontoColeta.objects.filter(
             edificacao=edificacao,
@@ -68,6 +68,7 @@ class Command(BaseCommand):
                                                  f"Edificacao: {edificacao}, "
                                                  f"Ambiente: {ambiente}, "
                                                  f"Tipo: {tipo}, "
+                                                 "Tombo: {tombo}"
                                                  f"Amontante: {amontante}")
         else:
             # Cria um novo objeto PontoColeta
@@ -75,6 +76,7 @@ class Command(BaseCommand):
                 edificacao=edificacao,
                 ambiente=ambiente,
                 tipo=tipo,
+                tombo = tombo,
                 amontante=amontante
             )
 
@@ -95,16 +97,16 @@ class Command(BaseCommand):
             edificacao = models.Edificacao.objects.get(codigo=linha.iloc[0])
 
             if 'bebedouro' in str(linha.iloc[3]):
-                tipo = 0
-            elif 'torneira' in str(linha.iloc[3]):
                 tipo = 1
+            elif 'torneira' in str(linha.iloc[3]):
+                tipo = 2
             else:
                 continue
 
             ambiente = linha.iloc[4]
-            # tombo = linha.iloc[5]
+            tombo = linha.iloc[5]
 
-            self.create_ponto(edificacao, ambiente, tipo)
+            self.create_ponto(edificacao, ambiente, tipo, tombo)
 
     def handle(self, *args, **options):
         self.create_edificacoes()

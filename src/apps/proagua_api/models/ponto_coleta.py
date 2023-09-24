@@ -23,6 +23,7 @@ class PontoColeta(models.Model):
         ),
         default=(1, "Bebedouro")
     )
+    tombo = models.CharField(max_length=20, verbose_name="tombo", blank=True, null=True)
     amontante = models.ForeignKey(
         to="PontoColeta",
         verbose_name="ponto amontante",
@@ -32,4 +33,4 @@ class PontoColeta(models.Model):
     )
 
     def __str__(self) -> str:
-        return f"Ponto {self.id}"
+        return f"Ponto {self.id} - {self.get_tipo_display()}"
