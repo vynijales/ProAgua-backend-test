@@ -108,9 +108,40 @@ class Command(BaseCommand):
 
             self.create_ponto(edificacao, ambiente, tipo, tombo)
 
+    DEFAULT_PASSWORD = '12345678'
+
+    def create_user(self, username):
+        try:
+            if not User.objects.filter(username=username).exists():
+                novo_usuario = User(username=username, password=self.DEFAULT_PASSWORD)
+                novo_usuario.save()  # Salvar o usuário no banco de dados
+                self.stdout.write(self.style.SUCCESS(f"Novo usuário criado: {username}"))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f"Erro ao criar usuário {username}: {e}"))
+
+    def create_responsaveis(self):
+        df = obter_dados_excel()
+
+        for indice, linha in df.iterrows():
+            if indice <= 5:
+                continue
+
+            if pd.notna(linha.iloc[12]):  # Verifica se a coluna na posição 12 não é NaN
+                responsaveis = str(linha.iloc[11])  # Evita erros se a coluna não existir
+
+                if responsaveis and responsaveis.lower() != 'nan':
+                    # Substitui vírgulas, "e" e pontos por espaços
+                    responsaveis = responsaveis.replace(',', ' ').replace(' e ', ' ').replace('.', '')
+
+                    # Divide a string em uma lista de nomes não vazios
+                    nomes = [nome for nome in responsaveis.split() if nome.strip()]
+                    for nome in nomes:
+                        self.create_user(nome)
+
     def handle(self, *args, **options):
         self.create_edificacoes()
         self.create_pontos()
+        self.create_responsaveis()
         self.stdout.write(self.style.SUCCESS('Seed data created successfully.'))
 
 if __name__ == '__main__':
