@@ -14,7 +14,7 @@ class PontoColetaOut(Schema):
     id: int 
     ambiente: str
     tipo: int
-    amontante_id: int
+    amontante_id: int = None
     links: dict = {}
 
     @staticmethod
