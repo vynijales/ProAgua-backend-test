@@ -86,7 +86,7 @@ class Command(BaseCommand):
     def create_pontos(self):
         # Criação de pontos de coleta
 
-        df = obter_dados_excel("Lista de pontos")
+        df = obter_dados_excel(sheet_name="Lista de pontos")
 
         for indice, linha in df.iterrows():
             if indice <= 5:
