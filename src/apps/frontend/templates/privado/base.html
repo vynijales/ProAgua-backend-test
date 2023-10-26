@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}ProÁgua{% endblock %}</title>
+        <link rel="stylesheet" href="{% static 'stylesheets/base.css' %}">
+        <link rel="stylesheet" href="{% static 'stylesheets/privado/stylesheet.css' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <div id="header-bar">
+            <button id="menu-button" class="collapsed" onclick="collapse_navbar()">
+                <i class="bi bi-list header-icon"></i>
+            </button>
+            <div class="proagua-logo">
+                <img src="{% static '/images/Logo.svg' %}" alt="Logo do projeto">
+                <span href="/">ProÁgua</span>
+            </div>
+        </div>
+        <div id="navbar-wrapper">
+            <div id="navbar-header">
+                <i 
+                    class="bi bi-chevron-left header-icon"
+                    onclick="collapse_navbar()"
+                ></i>
+            </div>
+            <div id="navbar-content">
+                <ul>
+                    <li>
+                        <a href="{% url 'visualizar_pontos' %}">
+                            <i class="bi bi-clipboard-data-fill"></i>
+                            <span>Pontos de coleta</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#solicitacoes">
+                            <i class="bi bi-envelope-fill"></i>
+                            <span>Solicitações</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'visualizar_edificacoes' %}">
+                            <i class="bi bi-buildings-fill"></i>
+                            <span>Edificações</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'configuracoes' %}">
+                            <i class="bi bi-gear-fill"></i>
+                            <span>Configurações</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <script>
+            function collapse_navbar() {
+                const navbar = document.getElementById('navbar-wrapper');
+                const menu_bt = document.getElementById('menu-button');
+                navbar.classList.toggle('collapsed');
+                menu_bt.classList.toggle('collapsed');
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+#content{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1{
+    font-family: Roboto, sans-serif;
+    font-weight: 100;
+    color: #525252;
+    font-size: 2rem;
+}
+
+.card{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 25rem;
+    padding: 1.5em;
+    width: 50%;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
+}
+
+.simple-form{
+    font-family: Roboto, sans-serif;
+    
+}
+
+label{
+    font-size: 1.15em;
+}
+
+input[type=text], input[type=select]{
+    font-weight: 80;
+}

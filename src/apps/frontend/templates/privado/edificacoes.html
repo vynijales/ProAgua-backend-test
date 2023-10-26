@@ -1,0 +1,36 @@
+{% extends 'privado/base.html' %}
+{% load static %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'stylesheets/privado/edificacoes.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Edificações</h1>
+
+<form method="get">
+    <input id="search-bar" type="text" name="q" placeholder="Pesquisar" />
+    <button><i class="bi bi-search"></i></button>
+    <!--<input id="botao-pesquisar" type="submit" value="Pesquisar">-->
+</form>
+
+<div class="card">
+    <h2>Lista de edificações</h2>
+    <table id="tabela">
+        {% for edificacao in edificacoes %}
+        <tr>
+            <td>{{ edificacao.codigo }}</td>
+            <td>{{ edificacao.nome }}</td>
+            <td>{{ edificacao.get_campus_display | capfirst }}</td>
+            <td><a href="{% url 'editar_edificacao' edificacao.id %}" style="text-decoration: none; color:#0362fc" title="editar">
+                <i id="edit" class="bi bi-pencil-square"></i>&nbsp&nbsp&nbsp&nbsp</a><i id="delete" class="bi bi-x-circle"></i>
+            </td>   
+        </tr>
+        {% endfor %}
+    </table>
+    <button id="b-add" onclick="window.location.href = `{% url 'criar_edificacao' %}`">Adicionar edificação</button>
+</div>
+
+
+
+{% endblock %}
