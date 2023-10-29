@@ -78,83 +78,72 @@
                 <div class="flex card" style="justify-content: center;">
                     <i class="bi bi-plus" style="font-size: 2rem;"></i>
                 </div>
-                <div class="flex card">
-                    <button class="modal-button">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                    <h3>00001</h3>
-                    <h2>Casa 04 da Vila Masculina</h2>
-                    <p>Torneira Nº 02</p>
-                    <p>Banheiro masculino do térreo</p>
-                    <button class="filled-button">
-                        <i class="bi bi-eye-fill"></i>
-                        Detalhes
-                    </button>
-                </div>
-                <div class="flex card">
-                    <button class="modal-button">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                    <h3>00001</h3>
-                    <h2>Casa 04 da Vila Masculina</h2>
-                    <p>Torneira Nº 02</p>
-                    <p>Banheiro masculino do térreo</p>
-                    <button class="filled-button">
-                        <i class="bi bi-eye-fill"></i>
-                        Detalhes
-                    </button>
-                </div>
-                <div class="flex card">
-                    <button class="modal-button">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                    <h3>00001</h3>
-                    <h2>Casa 04 da Vila Masculina</h2>
-                    <p>Torneira Nº 02</p>
-                    <p>Banheiro masculino do térreo</p>
-                    <button class="filled-button">
-                        <i class="bi bi-eye-fill"></i>
-                        Detalhes
-                    </button>
-                </div>
-                <div class="flex card">
-                    <button class="modal-button">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                    <h3>00001</h3>
-                    <h2>Casa 04 da Vila Masculina</h2>
-                    <p>Torneira Nº 02</p>
-                    <p>Banheiro masculino do térreo</p>
-                    <button class="filled-button">
-                        <i class="bi bi-eye-fill"></i>
-                        Detalhes
-                    </button>
-                </div>
-                <div class="flex card">
-                    <button class="modal-button">
-                        <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                    <h3>00001</h3>
-                    <h2>Casa 04 da Vila Masculina</h2>
-                    <p>Torneira Nº 02</p>
-                    <p>Banheiro masculino do térreo</p>
-                    <button class="filled-button">
-                        <i class="bi bi-eye-fill"></i>
-                        Detalhes
-                    </button>
-                </div>
             </div>
         </div>
     </div>
 </body>
 <script>
     function openNav() {
-        document.getElementById("sidebar").style.width = "15em";
+      document.getElementById('sidebar').style.width = '15em'
     }
-
+    
     function closeNav() {
-        document.getElementById("sidebar").style.width = "0";
+      document.getElementById('sidebar').style.width = '0'
     }
-</script>
+    
+    // URL base da API
+    const BASE_URL = "http://localhost:8000"
+    // URL do ponto de coleta
+    const pontos = BASE_URL + "/api/v1/pontos"
+    
+    // Fetch para obter o JSON da URL do ponto de coleta
+    fetch(pontos)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Erro ao acessar a API')
+          }
+          return response.json()
+        })
+        .then((data) => {
+          console.log(data)
+          const resultContainer = document.querySelector('.result-list')
+      
+          data.forEach((item) => {
+            const card = document.createElement('div')
+            card.className = 'flex card'
+      
+            const urlEdificacao = BASE_URL + item.links.edificacao.url_edificacao
+      
+            // fetch para obter o JSON da URL da edificação
+            fetch(urlEdificacao)
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error('Erro ao acessar a URL da edificação')
+                }
+                return response.json()
+              })
+              .then((edificacao) => {
 
+                card.innerHTML = `
+                    <button class="modal-button"><i class="bi bi-three-dots-vertical"></i></button>
+                    <h3>${item.id}</h3>
+                    <h2>${edificacao.nome}</h2>
+                    <p>${item.tipo == 1 ? 'Bebedouro' : 'RPS'}</p>
+                    <p>${item.ambiente}</p>
+                    <button class="filled-button">
+                      <i class="bi bi-eye-fill"></i>
+                      Detalhes
+                    </button>
+                  `
+                resultContainer.appendChild(card)
+              })
+              .catch((error) => {
+                console.error('Erro:', error)
+              })
+          })
+        })
+        .catch((error) => {
+          console.error('Erro:', error)
+        })
+  </script>
 </html>
