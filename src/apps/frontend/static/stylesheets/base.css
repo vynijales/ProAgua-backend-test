@@ -42,11 +42,10 @@ select {
     background-color: white;
     padding: 1rem 0.6rem;
     border-radius: 6px;
-
     font-family: 'Inter';
-    font-weight: 700;
+    font-weight: 400;
     
-    font-size: 1.25rem;
+    font-size: 1rem;
     line-height: 1.5rem;
     height: 1.5rem;
     box-sizing: content-box;
