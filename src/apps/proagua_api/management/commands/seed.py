@@ -236,11 +236,13 @@ class Command(BaseCommand):
 
                 coleta.responsavel.set(lista_responsaveis)
 
+
+
     def handle(self, *args, **options):
-        # self.create_edificacoes()
-        # self.create_pontos()
-        # self.create_responsaveis()
-        # self.create_sequencias()
+        self.create_edificacoes()
+        self.create_pontos()
+        self.create_responsaveis()
+        self.create_sequencias()
         self.create_coletas()
         self.stdout.write(self.style.SUCCESS('Seed data created successfully.'))
 
