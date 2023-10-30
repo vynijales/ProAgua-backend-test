@@ -33,6 +33,12 @@ def home(request):
         template_name="landing_page.html"
     )
 
+def visu_publica(request):
+    return render(
+        request=request,
+        template_name="visu_publica.html"
+    )
+
 
 @login_required
 def pontos_coletas(request):

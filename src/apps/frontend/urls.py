@@ -29,6 +29,7 @@ accounts_urls = [
 
 urlpatterns = [
     path('', views.home),
+    path('visu_publica', views.visu_publica),
     path('ponto/', include(ponto_coleta_urls)),
     path('coleta/', include(coleta_urls)),
     path('edificacao/', include(edificacao_urls)),
