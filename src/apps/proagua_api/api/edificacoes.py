@@ -2,13 +2,16 @@ from typing import List
 
 from django.shortcuts import get_object_or_404
 from ninja import Router
+from ninja.pagination import paginate
 
 from .schemas.edficacao import *
+from .schemas.ponto_coleta import (PontoColetaIn, PontoColetaOut)
 from .. import models
 
 router = Router()
 
 @router.get("/", response=List[EdificacaoOut])
+@paginate
 def list_edificacoes(request):
     qs = models.Edificacao.objects.all()
     return qs
@@ -36,3 +39,8 @@ def delete_edificacao(request, cod_edificacao: str):
     edificacao = get_object_or_404(models.Edificacao, codigo=cod_edificacao)
     edificacao.delete()
     return {"success": True}
+
+@router.get("/{cod_edificacao}/pontos", response=List[PontoColetaOut])
+def list_pontos(request, cod_edificacao: str):
+    qs = models.PontoColeta.objects.filter(edificacao__codigo=cod_edificacao)
+    return qs
