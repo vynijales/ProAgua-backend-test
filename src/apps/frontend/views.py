@@ -39,6 +39,11 @@ def visu_publica(request):
         template_name="visu_publica.html"
     )
 
+def lista_pontos(request):
+    return render(
+        request=request,
+        template_name="lista_pontos.html"
+    )
 
 @login_required
 def pontos_coletas(request):
