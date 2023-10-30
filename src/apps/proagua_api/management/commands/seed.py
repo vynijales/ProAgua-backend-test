@@ -138,10 +138,110 @@ class Command(BaseCommand):
                     for nome in nomes:
                         self.create_user(nome)
 
+    def create_sequencia(self, amostragem):
+        ponto = models.SequenciaColetas.objects.create(amostragem=amostragem)
+
+        if ponto:
+            self.stdout.write(self.style.SUCCESS(f"{ponto} criado com sucesso."))
+        else:
+            self.stdout.write(self.style.ERROR("Erro ao criar o {ponto}.")) 
+
+    def create_sequencias(self):
+        df = obter_dados_excel()
+
+        for indice, linha in df.iterrows():
+            if indice <= 5:
+                continue  # Pula as primeiras 6 linhas (índices 0 a 5)
+
+            amostragem_ordinal = linha.iloc[0]
+
+            if amostragem_ordinal.lower() in "primeira":
+                amostragem = 1
+            elif amostragem_ordinal.lower() in "segunda":
+                amostragem = 2
+
+            self.create_sequencia(amostragem=amostragem)
+
+    def create_coleta(self, sequencia, ponto, responsaveis,
+                       temperatura, coliformes_totais, escherichia, cor, data, ordem = "Coleta",
+                        cloro_residual_livre = False, turbidez = False):
+        try:
+            coleta = models.Coleta.objects.create(
+                sequencia=sequencia,
+                ponto=ponto,
+                responsavel=responsaveis,
+                temperatura=temperatura,
+                cloro_residual_livre=cloro_residual_livre,
+                turbidez=turbidez,
+                coliformes_totais=coliformes_totais,
+                escherichia=escherichia,
+                cor=cor,
+                data=data,
+                ordem=ordem
+            )
+            self.stdout.write(self.style.SUCCESS(f"Coleta criada com sucesso: {coleta}"))
+    
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f"Erro ao criar coleta: {e}"))
+
+    def create_coletas(self):
+        df = obter_dados_excel()
+
+        for indice, linha in df.iterrows():
+            if indice <= 5:
+                continue
+
+            id = indice - 5
+
+            sequencia = models.SequenciaColetas.objects.get(id=id)
+            try:
+                ponto = models.PontoColeta.objects.get(id=1)
+            except models.PontoColeta.DoesNotExist:
+                self.stdout.write(self.style.ERROR(f"PontoColeta with ID {id} does not exist."))
+
+            lista_responsaveis = []
+            temperatura = linha.iloc[12]
+            cloro_residual_livre = linha.iloc[13]
+            turbidez = linha.iloc[14]
+            
+            if linha.iloc[15] == "Presença":
+                coliformes_totais = True
+            else:
+                coliformes_totais = False
+            
+            if linha.iloc[16] == "Presença":
+                escherichia = True
+            else:
+                escherichia = False
+            cor= linha.iloc[17]
+            data= linha.iloc[9]
+            hora= linha.iloc[10]
+
+            ordem= "Coleta"
+
+            if pd.notna(linha.iloc[12]) and pd.notna(linha.iloc[13]) and pd.notna(linha.iloc[14]) and pd.notna(linha.iloc[15]) and pd.notna(linha.iloc[16]) and pd.notna(linha.iloc[17]):
+                self.create_coleta(sequencia, ponto, lista_responsaveis, temperatura, coliformes_totais, escherichia, cor, data, ordem, cloro_residual_livre, turbidez)
+                coleta = models.Coleta.objects.create(
+                sequencia=sequencia,
+                ponto=ponto,
+                temperatura=temperatura,
+                cloro_residual_livre=cloro_residual_livre,
+                turbidez=turbidez,
+                coliformes_totais=coliformes_totais,
+                escherichia=escherichia,
+                cor=cor,
+                data=data,
+                ordem=ordem
+            )
+
+                coleta.responsavel.set(lista_responsaveis)
+
     def handle(self, *args, **options):
-        self.create_edificacoes()
-        self.create_pontos()
-        self.create_responsaveis()
+        # self.create_edificacoes()
+        # self.create_pontos()
+        # self.create_responsaveis()
+        # self.create_sequencias()
+        self.create_coletas()
         self.stdout.write(self.style.SUCCESS('Seed data created successfully.'))
 
 if __name__ == '__main__':
