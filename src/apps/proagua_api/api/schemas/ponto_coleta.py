@@ -15,7 +15,13 @@ class PontoColetaOut(Schema):
     ambiente: str
     tipo: int
     amontante_id: int = None
+    edificacao_url: str
+
     links: dict = {}
+
+    @staticmethod
+    def resolve_edificacao_url(self):
+        return reverse("api-1.0.0:get_edificacao", kwargs={"cod_edificacao": self.edificacao.codigo})
 
     @staticmethod
     def resolve_links(obj: models.PontoColeta):
