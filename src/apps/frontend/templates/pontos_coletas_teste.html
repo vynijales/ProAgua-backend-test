@@ -19,8 +19,10 @@
             <i class="bi bi-list header-icon"></i>
         </button>
         <div class="proagua-logo">
-            <img src="../static/images/Logo.svg" alt="Logo do projeto">
-            <span href="/">ProÁgua</span>
+            <span href="/">
+                <img src="../static/images/Logo.svg" alt="Logo do projeto">
+                ProÁgua
+            </span>
         </div>
     </div>
     <div id="sidebar" class="navbar-wrapper">
@@ -37,15 +39,15 @@
                 </li>
                 <li>
                     <i class="bi bi-envelope-fill"></i>
-                    <a href="">Solicitações</a>
+                    <a href="#solicitacoes">Solicitações</a>
                 </li>
                 <li>
                     <i class="bi bi-buildings-fill"></i>
-                    <a href="">Edificações</a>
+                    <a href="{% url 'visualizar_edificacoes' %}">Edificações</a>
                 </li>
                 <li>
                     <i class="bi bi-gear-fill"></i>
-                    <a href="">Configurações</a>
+                    <a href="{% url 'configuracoes' %}">Configurações</a>
                 </li>
             </ul>
         </div>
@@ -60,13 +62,13 @@
                     <input type="text" name="search" id="search-bar" placeholder="Digite o termo de pesquisa">
                 </div>
                 <div class="flex" style="flex-direction: row-reverse;">
-                    <select name="campus" class="select" >
+                    <select name="campus" class="select">
                         <option value="" disabled selected hidden>Campus</option>
                         <option value="teste 1">teste 1</option>
                         <option value="teste 2">teste 2</option>
                         <option value="teste 3">teste 3</option>
                     </select>
-                    <select name="edificacao" class="select" >
+                    <select name="edificacao" class="select">
                         <option value="" disabled selected hidden>Edificação</option>
                         <option value="teste 1">teste 1</option>
                         <option value="teste 2">teste 2</option>
@@ -84,48 +86,60 @@
 </body>
 <script>
     function openNav() {
-      document.getElementById('sidebar').style.width = '15em'
+        document.getElementById('sidebar').style.width = '15em'
     }
-    
+
     function closeNav() {
-      document.getElementById('sidebar').style.width = '0'
+        document.getElementById('sidebar').style.width = '0'
     }
-    
+    function change_modal_state(element) {
+        var parentCard = element.parentNode
+        var modalZPos = parentCard.querySelector(".modal").style.zIndex
+
+        parentCard.querySelector(".modal").style.zIndex = modalZPos == "1" ? "-1"  : "1"
+    }
+
     // URL base da API
     const BASE_URL = "http://localhost:8000"
     // URL do ponto de coleta
     const pontos = BASE_URL + "/api/v1/pontos"
-    
+
     // Fetch para obter o JSON da URL do ponto de coleta
     fetch(pontos)
         .then((response) => {
-          if (!response.ok) {
-            throw new Error('Erro ao acessar a API')
-          }
-          return response.json()
+            if (!response.ok) {
+                throw new Error('Erro ao acessar a API')
+            }
+            return response.json()
         })
         .then((data) => {
-          console.log(data)
-          const resultContainer = document.querySelector('.result-list')
-      
-          data.forEach((item) => {
-            const card = document.createElement('div')
-            card.className = 'flex card'
-      
-            const urlEdificacao = BASE_URL + item.links.edificacao.url_edificacao
-      
-            // fetch para obter o JSON da URL da edificação
-            fetch(urlEdificacao)
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error('Erro ao acessar a URL da edificação')
-                }
-                return response.json()
-              })
-              .then((edificacao) => {
+            console.log(data)
+            const resultContainer = document.querySelector('.result-list')
 
-                card.innerHTML = `
-                    <button class="modal-button"><i class="bi bi-three-dots-vertical"></i></button>
+            data.forEach((item) => {
+                const card = document.createElement('div')
+                card.className = 'flex card'
+
+                const urlEdificacao = BASE_URL + item.links.edificacao.url_edificacao
+
+                // fetch para obter o JSON da URL da edificação
+                fetch(urlEdificacao)
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error('Erro ao acessar a URL da edificação')
+                        }
+                        return response.json()
+                    })
+                    .then((edificacao) => {
+
+                        card.id = ''+item.id;
+
+                        card.innerHTML = `
+                    <button class="modal-button" onclick="change_modal_state(this)"><i class="bi bi-three-dots-vertical"></i></button>
+                    <div class="flex modal">
+                        <a href="" style="color: #525252;">Editar</a>
+                        <a href="" style="color: #FC1B44;">Remover</a>
+                    </div>
                     <h3>${item.id}</h3>
                     <h2>${edificacao.nome}</h2>
                     <p>${item.tipo == 1 ? 'Bebedouro' : 'RPS'}</p>
@@ -135,15 +149,16 @@
                       Detalhes
                     </button>
                   `
-                resultContainer.appendChild(card)
-              })
-              .catch((error) => {
-                console.error('Erro:', error)
-              })
-          })
+                        resultContainer.appendChild(card)
+                    })
+                    .catch((error) => {
+                        console.error('Erro:', error)
+                    })
+            })
         })
         .catch((error) => {
-          console.error('Erro:', error)
+            console.error('Erro:', error)
         })
-  </script>
+</script>
+
 </html>

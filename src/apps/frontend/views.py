@@ -77,7 +77,7 @@ def pontos_coletas(request):
 
     return render(
         request=request,
-        template_name="privado/pontos_coletas.html",
+        template_name="pontos_coletas_teste.html",
         # context=context
     )
 
