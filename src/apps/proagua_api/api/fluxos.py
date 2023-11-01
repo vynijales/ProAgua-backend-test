@@ -1,0 +1,42 @@
+from typing import List
+
+from ninja import Router
+from ninja.pagination import paginate
+from django.shortcuts import get_object_or_404
+
+from .schemas.fluxo import FluxoOut, FluxoIn
+from apps.proagua_api.models.fluxo import Fluxo
+
+router = Router()
+
+@router.get("/", response=List[FluxoOut])
+@paginate
+def list_fluxo(request):
+    qs = Fluxo.objects.all()
+    return qs
+
+@router.get("/{id_fluxo}", response=FluxoOut)
+def get_fluxo(request, id_fluxo: int):
+    fluxo = get_object_or_404(Fluxo, id=id_fluxo)
+    return fluxo
+
+@router.post("/", response=FluxoOut)
+def create_fluxo(request, data: FluxoIn):
+    fluxo = Fluxo.objects.create()
+    fluxo.pontos.set(data.pontos)
+    fluxo.save()
+    return fluxo
+
+@router.put("/{id_fluxo}")
+def update_fluxo(request, id_fluxo: int, payload: FluxoIn):
+    fluxo = get_object_or_404(Fluxo, id=id_fluxo)
+    for attr, value in payload.dict().items():
+        setattr(fluxo, attr, value)
+    fluxo.save()
+    return {"status": "success"}
+
+@router.delete("/{id_fluxo}")
+def delete_fluxo(request, id_fluxo: int):
+    fluxo = get_object_or_404(Fluxo, id=id_fluxo)
+    fluxo.delete()
+    return {"status": "success"}
