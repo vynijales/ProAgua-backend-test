@@ -64,9 +64,9 @@
                 <div class="flex" style="flex-direction: row-reverse;">
                     <select name="campus" class="select">
                         <option value="" disabled selected hidden>Campus</option>
-                        <option value="teste 1">teste 1</option>
-                        <option value="teste 2">teste 2</option>
-                        <option value="teste 3">teste 3</option>
+                        <option value="Todos">Leste/Oeste</option>
+                        <option value="Leste">Leste</option>
+                        <option value="Oeste">Oeste</option>
                     </select>
                     <select name="edificacao" class="select">
                         <option value="" disabled selected hidden>Edificação</option>
@@ -77,9 +77,11 @@
                 </div>
             </div>
             <div class="result-list">
-                <div class="flex card" style="justify-content: center;">
-                    <i class="bi bi-plus" style="font-size: 2rem;"></i>
-                </div>
+                <a href="">
+                    <div class="flex card" style="justify-content: center;">
+                        <i class="bi bi-plus" style="font-size: 2rem;"></i>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -100,7 +102,8 @@
     }
 
     // URL base da API
-    const BASE_URL = "http://localhost:8000"
+    // const BASE_URL = "http://localhost:8000"
+    const BASE_URL = "http://10.0.0.103:8000"
     // URL do ponto de coleta
     const pontos = BASE_URL + "/api/v1/pontos"
 
