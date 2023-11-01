@@ -2,6 +2,7 @@ from typing import List
 
 from django.shortcuts import get_object_or_404
 from ninja import Router
+from ninja.pagination import paginate
 
 from .schemas.ponto_coleta import *
 from .. import models
@@ -9,6 +10,7 @@ from .. import models
 router = Router()
 
 @router.get("/", response=List[PontoColetaOut])
+@paginate
 def list_ponto(request):
     qs = models.PontoColeta.objects.all()
     return qs
