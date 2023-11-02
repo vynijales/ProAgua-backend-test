@@ -1,14 +1,24 @@
+"""
+Material de referência:
+    https://django-ninja.rest-framework.com/tutorial/other/crud/
+    https://django-ninja.rest-framework.com/guides/response/?h=resolvers#resolvers
+"""
+
 from typing import List
 
 from django.shortcuts import get_object_or_404
 from ninja import Router
+from ninja.pagination import paginate
 
 from .schemas.ponto_coleta import *
+from .schemas.coleta import ColetaOut
+from .schemas.fluxo import FluxoOut
 from .. import models
 
 router = Router()
 
 @router.get("/", response=List[PontoColetaOut])
+@paginate
 def list_ponto(request):
     qs = models.PontoColeta.objects.all()
     return qs
@@ -44,5 +54,15 @@ def delete_ponto(request, id_ponto: int):
     ponto.delete()
     return {"success": True}
 
-# https://django-ninja.rest-framework.com/tutorial/other/crud/
-# https://django-ninja.rest-framework.com/guides/response/?h=resolvers#resolvers
+@router.get("/{id_ponto}/coletas", response=List[ColetaOut])
+def list_coletas(request, id_ponto: int):
+    """
+    Retorna todas as coletas associadas a um ponto de coleta
+    """
+    qs = models.Coleta.objects.filter(ponto__id=id_ponto)
+    return qs
+
+@router.get("/{id_ponto}/fluxos", response=List[FluxoOut])
+def get_fluxos(request, id_ponto: int):
+    fluxos = models.Fluxo.objects.filter(pontos__id=id_ponto)
+    return fluxos

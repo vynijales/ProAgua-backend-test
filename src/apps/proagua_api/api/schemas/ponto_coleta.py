@@ -16,12 +16,16 @@ class PontoColetaOut(Schema):
     tipo: int
     amontante_id: int = None
     edificacao_url: str
-
+    fluxos_url: str
     links: dict = {}
 
     @staticmethod
     def resolve_edificacao_url(self):
         return reverse("api-1.0.0:get_edificacao", kwargs={"cod_edificacao": self.edificacao.codigo})
+
+    @staticmethod
+    def resolve_fluxos_url(self):
+        return reverse("api-1.0.0:get_fluxos", kwargs={"id_ponto": self.id})
 
     @staticmethod
     def resolve_links(obj: models.PontoColeta):

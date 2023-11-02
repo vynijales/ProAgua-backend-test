@@ -32,6 +32,16 @@ class ColetaOut(Schema):
     responsavel: List[int]
     ordem: str
     links: dict = {}
+    sequencia_url: str
+    ponto_url: str
+
+    @staticmethod
+    def resolve_sequencia_url(self):
+        return reverse("api-1.0.0:get_sequencia", kwargs={"id_sequencia": self.sequencia.id})
+
+    @staticmethod
+    def resolve_ponto_url(self):
+        return reverse("api-1.0.0:get_ponto", kwargs={"id_ponto": self.ponto.id})
 
     @staticmethod
     def resolve_links(obj: models.PontoColeta):
