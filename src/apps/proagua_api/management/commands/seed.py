@@ -169,7 +169,6 @@ class Command(BaseCommand):
             coleta = models.Coleta.objects.create(
                 sequencia=sequencia,
                 ponto=ponto,
-                responsavel=responsaveis,
                 temperatura=temperatura,
                 cloro_residual_livre=cloro_residual_livre,
                 turbidez=turbidez,
@@ -179,6 +178,8 @@ class Command(BaseCommand):
                 data=data,
                 ordem=ordem
             )
+            coleta.responsavel.set(responsaveis)
+            coleta.save()
             self.stdout.write(self.style.SUCCESS(f"Coleta criada com sucesso: {coleta}"))
     
         except Exception as e:
