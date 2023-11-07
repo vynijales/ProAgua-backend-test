@@ -5,7 +5,14 @@ from ninja import ModelSchema
 class UsuarioIn(ModelSchema):
     class Config:
         model = User
-        model_fields = ["username", "first_name", "last_name", "password", "is_staff", "email"]
+        model_fields = [
+            "username",
+            "first_name",
+            "last_name",
+            "password",
+            "is_staff",
+            "email"
+        ]
 
 
 class UsuarioOut(ModelSchema):

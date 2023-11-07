@@ -22,17 +22,25 @@ def get_usuario(request, username: str):
     usuario = get_object_or_404(User, username=username)
     return usuario
 
-@router.post("/")
+
+@router.post("/", response=UsuarioOut)
 def create_usuario(request, payload: UsuarioIn):
-    # TODO: criar usuario
-    pass
+    user = User.objects.create(**payload.dict())
+    user.save()
+    return user
+
 
 @router.put("/{username}")
-def update_usuario(request):
-    # TODO: atualizar usuario
-    pass
+def update_usuario(request, username: str, payload: UsuarioIn):
+    user = get_object_or_404(User, username=username)
+    for attr, value in payload.dict().items():
+        setattr(user, attr, value)
+    user.save()
+    return {"status": "success"}
+
 
 @router.delete("/{username}")
-def delete_usuario(request):
-    # TODO: deletar usuario
-    pass
+def delete_usuario(request, username: str):
+    user = get_object_or_404(User, username=username)
+    user.delete()
+    return {"status": "success"}
