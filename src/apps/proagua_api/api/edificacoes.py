@@ -24,6 +24,7 @@ def get_edificacao(request, cod_edificacao: str):
 @router.post("/")
 def create_edificacao(request, payload: EdificacaoIn):
     edificacao = models.Edificacao.objects.create(**payload.dict())
+    edificacao.save()
     return {"success": True}
 
 @router.put("/{cod_edificacao}")
