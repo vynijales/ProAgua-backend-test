@@ -1,7 +1,7 @@
-from typing import List
+from typing import List, Optional
 from datetime import date
 
-from ninja import Schema
+from ninja import Schema, FilterSchema, Field
 from django.urls import reverse
 
 from ... import models
@@ -59,3 +59,10 @@ class ColetaOut(Schema):
     @staticmethod
     def resolve_responsavel(obj: models.Coleta):
         return [responsavel.id for responsavel in obj.responsavel.all()]
+
+
+class FilterColeta(FilterSchema):
+    q: Optional[str] = Field(q=["responsavel__username__contains"])
+    data__gte: Optional[date]
+    data__lte: Optional[date]
+    
