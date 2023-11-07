@@ -36,7 +36,8 @@ def create_ponto(request, payload: PontoColetaIn):
     data_dict.pop("codigo_edificacao")
     data_dict["edificacao"] = edificacao
 
-    qs = models.PontoColeta.objects.create(**data_dict)
+    ponto_coleta = models.PontoColeta.objects.create(**data_dict)
+    ponto_coleta.save()
 
     return {"success": True}
 

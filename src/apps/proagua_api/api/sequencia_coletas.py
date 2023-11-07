@@ -23,6 +23,7 @@ def get_sequencia(request, id_sequencia: int):
 @router.post("/", tags=["Sequencias"])
 def create_sequencia(request, payload: SequenciaColetasIn):
     sequencia = models.SequenciaColetas.objects.create(**payload.dict())
+    sequencia.save()
     return {"success": True}
 
 @router.put("/{id_sequencia}", tags=["Sequencias"])
