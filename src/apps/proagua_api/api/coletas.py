@@ -9,17 +9,17 @@ from .. import models
 
 router = Router()
 
-@router.get("/", response=List[ColetaOut])
+@router.get("/", response=List[ColetaOut], tags=["Coletas"])
 def list_coleta(request):
     qs = models.Coleta.objects.all()
     return qs
 
-@router.get("/{id_coleta}", response=ColetaOut)
+@router.get("/{id_coleta}", response=ColetaOut, tags=["Coletas"])
 def get_coleta(request, id_coleta: int):
     qs = get_object_or_404(models.Coleta, id=id_coleta)
     return qs
 
-@router.post("/")
+@router.post("/", tags=["Coletas"])
 def create_coleta(request, payload: ColetaIn):
     data_dict = payload.dict()
     responsavel_ids = data_dict.get("responsavel", [])
@@ -41,7 +41,7 @@ def create_coleta(request, payload: ColetaIn):
     return {"success": True}
 
 
-@router.put("/{id_coleta}")
+@router.put("/{id_coleta}", tags=["Coletas"])
 def update_coleta(request, id_coleta: int, payload: ColetaIn):
     obj_coleta = get_object_or_404(models.Coleta, id=id_coleta)
     data_dict = payload.dict()
@@ -66,7 +66,7 @@ def update_coleta(request, id_coleta: int, payload: ColetaIn):
 
     return {"success": True}
 
-@router.delete("/{id_coleta}")
+@router.delete("/{id_coleta}", tags=["Coletas"])
 def delete_coleta(request, id_coleta: int):
     obj_coleta = get_object_or_404(models.Coleta, id=id_coleta)
     obj_coleta.delete()

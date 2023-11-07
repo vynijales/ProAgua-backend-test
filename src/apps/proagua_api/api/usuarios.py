@@ -10,27 +10,27 @@ from .schemas.usuario import UsuarioOut, UsuarioIn
 router = Router()
 
 
-@router.get("/", response=List[UsuarioOut])
+@router.get("/", response=List[UsuarioOut], tags=["Usuarios"])
 @paginate
 def list_usuario(request):
     qs = User.objects.all()
     return qs
 
 
-@router.get("/{username}", response=UsuarioOut)
+@router.get("/{username}", response=UsuarioOut, tags=["Usuarios"])
 def get_usuario(request, username: str):
     usuario = get_object_or_404(User, username=username)
     return usuario
 
 
-@router.post("/", response=UsuarioOut)
+@router.post("/", response=UsuarioOut, tags=["Usuarios"])
 def create_usuario(request, payload: UsuarioIn):
     user = User.objects.create(**payload.dict())
     user.save()
     return user
 
 
-@router.put("/{username}")
+@router.put("/{username}", tags=["Usuarios"])
 def update_usuario(request, username: str, payload: UsuarioIn):
     user = get_object_or_404(User, username=username)
     for attr, value in payload.dict().items():
@@ -39,7 +39,7 @@ def update_usuario(request, username: str, payload: UsuarioIn):
     return {"status": "success"}
 
 
-@router.delete("/{username}")
+@router.delete("/{username}", tags=["Usuarios"])
 def delete_usuario(request, username: str):
     user = get_object_or_404(User, username=username)
     user.delete()

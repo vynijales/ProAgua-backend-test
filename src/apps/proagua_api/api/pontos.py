@@ -17,18 +17,18 @@ from .. import models
 
 router = Router()
 
-@router.get("/", response=List[PontoColetaOut])
+@router.get("/", response=List[PontoColetaOut], tags=["Pontos"])
 @paginate
 def list_ponto(request):
     qs = models.PontoColeta.objects.all()
     return qs
 
-@router.get("/{id_ponto}", response=PontoColetaOut)
+@router.get("/{id_ponto}", response=PontoColetaOut, tags=["Pontos"])
 def get_ponto(request, id_ponto: int):
     qs = get_object_or_404(models.PontoColeta, id=id_ponto)
     return qs
 
-@router.post("/")
+@router.post("/", tags=["Pontos"])
 def create_ponto(request, payload: PontoColetaIn):
     edificacao = get_object_or_404(models.Edificacao, codigo=payload.codigo_edificacao)
 
@@ -40,7 +40,7 @@ def create_ponto(request, payload: PontoColetaIn):
 
     return {"success": True}
 
-@router.put("/{id_ponto}")
+@router.put("/{id_ponto}", tags=["Pontos"])
 def update_ponto(request, id_ponto: int, payload: PontoColetaIn):
     ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
     for attr, value in payload.dict().items():
@@ -48,13 +48,13 @@ def update_ponto(request, id_ponto: int, payload: PontoColetaIn):
     ponto.save()
     return {"success": True}
 
-@router.delete("/{id_ponto}")
+@router.delete("/{id_ponto}", tags=["Pontos"])
 def delete_ponto(request, id_ponto: int):
     ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
     ponto.delete()
     return {"success": True}
 
-@router.get("/{id_ponto}/coletas", response=List[ColetaOut])
+@router.get("/{id_ponto}/coletas", response=List[ColetaOut], tags=["Pontos"])
 def list_coletas(request, id_ponto: int):
     """
     Retorna todas as coletas associadas a um ponto de coleta
@@ -62,7 +62,7 @@ def list_coletas(request, id_ponto: int):
     qs = models.Coleta.objects.filter(ponto__id=id_ponto)
     return qs
 
-@router.get("/{id_ponto}/fluxos", response=List[FluxoOut])
+@router.get("/{id_ponto}/fluxos", response=List[FluxoOut], tags=["Pontos"])
 def get_fluxos(request, id_ponto: int):
     fluxos = models.Fluxo.objects.filter(pontos__id=id_ponto)
     return fluxos
