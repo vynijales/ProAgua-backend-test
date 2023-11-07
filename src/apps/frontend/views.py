@@ -33,6 +33,12 @@ def home(request):
         template_name="landing_page.html"
     )
 
+def password_reset(request):
+    return render(
+        request=request,
+        template_name="registration/password_reset.html"
+    )
+
 def visu_publica(request):
     return render(
         request=request,
