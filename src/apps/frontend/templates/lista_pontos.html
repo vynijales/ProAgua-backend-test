@@ -55,4 +55,63 @@
     </footer>
 </body>
 
+<script>
+    // URL base da API
+    // const BASE_URL = "http://localhost:8000"
+    const BASE_URL = "http://10.0.0.103:8000"
+    // URL do ponto de coleta
+    const pontos = BASE_URL + "/api/v1/pontos"
+
+    // Fetch para obter o JSON da URL do ponto de coleta
+    fetch(pontos)
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error('Erro ao acessar a API')
+        }
+        return response.json()
+    })
+    .then((data) => {
+        console.log(data)
+
+        data.items.forEach((item) => {
+            const edificacao_url = BASE_URL + item.edificacao_url
+
+            // fetch para obter o JSON da URL da edificação
+            fetch(edificacao_url)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao acessar a URL da edificação')
+                    }
+                    return response.json()
+                })
+                .then((edificacao) => {
+                    // Adiciona uma nova linha na tabela para cada item
+                    const table = document.querySelector('table');
+                    const row = table.insertRow();
+
+                    const cell1 = row.insertCell();
+                    const cell2 = row.insertCell();
+                    const cell3 = row.insertCell();
+                    const cell4 = row.insertCell();
+                    const cell5 = row.insertCell();
+                    const cell6 = row.insertCell();
+
+                    cell1.innerHTML = edificacao.codigo;
+                    cell2.innerHTML = edificacao.nome;
+                    cell3.innerHTML = edificacao.campus;
+                    cell4.innerHTML = item.ambiente;
+                    cell5.innerHTML = item.tipo == 1 ? "Bebedouro" : "Torneira";
+                    cell6.innerHTML = item.tombo;
+                })
+                .catch((error) => {
+                    console.error('Erro:', error)
+                })
+        })
+    })
+    .catch((error) => {
+        console.error('Erro:', error)
+    })
+
+</script>
+
 </html>
