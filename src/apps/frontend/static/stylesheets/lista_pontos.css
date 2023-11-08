@@ -12,10 +12,14 @@ a {
     transition: 0.3s;
 }
 
+header {
+    display: flex;
+}
+
 nav {
     position: fixed;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     background: #027BD0;
     height: 8vh;
@@ -23,39 +27,36 @@ nav {
     z-index: 1;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
-    text-transform: uppercase;
-    font-size: 1.5em;
+nav > .back {
+    margin-left: 4rem;
 }
 
-.logo img {
+nav > .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    
+}
+
+.logo > img {
     height: 5.3vh;
     margin-right: 5px;
 }
 
-.login-btn {
+nav > .login-btn {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    position: absolute;
-    left: 85%;
-
+    margin-right: 4rem;
     border: 1px solid#fff;
     border-radius: .4em;
     padding: .3em .8em .3em .8em;
-
     transition: .3s;
-}
-
-.login-btn a {
     font-size: 1em;
 }
+
 
 body{
     min-height: 100vh;

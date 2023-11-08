@@ -39,7 +39,7 @@ button {
 #header-bar, .navbar-wrapper .navbar-header {
     position: relative;
     width: 100%;
-    height: 50px;
+    height: 8vh;
     background-color: #027BD0;
 }
 .proagua-logo {
