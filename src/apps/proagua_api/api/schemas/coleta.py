@@ -29,19 +29,24 @@ class ColetaOut(Schema):
     escherichia: bool
     cor: float
     data: date
-    responsavel: List[int]
+    # responsavel: List[int]
+    responsaveis_url: str
     ordem: str
     links: dict = {}
     sequencia_url: str
     ponto_url: str
 
     @staticmethod
-    def resolve_sequencia_url(self):
-        return reverse("api-1.0.0:get_sequencia", kwargs={"id_sequencia": self.sequencia.id})
+    def resolve_responsaveis_url(obj):
+        return reverse("api-1.0.0:get_responsaveis_coleta", kwargs={"id_coleta": obj.id})
 
     @staticmethod
-    def resolve_ponto_url(self):
-        return reverse("api-1.0.0:get_ponto", kwargs={"id_ponto": self.ponto.id})
+    def resolve_sequencia_url(obj):
+        return reverse("api-1.0.0:get_sequencia", kwargs={"id_sequencia": obj.sequencia.id})
+
+    @staticmethod
+    def resolve_ponto_url(obj):
+        return reverse("api-1.0.0:get_ponto", kwargs={"id_ponto": obj.ponto.id})
 
     @staticmethod
     def resolve_links(obj: models.PontoColeta):
@@ -55,10 +60,6 @@ class ColetaOut(Schema):
                 "url_ponto": reverse("api-1.0.0:get_ponto", kwargs={"id_ponto":obj.ponto.id}),
              }
         }
-
-    @staticmethod
-    def resolve_responsavel(obj: models.Coleta):
-        return [responsavel.id for responsavel in obj.responsavel.all()]
 
 
 class FilterColeta(FilterSchema):
