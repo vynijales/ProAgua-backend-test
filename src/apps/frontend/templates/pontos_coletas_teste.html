@@ -119,14 +119,14 @@
             console.log(data)
             const resultContainer = document.querySelector('.result-list')
 
-            data.forEach((item) => {
+            data.items.forEach((item) => {
                 const card = document.createElement('div')
                 card.className = 'flex card'
 
-                const urlEdificacao = BASE_URL + item.links.edificacao.url_edificacao
+                const edificacao_url = BASE_URL + item.edificacao_url
 
                 // fetch para obter o JSON da URL da edificação
-                fetch(urlEdificacao)
+                fetch(edificacao_url)
                     .then((response) => {
                         if (!response.ok) {
                             throw new Error('Erro ao acessar a URL da edificação')
@@ -143,7 +143,7 @@
                         <a href="" style="color: #525252;">Editar</a>
                         <a href="" style="color: #FC1B44;">Remover</a>
                     </div>
-                    <h3>${item.id}</h3>
+                    <h3>${edificacao.codigo}</h3>
                     <h2>${edificacao.nome}</h2>
                     <p>${item.tipo == 1 ? 'Bebedouro' : 'RPS'}</p>
                     <p>${item.ambiente}</p>
