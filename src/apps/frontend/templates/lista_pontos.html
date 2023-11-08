@@ -1,117 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/stylesheets/lista_pontos.css">
-	<link rel="icon" href="../static/images/Logo.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/586c659954.js" crossorigin="anonymous"></script>
-    <title>ProÁgua</title>
-</head>
-<body>
-    <header>
-        <nav>
-            <a href="javascript:history.back()" class="back">Voltar</a>
-            <a href="/" class="logo">
-                <img src="../static/images/Logo.svg" alt="Logo do projeto">
-                <span>ProÁgua</span></a>
-            <a href="/accounts/login" class="login-btn">Login</a>
-        </nav>
-    </header>
-    <div class="content">
-        <h1>Pesquisar</h1>
-        <form class="search-field" id="pesquise">
-            <input type="text" name="search-query" placeholder="Pesquisar">
-        </form>
-
-        <div style="overflow-x: auto;">
-            <table>
-                <tr>
-                    <th>Código</th>
-                    <th>Edificação</th>
-                    <th>Campus</th>
-                    <th>Ambiente da Edif.</th>
-                    <th>Ponto</th>
-                    <th>Nº do Tombo</th>
-                </tr>
-            </table>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../static/stylesheets/lista_pontos.css">
+        <link rel="icon" href="../static/images/Logo.svg">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+            rel="stylesheet">
+        <script src="https://kit.fontawesome.com/586c659954.js"
+            crossorigin="anonymous"></script>
+        <title>ProÁgua</title>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="javascript:history.back()" class="back">Voltar</a>
+                <a href="/" class="logo">
+                    <img src="../static/images/Logo.svg" alt="Logo do projeto">
+                    <span>ProÁgua</span>
+                </a>
+                <a href="/accounts/login" class="login-btn">Login</a>
+            </nav>
+        </header>
+        <div class="content">
+            <h1>Pesquisar</h1>
+            <form class="search-field" id="pesquise">
+                <input type="text" name="search-query" placeholder="Pesquisar">
+            </form>
+            <div style="overflow-x: auto;">
+                <table id="results-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Edificação</th>
+                            <th>Campus</th>
+                            <th>Ambiente da Edif.</th>
+                            <th>Ponto</th>
+                            <th>Nº do Tombo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+            </div>
         </div>
-        
-    </div>
-    
-    <footer>
-        <div class="container">
-            <h1>ProÁgua</h1>
-            <h5>&#169 2023 - Bom dia.</h5>
-            <h5>Todos os direitos reservados.</h5>
-        </div>
-        <div class="logo-container">
-            <img src="../static/images/Logo_ufersa.svg" alt="Logo UFERSA" >
-        </div>
-    </footer>
-</body>
+        <footer>
+            <div class="container">
+                <h1>ProÁgua</h1>
+                <h5>&#169 2023 - Bom dia.</h5>
+                <h5>Todos os direitos reservados.</h5>
+            </div>
+            <div class="logo-container">
+                <img src="../static/images/Logo_ufersa.svg" alt="Logo UFERSA">
+            </div>
+        </footer>
+    </body>
 
-<script>
-    // URL base da API
-    // const BASE_URL = "http://localhost:8000"
-    const BASE_URL = "http://10.0.0.103:8000"
-    // URL do ponto de coleta
-    const pontos = BASE_URL + "/api/v1/pontos"
-
-    // Fetch para obter o JSON da URL do ponto de coleta
-    fetch(pontos)
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error('Erro ao acessar a API')
-        }
-        return response.json()
-    })
-    .then((data) => {
-        console.log(data)
-
-        data.items.forEach((item) => {
-            const edificacao_url = BASE_URL + item.edificacao_url
-
-            // fetch para obter o JSON da URL da edificação
-            fetch(edificacao_url)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error('Erro ao acessar a URL da edificação')
-                    }
-                    return response.json()
-                })
-                .then((edificacao) => {
-                    // Adiciona uma nova linha na tabela para cada item
-                    const table = document.querySelector('table');
-                    const row = table.insertRow();
-
-                    const cell1 = row.insertCell();
-                    const cell2 = row.insertCell();
-                    const cell3 = row.insertCell();
-                    const cell4 = row.insertCell();
-                    const cell5 = row.insertCell();
-                    const cell6 = row.insertCell();
-
-                    cell1.innerHTML = edificacao.codigo;
-                    cell2.innerHTML = edificacao.nome;
-                    cell3.innerHTML = edificacao.campus;
-                    cell4.innerHTML = item.ambiente;
-                    cell5.innerHTML = item.tipo == 1 ? "Bebedouro" : "Torneira";
-                    cell6.innerHTML = item.tombo;
-                })
-                .catch((error) => {
-                    console.error('Erro:', error)
-                })
-        })
-    })
-    .catch((error) => {
-        console.error('Erro:', error)
-    })
-
-</script>
+    <script src="../static/js/listar_pontos.js"></script>
 
 </html>
