@@ -1,7 +1,7 @@
 from typing import List
 
 from django.shortcuts import get_object_or_404
-from ninja import Router
+from ninja import Router, Query
 from ninja.pagination import paginate
 
 from .schemas.edficacao import *
@@ -13,9 +13,9 @@ router = Router()
 
 @router.get("/", response=List[EdificacaoOut], tags=["Edificacoes"])
 @paginate
-def list_edificacoes(request):
+def list_edificacoes(request, filters: FilterEdificacao = Query(...)):
     qs = models.Edificacao.objects.all()
-    return qs
+    return filters.filter(qs)
 
 
 @router.get("/{cod_edificacao}", response=EdificacaoOut, tags=["Edificacoes"])
