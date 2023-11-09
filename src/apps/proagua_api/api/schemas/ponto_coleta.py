@@ -19,7 +19,7 @@ class PontoColetaOut(Schema):
     tipo: int
     
     # Substituir amontante_id por amontante_url ?
-    amontante_id: int = None 
+    tombo: Optional[str]
     
     edificacao_url: str
     fluxos_url: str
