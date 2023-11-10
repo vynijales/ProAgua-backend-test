@@ -19,12 +19,11 @@ class PontoColetaOut(Schema):
     tipo: int
     
     # Substituir amontante_id por amontante_url ?
-    amontante_id: int = None 
+    tombo: Optional[str]
     
     edificacao_url: str
     fluxos_url: str
     
-    links: dict = {}
 
     @staticmethod
     def resolve_edificacao_url(self):
@@ -33,16 +32,6 @@ class PontoColetaOut(Schema):
     @staticmethod
     def resolve_fluxos_url(self):
         return reverse("api-1.0.0:get_fluxos", kwargs={"id_ponto": self.id})
-
-    @staticmethod
-    def resolve_links(obj: models.PontoColeta):
-        return {
-            "edificacao": { 
-                "codigo_edificacao": obj.edificacao.codigo,
-                "url_edificacao": reverse("api-1.0.0:get_edificacao", kwargs={"cod_edificacao":obj.edificacao.codigo})
-            }
-        }
-
 
 class FilterPontos(FilterSchema):
     q: Optional[str] = Field(
