@@ -26,8 +26,13 @@ function search(query) {
                     .then((edificacao) => {
                         const row = resultsTable.insertRow();
 
+                        row.addEventListener('dblclick', function(event){
+                            location.href = BASE_URL + '/visu_publica#' + edificacao.codigo;
+                        });
                         const cell1 = row.insertCell();
                         const cell2 = row.insertCell();
+
+
                         const cell3 = row.insertCell();
                         const cell4 = row.insertCell();
                         const cell5 = row.insertCell();
@@ -39,6 +44,7 @@ function search(query) {
                         cell4.innerHTML = item.ambiente;
                         cell5.innerHTML = item.tipo == 1 ? "Bebedouro" : "Torneira";
                         cell6.innerHTML = item.tombo;
+
                     })
                     .catch((error) => {
                         console.error('Erro:', error);
@@ -55,4 +61,8 @@ document.querySelector('input[name="search-query"]').addEventListener('input', f
     search(query);
 });
 
-search('');
+
+const urlParams = new URLSearchParams(window.location.search);
+const busca = urlParams.get('search-query');
+
+search(busca);

@@ -35,16 +35,16 @@
         <h1>A verificação da sua água<br>simplificada para você</h1>
         <div class="search-btn">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <a href="visu_publica">Procure por um ponto</a>
+            <a href="#pesquise">Procure por um ponto</a>
         </div>
     </section>
 
     <section class="section" id="pesquise">
         <p>PESQUISA</p>
         <h1>Deseja verificar a qualidade<br>da água de qual ponto?</h1>
-        <form class="search-field">
+        <form class="search-field" action="lista_pontos" method="GET">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" name="search-query" placeholder="Torneiras Campus Leste">
+            <input type="text" required name="search-query" placeholder="Laboratório" >
         </form>
     </section>
 
