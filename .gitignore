@@ -21,3 +21,6 @@ venv.bak/
 
 # Confidencial
 src/datasync/*.xlsm
+
+# Uploaded files
+src/files/*
