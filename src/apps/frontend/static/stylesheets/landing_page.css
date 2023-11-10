@@ -163,6 +163,7 @@ footer {
     justify-content: space-between;
     background: #027BD0;
     height: 25vh;
+    width: 100%;
 }
 footer .container {
     display: flex;
@@ -183,6 +184,7 @@ footer .container h5 {
     font-size: 1em;
 }
 footer .logo-container img {
-    height: 8vh;
-    padding-right: 8vw;
+    width: 100%;
+    max-width: 20rem;
+    /* margin-right: 10rem; */
     color: #fff;}

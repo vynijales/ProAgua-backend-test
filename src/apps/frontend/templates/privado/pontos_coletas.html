@@ -1,87 +1,100 @@
-{% extends 'privado/base.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block stylesheets %}
-<link rel="stylesheet" href="{% static 'stylesheets/privado/pontos_coletas.css' %}">
-<link rel="stylesheet" href="{% static 'stylesheets/dropdown.css' %}">
-{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/stylesheets/teste.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <title>SAAS</title>
+</head>
 
-{% block content %}
-<h1 id="titulo">Pontos de Coleta</h1>
-
-<div>
-    <form class="d-flex" method="GET">
-        <input id="search-bar" name="q" type="text" placeholder="Pesquisar"/>
-        <button><i class="bi bi-search"></i></button>
-        <div id="filters" hidden>
-            {{ form_search }}
-        </div>
-        <button type="button" onclick="mostrarFiltros()"><i class="bi bi-filter"></i> Filtros</button>
-    </form>
-</div>
-
-<div class="content">
-    <div id="board">
-        <script>
-            const board = document.getElementById("board");
-            
-            async function createCardPonto(ponto) {
-                let card = document.createElement('div');
-                let edificacao= await fetch(ponto.links.edificacao.url_edificacao).then(resp => resp.json());
-
-                card.innerHTML = `
-                    <div class="card">
-                        <div class="dropdown card-options">
-                            <button id="dropdown-bt">
-                                <i class="bi bi-three-dots-vertical"></i>
-                            </button>
-                            <div id="dropdown-content">
-                                <a href="#editar">Editar</a>
-                                <a href="#excluir">Excluir</a>
-                            </div>
-                        </div>
-                        
-                        <p class="codigo">${ edificacao.codigo }</p>
-                        <h2 class="nome-edif">${ edificacao.nome }</h2>
-                        <p class="ambiente">${ ponto.ambiente}</p>
-                        <p>${ ponto.tipo }</p>
-                        <a href="#" class="button"><i class="bi bi-eye"></i> Detalhes</a>
-                    </div>
-                `;
-                return card;
-            }
-
-            async function main() {
-                let resp = await fetch('/api/v1/pontos');
-                let pontos = await resp.json();
-            
-                console.log(pontos);
-                pontos.forEach(async (ponto) => {
-                    let card = await createCardPonto(ponto);
-                    board.insertAdjacentElement('afterbegin', card);
-                });
-            }
-
-            main();
-        </script>
-
-        <div 
-            class="card add-card" 
-            onclick="window.location.href = '{% url 'criar_ponto' %}'"
-        >
-            <i class="bi bi-plus-lg"></i>
+<body>
+    <div id="header-bar">
+        <button id="menu-button" class="collapsed" onclick="openNav()">
+            <i class="bi bi-list header-icon"></i>
+        </button>
+        <div class="proagua-logo">
+            <span href="/">
+                <img src="../static/images/Logo.svg" alt="Logo do projeto">
+                ProÁgua
+            </span>
         </div>
     </div>
-</div>
-
-<script src="{% static 'js/dropdown.js' %}">
-</script>
+    <div id="sidebar" class="navbar-wrapper">
+        <div class="navbar-header">
+            <button id="close-button" class="collapsed" onclick="closeNav()">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+        </div>
+        <div class="navbar-links">
+            <ul>
+                <li>
+                    <i class="bi bi-clipboard-data-fill"></i>
+                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUJcmljayByb2xs">Coletas</a>
+                </li>
+                <li>
+                    <i class="bi bi-envelope-fill"></i>
+                    <a href="#solicitacoes">Solicitações</a>
+                </li>
+                <li>
+                    <i class="bi bi-buildings-fill"></i>
+                    <a href="{% url 'visualizar_edificacoes' %}">Edificações</a>
+                </li>
+                <li>
+                    <i class="bi bi-gear-fill"></i>
+                    <a href="{% url 'configuracoes' %}">Configurações</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <h2>Pontos de Coleta</h2>
+        <div class="flex wrapper">
+            <div class="flex" style="flex-direction: column;">
+                <div class="flex" style="position: relative;">
+                    <i class="bi bi-search"></i>
+                    <input type="text" name="search-query" id="search-bar" placeholder="Digite o termo de pesquisa">
+                </div>
+                <div class="flex" style="flex-direction: row-reverse;">
+                    <select name="campus" class="select">
+                        <option value="" disabled selected hidden>Campus</option>
+                        <option value="Todos">Leste/Oeste</option>
+                        <option value="Leste">Leste</option>
+                        <option value="Oeste">Oeste</option>
+                    </select>
+                    <select name="edificacao" class="select">
+                        <option value="" disabled selected hidden>Edificação</option>
+                        <option value="teste 1">teste 1</option>
+                        <option value="teste 2">teste 2</option>
+                        <option value="teste 3">teste 3</option>
+                    </select>
+                </div>
+            </div>
+            <div class="result-list" id="result-list">
+                <!-- Os resultados da pesquisa serão adicionados aqui -->
+            </div>
+        </div>
+    </div>
+</body>
 <script>
-    const filtros = document.getElementById("filters")
-
-    function mostrarFiltros() {
-        filtros.hidden = !filtros.hidden
+    function openNav() {
+        document.getElementById('sidebar').style.width = '15em';
     }
-    setupDropdown()
+
+    function closeNav() {
+        document.getElementById('sidebar').style.width = '0';
+    }
+
+    function change_modal_state(element) {
+        var parentCard = element.parentNode;
+        var modalZPos = parentCard.querySelector(".modal").style.zIndex;
+
+        parentCard.querySelector(".modal").style.zIndex = modalZPos === "1" ? "-1" : "1";
+    }
 </script>
-{% endblock %}
+<script src="../static/js/pontos_coletas.js"></script>
+</html>
