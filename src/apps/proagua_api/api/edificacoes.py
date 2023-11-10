@@ -12,13 +12,14 @@ from .. import models
 
 router = Router()
 
-def save_file(file: UploadedFile=File(...)) -> str:
-    file_path = os.path.join(settings.MEDIA_ROOT, 'images', file.name)
+def save_file(file_path: str, file: UploadedFile=File(...)) -> str:
+    file_path = os.path.join(settings.MEDIA_ROOT, file_path)
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
     
     with open(file_path, 'wb') as destination_file:
         destination_file.write(file.read())
 
-    return file_path
+    return os.path.relpath(file_path, settings.MEDIA_ROOT)
 
 
 @router.get("/", response=List[EdificacaoOut], tags=["Edificacoes"])
@@ -36,8 +37,8 @@ def get_edificacao(request, cod_edificacao: str):
 
 @router.post("/", response=EdificacaoOut, tags=["Edificacoes"])
 def create_edificacao(request, payload: EdificacaoIn = Form(...), imagem: UploadedFile = File(...)):
-    im_path = save_file(imagem)
-    
+    im_path = save_file(f'media/images/edificacoes/{imagem.name}', imagem)
+
     data = payload.dict()
     data['imagem'] = im_path
 

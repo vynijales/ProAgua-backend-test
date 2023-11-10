@@ -23,6 +23,4 @@ venv.bak/
 src/datasync/*.xlsm
 
 # Uploaded files
-src/media/images/*.png
-src/media/images/*.jpg
-src/media/images/*.jpeg
+src/files/*
