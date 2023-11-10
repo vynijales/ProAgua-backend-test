@@ -1,4 +1,4 @@
-const BASE_URL = "http://10.0.0.103:8000"
+const BASE_URL = window.location.origin;
 const pontos = BASE_URL + "/api/v1/pontos"
 
 function search(query) {
