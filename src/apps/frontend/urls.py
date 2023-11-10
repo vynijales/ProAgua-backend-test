@@ -29,10 +29,14 @@ accounts_urls = [
 
 urlpatterns = [
     path('', views.home),
+    path('visu_publica', views.visu_publica),
+    path('lista_pontos', views.lista_pontos),
     path('ponto/', include(ponto_coleta_urls)),
     path('coleta/', include(coleta_urls)),
     path('edificacao/', include(edificacao_urls)),
     path('configuracoes/', views.configuracoes, name='configuracoes'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('users/', include(accounts_urls)),
+
+    path('password_reset', views.password_reset, name='password_reset'),
 ]

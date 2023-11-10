@@ -33,37 +33,26 @@ def home(request):
         template_name="landing_page.html"
     )
 
+def password_reset(request):
+    return render(
+        request=request,
+        template_name="registration/password_reset.html"
+    )
+
+def visu_publica(request):
+    return render(
+        request=request,
+        template_name="visu_publica.html"
+    )
+
+def lista_pontos(request):
+    return render(
+        request=request,
+        template_name="lista_pontos.html"
+    )
 
 @login_required
 def pontos_coletas(request):
-    # search = request.GET.get("q")
-    # form_search = FormSearchPontos(request.GET)
-    # pontos = PontoColeta.objects
-
-    # if search:
-    #     pontos = pontos.filter(
-    #         Q(edificacao__nome__contains=search)
-    #     )
-    # q = Q()
-
-    # if form_search.is_valid():
-    #     if form_search.cleaned_data.get("campus"):
-    #         q &= Q(edificacao__campus = form_search.cleaned_data["campus"])
-    #     if form_search.cleaned_data.get("tipo"):
-    #         q &= Q(tipo__in = form_search.cleaned_data["tipo"])
-        
-    #     if form_search.cleaned_data.get("data_minima"):
-    #         q &= Q(coletas__date__gt = form_search.cleaned_data["data_minima"])
-
-    #     if form_search.cleaned_data.get("data_maxima"):
-    #         q &= Q(coletas__date__lt = form_search.cleaned_data["data_maxima"])
-
-    # pontos = pontos.filter(q)
-    # context = {
-    #     'pontos_coletas': pontos,
-    #     'form_search': form_search,
-    # }
-
     return render(
         request=request,
         template_name="privado/pontos_coletas.html",
