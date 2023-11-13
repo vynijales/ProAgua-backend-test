@@ -1,67 +1,235 @@
-h1{
-    text-align: center;
-    font-family: Roboto, sans-serif;
-    font-weight: 100;
-    color: #525252;
-    font-size: 2rem;
+:root {
+    --clr-primary-900: 205 98% 41%;
+    --clr-primary-800: 207 90% 29%;
+    --clr-neutral-900: 0, 0%, 100%;
+    --clr-neutral-800: 0 0% 95%;
+    --clr-neutral-400: 205 15% 41%;
+    --clr-neutral-100: 0, 0%, 0%;
 }
-h2{
-    text-align: center;
-    font-family: Roboto, sans-serif;
-    font-weight: 100;
-    color: #525252;
-    margin-top: 0.5em;
-
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: inherit;
+    color: inherit;
 }
-
-#search-bar{
-    font-family: Roboto, sans-serif;
-    font-weight: 100;
-    height: 0.72rem;
-    width: 55rem;
-    margin-bottom: 2rem;
+ul {
+    list-style: none;
 }
-
-
-#content{
-    display:flex;
+body {
+    font-family: 'Montserrat';
+    min-height: 100vh;
+    background-color: hsl(var(--clr-neutral-800));
+}
+button {
+    border: none;
+    background-color: none;
+}
+/* Diminui as animações para navegadores com a configuração ativa */
+@media (prefers-reduced-motion: reduce) {  
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+}
+.flex {
+    display: flex;
+    gap: var(--gap, 1rem);
+}
+#header-bar {
+    position: fixed;
+    display: flex;
+    z-index: 1;
     align-items: center;
-    flex-direction: column;
 }
-
-.card{
+#header-bar, .navbar-wrapper .navbar-header {
+    position: relative;
+    width: 100%;
+    height: clamp(50px, 8vh, 100px);
+    background-color: hsl(var(--clr-primary-900));
+}
+.proagua-logo {
+    display: flex;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    align-items: center;
+    transform: translateX(-50%);
+}
+.proagua-logo span {
     display: flex;
     align-items: center;
+    gap: 5px;
+    font-weight: 400;
+    user-select: none;
+    padding: 10px 0px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.proagua-logo img {
+    box-sizing: border-box;
+    height: 2.5rem;
+    padding: 5px 0;
+}
+#menu-button, #close-button {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: hsl(var(--clr-primary-900));
+    padding: 0;
+}
+#menu-button:hover, #close-button:hover, .filled-button:hover {
+    background-color: hsl(var(--clr-primary-800));
+}
+#menu-button i, #close-button i, .proagua-logo span {
+    font-size: 1.5rem;
+    color: hsl(var(--clr-neutral-900));
+}
+.navbar-wrapper {
+    position: fixed;
+    width: 0;
+    height: 100vh;
+    background-color: hsl(var(--clr-neutral-800));
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: .5s ease;
+    box-shadow: 0px 0px 10px 5px hsl(var(--clr-neutral-400) / .3);
+}
+.navbar-header #close-button {
+    position: absolute;
+    right: 0;
+}
+.navbar-links ul{
+    margin: 0;
+    padding: 0;
+}
+.navbar-links li {
+    display: flex;
+    font-size: 1.5rem;
+    align-items: center;
+    padding: 10px 0px 10px 10px;
+    color: hsl(var(--clr-neutral-400));
+}
+.navbar-links ul li:hover{
+    color: hsl(var(--clr-neutral-900));
+    background-color: hsl(var(--clr-neutral-400));
+}
+.navbar-links a {
+    font-weight: 500;
+    margin-left: 10px;
+    font-size: .8em;
+}
+.content {
+    --gap: 2rem;
+    padding: 5% 0;
+    width: auto;
     flex-direction: column;
-    height: 25rem;
-    padding: 1.5em;
-    width: 50%;
-    border-radius: 8px;
-    background-color: white;
-    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
+    align-items: center;
+    justify-content: center;
 }
-
-table, th{
+.content > span {
+    color: hsl(var(--clr-neutral-400));
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.card {
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    width: clamp(300px, 50%, 700px);
+    height: max(300px, 60vh);
+    background-color: hsl(var(--clr-neutral-900));
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 3px hsl(var(--clr-neutral-400) / .2);
+}
+.card > span {
+    color: hsl(var(--clr-neutral-400));
+    font-size: 1.25rem;
+}
+.card ul {
+    --gap: 1rem;
+    position: relative;
     width: 100%;
-    font-family: Roboto, sans-serif;
+    overflow-y: scroll;
+    flex-direction: column;
+    color: hsl(var(--clr-neutral-100));
+    font-size: 1rem;
+    height: max(200px, 100%);
+    font-size: .9rem;
+    padding-inline: .5rem;
+}
+.card ul::-webkit-scrollbar {
+    width: 5px;
+    z-index: 1;
+}
+.card ul::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--clr-primary-900) / .8);
+    border-radius: 2px;
+}
+.card li {
+    position: relative;
+    width: 100%;
+    --gap: .5rem;
+    padding: .5rem;
+    border-bottom: 1px solid hsl(var(--clr-neutral-400) / .5);
+}
+.edification_id {
+    width: fit-content;
+    max-width: 6ch;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.edification_name {
+    max-width: calc(85% - 6ch);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.filled_button {
+    --gap: 1rem;
+    padding: .75rem;
+    align-items: center;
+    color: hsl(var(--clr-neutral-900));
+    font-size: .75rem;
+    font-weight: 900;
+    background-color: hsl(var(--clr-primary-900));
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 3px hsl(var(--clr-neutral-400) / .2);
+    margin-left: auto;
+    margin-top: auto;
+}
+.filled_button i {
+    font-size: 1.25rem;
+}
+.modal-button {
+    padding: .5rem;
+    background-color: transparent;
+    border-radius: 5px;
     color: #525252;
-    margin-bottom: 2em;
+    margin-left: auto;
 }
-
-td{
-    border-left-style: hidden;
-    border-right-style: hidden;
+.modal-button:hover {
+    background-color: #EFEFEF;
 }
-
-#b-add{
-    font-size: 1.2em;
-    font-family: Roboto, sans-serif;
-}
-
-#edit{
-    font-size: 3vh;
-}
-#delete{
-    font-size: 3vh;
-    color: red;
+.modal {
+    --gap: .2rem;
+    position: absolute;
+    top: 3rem;
+    right: 1rem;
+    z-index: -1;
+    flex-direction: column;
+    background-color: white;
+    border: 2px solid #525252;
+    border-radius: 5px;
+    padding: var(--gap);
+    box-shadow: 0px 0px 10px 3px rgba(82,82,82,0.2);
 }
