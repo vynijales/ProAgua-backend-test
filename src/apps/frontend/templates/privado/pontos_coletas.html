@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/stylesheets/teste.css">
+    <link rel="stylesheet" href="../../static/stylesheets/pontos_coletas.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Montserrat:wght@500&display=swap" rel="stylesheet">
@@ -34,7 +34,7 @@
             <ul>
                 <li>
                     <i class="bi bi-clipboard-data-fill"></i>
-                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUJcmljayByb2xs">Coletas</a>
+                    <a href="{% url 'visualizar_pontos' %}">Coletas</a>
                 </li>
                 <li>
                     <i class="bi bi-envelope-fill"></i>
@@ -59,7 +59,7 @@
                     <i class="bi bi-search"></i>
                     <input type="text" name="search-query" id="search-bar" placeholder="Digite o termo de pesquisa">
                 </div>
-                <div class="flex" style="flex-direction: row-reverse;">
+                <div class="flex" style="flex-direction: row-reverse; --gap: .75rem;">
                     <select name="campus" class="select">
                         <option value="" disabled selected hidden>Campus</option>
                         <option value="Todos">Leste/Oeste</option>
