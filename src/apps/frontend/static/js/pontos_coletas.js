@@ -1,11 +1,12 @@
 const BASE_URL = window.location.origin;
 const pontos = BASE_URL + "/api/v1/pontos";
 
-function search(query) {
+function search(query, campus) {
     const resultContainer = document.getElementById('result-list');
     resultContainer.innerHTML = '';
 
-    fetch(pontos + `?q=${encodeURIComponent(query)}`)
+    const campusQueryParam = campus ? `&campus=${encodeURIComponent(campus)}` : '';
+    fetch(`${pontos}?q=${encodeURIComponent(query)}${campusQueryParam}`)
         .then((response) => {
             if (!response.ok) {
                 throw new Error('Erro ao acessar a API');
@@ -56,9 +57,16 @@ function search(query) {
         });
 }
 
-document.querySelector('input[name="search-query"]').addEventListener('input', function (event) {
-    const query = event.target.value;
-    search(query);
+document.querySelector('select[name="campus"]').addEventListener('change', function (event) {
+    const query = document.querySelector('input[name="search-query"]').value;
+    const campus = event.target.value;
+    search(query, campus);
 });
 
-search('');
+document.querySelector('input[name="search-query"]').addEventListener('input', function (event) {
+    const query = event.target.value;
+    const campus = document.querySelector('select[name="campus"]').value;
+    search(query, campus);
+});
+
+search('', '');
