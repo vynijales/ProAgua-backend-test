@@ -33,11 +33,13 @@ class PontoColetaOut(Schema):
     def resolve_fluxos_url(self):
         return reverse("api-1.0.0:get_fluxos", kwargs={"id_ponto": self.id})
 
+
 class FilterPontos(FilterSchema):
     q: Optional[str] = Field(
         q=["ambiente__contains", "edificacao__nome__contains"],
         description="Campo de pesquisa por ambiente ou nome de edificação"
     )
+    edificacao__campus: Optional[str] = Field(alias="campus")
     tipo: Optional[int]
     amontante_id: Optional[int]
     fluxos: Optional[int]
