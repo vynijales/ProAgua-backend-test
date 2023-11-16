@@ -15,6 +15,7 @@ class Coleta(models.Model):
         to="PontoColeta",
         verbose_name="Ponto de Coleta",
         on_delete=models.PROTECT,
+        related_name="coletas",
         blank=False,
         null=False
     )
