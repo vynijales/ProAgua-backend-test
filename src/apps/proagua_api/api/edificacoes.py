@@ -12,7 +12,7 @@ from .schemas.edficacao import *
 from .schemas.ponto_coleta import (PontoColetaIn, PontoColetaOut)
 from .. import models
 
-router = Router()
+router = Router(tags=["Edificacoes"])
 
 def save_file(file_path: str, file: UploadedFile=File(...)) -> str:
     file_path = os.path.join(settings.MEDIA_ROOT, file_path)
@@ -27,14 +27,14 @@ def save_file(file_path: str, file: UploadedFile=File(...)) -> str:
     return os.path.relpath(file_path, settings.MEDIA_ROOT)
 
 
-@router.get("/", response=List[EdificacaoOut], tags=["Edificacoes"])
+@router.get("/", response=List[EdificacaoOut])
 @paginate
 def list_edificacoes(request, filters: FilterEdificacao = Query(...)):
     qs = models.Edificacao.objects.all()
     return filters.filter(qs)
 
 
-@router.get("/{cod_edificacao}", response=EdificacaoOut, tags=["Edificacoes"])
+@router.get("/{cod_edificacao}", response=EdificacaoOut)
 def get_edificacao(request, cod_edificacao: str):
     qs = get_object_or_404(models.Edificacao, codigo=cod_edificacao)
     return qs
@@ -61,7 +61,7 @@ def create_edificacao(request, payload: EdificacaoIn):
     return edificacao
 
 
-@router.put("/{cod_edificacao}", tags=["Edificacoes"])
+@router.put("/{cod_edificacao}")
 def update_edificacoes(request, cod_edificacao: str, payload: EdificacaoIn):
     edificacao = get_object_or_404(models.Edificacao, codigo=cod_edificacao)
     for attr, value in payload.dict().items():
@@ -70,14 +70,14 @@ def update_edificacoes(request, cod_edificacao: str, payload: EdificacaoIn):
     return {"success": True}
 
 
-@router.delete("/{cod_edificacao}", tags=["Edificacoes"])
+@router.delete("/{cod_edificacao}")
 def delete_edificacao(request, cod_edificacao: str):
     edificacao = get_object_or_404(models.Edificacao, codigo=cod_edificacao)
     edificacao.delete()
     return {"success": True}
 
 
-@router.get("/{cod_edificacao}/pontos", response=List[PontoColetaOut], tags=["Edificacoes"])
+@router.get("/{cod_edificacao}/pontos", response=List[PontoColetaOut])
 def list_pontos(request, cod_edificacao: str):
     qs = models.PontoColeta.objects.filter(edificacao__codigo=cod_edificacao)
     return qs
