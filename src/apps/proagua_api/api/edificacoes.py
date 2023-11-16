@@ -1,6 +1,8 @@
 from typing import List
 import os
+from io import BytesIO
 
+from PIL import Image
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from ninja import Router, Query, UploadedFile, File, Form
@@ -16,8 +18,11 @@ def save_file(file_path: str, file: UploadedFile=File(...)) -> str:
     file_path = os.path.join(settings.MEDIA_ROOT, file_path)
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     
-    with open(file_path, 'wb') as destination_file:
-        destination_file.write(file.read())
+    image = Image.open(BytesIO(file.read()))
+    image.save(file_path)
+
+    # with open(file_path, 'wb') as destination_file:
+    #     destination_file.write(file.read())   
 
     return os.path.relpath(file_path, settings.MEDIA_ROOT)
 
@@ -35,13 +40,21 @@ def get_edificacao(request, cod_edificacao: str):
     return qs
 
 
-@router.post("/", response=EdificacaoOut, tags=["Edificacoes"])
-def create_edificacao(request, payload: EdificacaoIn = Form(...), imagem: UploadedFile = File(...)):
-    im_path = save_file(f'media/images/edificacoes/{imagem.name}', imagem)
+@router.post("/{cod_edificacao}")
+def upload_image(request, cod_edificacao: str, imagem: UploadedFile = File(...)):
+    edificacao = get_object_or_404(models.Edificacao, codigo=cod_edificacao)
+    
+    im_path = save_file(f'media/images/edificacoes/edificacao_{edificacao.codigo}.png', imagem)
+    
+    edificacao.imagem = im_path
+    edificacao.save()
+    
+    return {"success": True}
 
+
+@router.post("/", response=EdificacaoOut)
+def create_edificacao(request, payload: EdificacaoIn):
     data = payload.dict()
-    data['imagem'] = im_path
-
     edificacao = models.Edificacao.objects.create(**data)
     edificacao.save()
     

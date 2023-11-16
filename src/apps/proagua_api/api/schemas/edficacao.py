@@ -7,7 +7,6 @@ from django.conf import settings
 from apps.proagua_api import models
 
 class EdificacaoIn(Schema):
-    imagem: Optional[str]
     codigo: str
     nome: str
     campus: str 
