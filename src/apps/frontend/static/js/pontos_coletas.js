@@ -1,4 +1,5 @@
 const BASE_URL = window.location.origin;
+// const BASE_URL = "https://10.0.0.103:8000";
 const pontos = BASE_URL + "/api/v1/pontos";
 
 function fetchJson(url) {
@@ -35,32 +36,31 @@ function createCard(item, edificacao) {
     return card;
 }
 
-function search(query, campus) {
+async function search(query, campus) {
     const resultContainer = document.getElementById('result-list');
     resultContainer.innerHTML = '';
 
-    const campusQueryParam = campus ? `&campus=${encodeURIComponent(campus)}` : '';
-    
-    fetchJson(`${pontos}?q=${encodeURIComponent(query)}${campusQueryParam}`)
-        .then((data) => {
-            const edificacaoPromises = data.items.map((item) => {
-                const edificacao_url = BASE_URL + item.edificacao_url;
-                return fetchJson(edificacao_url);
-            });
+    try {
+        const campusQueryParam = campus ? `&campus=${encodeURIComponent(campus)}` : '';
+        const data = await fetchJson(`${pontos}?q=${encodeURIComponent(query)}${campusQueryParam}`);
 
-            return Promise.all(edificacaoPromises);
-        })
-        .then((edificacoes) => {
+        if (data && data.items) {
+            const edificacoes = await Promise.all(data.items.map(item => fetchJson(BASE_URL + item.edificacao_url)));
+
             data.items.forEach((item, index) => {
                 const edificacao = edificacoes[index];
                 const card = createCard(item, edificacao);
                 resultContainer.appendChild(card);
             });
-        })
-        .catch((error) => {
-            console.error('Erro:', error);
-        });
+        } else {
+            console.error('Data or data.items is undefined.');
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+    }
 }
+
+
 
 function handleCampusChange(event) {
     const query = document.querySelector('input[name="search-query"]').value;
@@ -78,3 +78,5 @@ document.querySelector('select[name="campus"]').addEventListener('change', handl
 document.querySelector('input[name="search-query"]').addEventListener('input', handleQueryInput);
 
 search('', '');
+
+console.log('Pontos de coleta carregados');
