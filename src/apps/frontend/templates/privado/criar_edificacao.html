@@ -1,22 +1,130 @@
-{% extends 'privado/base.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
 
-{% block stylesheets %}
-<link rel="stylesheet" href="{% static 'stylesheets/privado/criar_edificacao.css' %}">
-{% endblock %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"
+            href="../../static/stylesheets/privado/pontos_coletas.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Montserrat:wght@500&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+        <title>Sequência de Coletas</title>
+    </head>
+
+    <body>
+        <div id="header-bar">
+            <button id="menu-button" class="collapsed" onclick="openNav()">
+                <i class="bi bi-list header-icon"></i>
+            </button>
+            <div class="proagua-logo">
+                <span href="/">
+                    <img src="../../static/images/Logo.svg"
+                        alt="Logo do projeto">
+                    ProÁgua
+                </span>
+            </div>
+        </div>
+        <div id="sidebar" class="navbar-wrapper">
+            <div class="navbar-header">
+                <button id="close-button" class="collapsed" onclick="closeNav()">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+            </div>
+            <div class="navbar-links">
+                <ul>
+                    <li>
+                        <i class="bi bi-clipboard-data-fill"></i>
+                        <a href="{% url 'sequencia_coletas' %}">Sequência Coletas</a>
+                    </li>
+                    <li>
+                        <i class="bi bi-envelope-fill"></i>
+                        <a href="#solicitacoes">Solicitações</a>
+                    </li>
+                    <li>
+                        <i class="bi bi-buildings-fill"></i>
+                        <a href="{% url 'visualizar_edificacoes' %}">Edificações</a>
+                    </li>
+                    <li>
+                        <i class="bi bi-gear-fill"></i>
+                        <a href="{% url 'configuracoes' %}">Configurações</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content">
+            <h2>Sequências de Coletas</h2>
+            <div class="flex wrapper">
+                <div class="flex" style="flex-direction: column;">
+                    <form method="post" action="/api/v1/edificacoes/">
+                         <label for="codigo">Código:</label>
+                         <input type="text" id="codigo" name="codigo" required>
+                         
+                         <label for="nome">Nome:</label>
+                         <input type="text" id="nome" name="nome" required>
+                         
+                         <label for="campus">Campus:</label>
+                         <select type="text" id="campus" name="campus" required>
+                            <option value="LE">Leste</option>
+                            <option value="OE">Oeste</option>
+                        </select>
+
+                         <label for="cronograma">Cronograma:</label>
+                         <input type="number" id="cronograma" name="cronograma" required>
+                         
+                         <button type="button" onclick="enviarFormulario()">Enviar</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </body>
+    <script>
+    function openNav() {
+        document.getElementById('sidebar').style.width = '15em';
+    }
+
+    function closeNav() {
+        document.getElementById('sidebar').style.width = '0';
+    }
+
+    function enviarFormulario() {
+        // Obter os valores do formulário
+        var codigo = document.getElementById("codigo").value;
+        var nome = document.getElementById("nome").value;
+        var campus = document.getElementById("campus").value;
+        var cronograma = document.getElementById("cronograma").value;
+
+        // Criar um objeto JSON com os valores do formulário
+        var json = {
+            "codigo": codigo,
+            "nome": nome,
+            "campus": campus,
+            "cronograma": parseInt(cronograma)
+        };
+
+        // Enviar os dados para o servidor usando o método POST
+        fetch("/api/v1/edificacoes/", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(json)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            window.location.href = "{% url 'visualizar_edificacoes' %}";
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
 
 
-{% block content %}
-<h1>Criar Edificação</h1>
-
-<div class="card">
-
-<form method="post" class="simple-form">
-     {% csrf_token %}
-    {{ form }}
-      <input type="submit" value="Criar">
- </form>
-    
-    
-</div>
-{% endblock %}
+    </script>
+</html>
