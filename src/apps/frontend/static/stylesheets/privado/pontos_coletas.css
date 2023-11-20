@@ -7,41 +7,48 @@
     text-decoration: inherit;
     color: inherit;
 }
+
 body {
     font-family: 'Montserrat';
     min-height: 100vh;
     background-color: #f3f3f3;
 }
+
 button {
     border: none;
     background-color: none;
 }
+
 /* Diminui as animações para navegadores com a configuração ativa */
 @media (prefers-reduced-motion: reduce) {  
     *,
     *::before,
     *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
+
 .flex {
     display: flex;
     gap: var(--gap, 1rem);
 }
+
 #header-bar {
     position: fixed;
     display: flex;
     align-items: center;
 }
+
 #header-bar, .navbar-wrapper .navbar-header {
     position: relative;
     width: 100%;
     height: clamp(50px, 8vh, 100px);
     background-color: #027BD0;
 }
+
 .proagua-logo {
     display: flex;
     height: 100%;
@@ -50,6 +57,7 @@ button {
     align-items: center;
     transform: translateX(-50%);
 }
+
 .proagua-logo span {
     display: flex;
     align-items: center;
@@ -60,22 +68,27 @@ button {
     text-transform: uppercase;
     cursor: pointer;
 }
+
 .proagua-logo img {
     height: 2.5rem;
 }
+
 #menu-button, #close-button {
     height: 100%;
     aspect-ratio: 1 / 1;
     background-color: #027BD0;
     padding: 0;
 }
+
 #menu-button:hover, #close-button:hover, .filled-button:hover {
     background-color: #07508b;
 }
+
 #menu-button i, #close-button i, .proagua-logo span {
     font-size: 1.5rem;
     color: white;
 }
+
 .navbar-wrapper {
     position: fixed;
     width: 0;
@@ -88,15 +101,18 @@ button {
     transition: .5s ease;
     box-shadow: 0px 0px 10px 5px rgba(82,82,82,0.3);
 }
+
 .navbar-header #close-button {
     position: absolute;
     right: 0;
 }
+
 .navbar-links ul{
     list-style: none;
     margin: 0;
     padding: 0;
 }
+
 .navbar-links li {
     display: flex;
     font-size: 1.5rem;
@@ -104,15 +120,18 @@ button {
     padding: 10px 0px 10px 10px;
     color: #5A6C79;
 }
+
 .navbar-links ul li:hover{
     color: white;
     background-color: #5A6C79;
 }
+
 .navbar-links a {
     font-weight: 500;
     margin-left: 10px;
     font-size: .8em;
 }
+
 .content {
     display: flex;
     flex-direction: column;
@@ -122,15 +141,18 @@ button {
     width: clamp(320px, 100vw - 2rem, 1200px);
     align-items: center;
 }
+
 .content h2 {
     font-weight: 500;
     font-size: 1.8rem;
     color: #525252;
 }
+
 .wrapper {
     flex-direction: column;
     width: 100%;
 }
+
 .result-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -138,6 +160,7 @@ button {
     gap: 2rem;
     width: 100%;
 }
+
 .card {
     --gap: .75rem;
     flex-direction: column;
@@ -161,11 +184,13 @@ button {
         align-items: center;
     }
 }
+
 @media (max-width: 900px) {
     .result-list {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
 @media (min-width: 1440px) {
     .result-list {
         grid-template-columns: repeat(4, 1fr);
@@ -175,6 +200,7 @@ button {
 .card h3 {
     font-size: 1rem;
 }
+
 .card h2 {
     font-size: 1.25rem;
     text-align: center;
@@ -183,17 +209,20 @@ button {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
+
 .card p {
     font-size: .8rem;
     color: #525252;
     text-align: center;
 }
+
 .filled-button {
     border-radius: 1.4rem;
     background-color: #027BD0;
     padding: .8rem;
     color: #f3f3f3;
 }
+
 .modal-button {
     position: absolute;
     top: 0;
@@ -203,9 +232,11 @@ button {
     border-radius: 5px;
     color: #525252;
 }
+
 .modal-button:hover {
     background-color: #EFEFEF;
 }
+
 .modal {
     --gap: .2rem;
     position: absolute;
@@ -219,6 +250,7 @@ button {
     padding: var(--gap);
     box-shadow: 0px 0px 10px 3px rgba(82,82,82,0.2);
 }
+
 .select, #search-bar {
     border: 1px solid #ABABAB;
     background-color: white;
@@ -227,6 +259,7 @@ button {
     padding: .5rem 0.6rem;
     border-radius: 6px;
 }
+
 .bi-search {
     position: absolute;
     top: 50%;
@@ -234,12 +267,44 @@ button {
     transform: translateY(-50%);
     color: #525252;
 }
+
 #search-bar {
     width: 100%;
     padding: .8rem 0.6rem .8rem 2.5rem;
 }
+
 .select:focus-visible, .select:focus, .select:focus-within,
 #search-bar:focus-visible, #search-bar:focus, #search-bar:focus-within {
     border: 1px solid #525252;
     outline: none;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#pagination-prev,
+#pagination-next {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#pagination-prev:disabled,
+#pagination-next:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#page-info {
+    font-size: 14px;
+    color: #333;
+    flex-grow: 1;
+    text-align: center;
 }
