@@ -4,8 +4,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet"
-            href="../../static/stylesheets/privado/pontos_coletas.css">
+        <link rel="stylesheet" href="../../static/stylesheets/privado/pontos_coletas.css">
+        <link rel="stylesheet" href="../../static/stylesheets/privado/criar_edificacao.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link
@@ -39,7 +39,8 @@
                 <ul>
                     <li>
                         <i class="bi bi-clipboard-data-fill"></i>
-                        <a href="{% url 'sequencia_coletas' %}">Sequência Coletas</a>
+                        <a href="{% url 'sequencia_coletas' %}">Sequência
+                            Coletas</a>
                     </li>
                     <li>
                         <i class="bi bi-envelope-fill"></i>
@@ -57,26 +58,30 @@
             </div>
         </div>
         <div class="content">
-            <h2>Sequências de Coletas</h2>
+            <h2>Criar Edificação</h2>
             <div class="flex wrapper">
-                <div class="flex" style="flex-direction: column;">
+                <div id="div-container" class="flex"
+                    style="flex-direction: column;">
                     <form method="post" action="/api/v1/edificacoes/">
-                         <label for="codigo">Código:</label>
-                         <input type="text" id="codigo" name="codigo" required>
-                         
-                         <label for="nome">Nome:</label>
-                         <input type="text" id="nome" name="nome" required>
-                         
-                         <label for="campus">Campus:</label>
-                         <select type="text" id="campus" name="campus" required>
+                        <label for="codigo">Código:</label>
+                        <input type="text" id="codigo" name="codigo" required>
+
+                        <label for="nome">Nome:</label>
+                        <input type="text" id="nome" name="nome" required>
+
+                        <label for="campus">Campus:</label>
+                        <select type="text" id="campus" name="campus" required>
                             <option value="LE">Leste</option>
                             <option value="OE">Oeste</option>
                         </select>
 
-                         <label for="cronograma">Cronograma:</label>
-                         <input type="number" id="cronograma" name="cronograma" required>
-                         
-                         <button type="button" onclick="enviarFormulario()">Enviar</button>
+                        <label for="cronograma">Cronograma:</label>
+                        <input type="number" id="cronograma" name="cronograma"
+                            required>
+
+                            <div class="center-button">
+                                <button type="button" onclick="enviarFormulario()">Criar</button>
+                            </div>
                     </form>
                 </div>
 
