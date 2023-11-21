@@ -6,14 +6,12 @@ let totalItems = 0;
 const pontos = `${BASE_URL}/api/v1/pontos`;
 
 // Função para fazer requisições JSON
-function fetchJson(url) {
-    return fetch(url)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`Erro ao acessar a API: ${response.statusText}`);
-            }
-            return response.json();
-        });
+async function fetchJson(url) {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`Erro ao acessar a API: ${response.statusText}`);
+    }
+    return response.json();
 }
 
 // Função para criar um card
