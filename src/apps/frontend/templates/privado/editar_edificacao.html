@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../static/stylesheets/privado/base.css">
     <link rel="stylesheet" href="../../static/stylesheets/privado/pontos_coletas.css">
-    <link rel="stylesheet" href="../../static/stylesheets/privado/criar_edificacao.css">
+    <link rel="stylesheet" href="../../static/stylesheets/privado/form_edificacao.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Montserrat:wght@500&display=swap"
@@ -90,8 +90,9 @@
                     <label for="cronograma">Cronograma:</label>
                     <input type="number" id="cronograma" name="cronograma" required>
 
-                    <div class="center-button">
+                    <div class="flex button-container">
                         <button type="button" onclick="atualizarEdificacao()">Atualizar</button>
+                        <button id="excluir" type="button" onclick="excluirEdificacao()">Excluir</button>
                     </div>
                 </form>
             </div>

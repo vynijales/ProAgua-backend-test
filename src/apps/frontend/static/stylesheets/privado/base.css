@@ -5,11 +5,13 @@
     --font-family-primary: 'Montserrat';
     --primary-blue:  rgb(2, 123, 208);
     --secundary-blue: rgb(0, 109, 186);
-    --primary-red: rgb(252, 27, 68);
-    --primary-green: rgb(46, 188, 94);
-    --secundary-green: rgb(109, 245, 115);
+    --primary-red: rgb(226, 3, 44);
+    --secundary-red: rgb(252, 27, 68);
+    --primary-green: rgb(13, 186, 21);
+    --secundary-green: rgb(46, 188, 94);
     --primary-white: rgb(255, 255, 255);
     --secundary-white: rgb(244, 244, 244);
+    --tertiary-white: rgb(204, 204, 204);
     --primary-gray: rgb(90, 108, 121);
     --primary-black: rgb(0, 0, 0);
 
