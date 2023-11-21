@@ -1,0 +1,192 @@
+/* Version: 1.0.0 */
+
+/* Declarando variáveis */
+:root {
+    --font-family-primary: 'Montserrat';
+    --primary-blue:  rgb(2, 123, 208);
+    --secundary-blue: rgb(0, 109, 186);
+    --primary-red: rgb(252, 27, 68);
+    --primary-green: rgb(46, 188, 94);
+    --secundary-green: rgb(109, 245, 115);
+    --primary-white: rgb(255, 255, 255);
+    --secundary-white: rgb(244, 244, 244);
+    --primary-gray: rgb(90, 108, 121);
+    --primary-black: rgb(0, 0, 0);
+
+    --neutral: var(--primary-white);
+    --background-color: var(--secundary-white);
+    --header-color: var(--primary-blue);
+}
+
+/* Resetando estilos padrões */
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: inherit;
+    color: inherit;
+}
+
+/* Diminui as animações para navegadores com a configuração ativa */
+@media (prefers-reduced-motion: reduce) {  
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+body {
+    min-height: 100vh;
+    font-family: var(--font-family-primary);
+    background-color: var(--background-color);
+}
+
+button {
+    border: none;
+    background-color: none;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    justify-content: space-between;
+}
+
+header, .navbar-header {
+    align-items: center;
+    height: clamp(50px, 8vh, 100px);
+    background-color: var(--header-color);
+    color: var(--primary-white);
+    font-size: 1.5rem;
+}
+
+header a {
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-button {
+    padding: 0;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: inherit;
+    font-size: 1.5rem;
+}
+
+.filled-button {
+    border-radius: 1.4rem;
+    background-color: #027BD0;
+    padding: .8rem;
+    color: #f3f3f3;
+}
+
+.menu-button:hover, .filled-button:hover {
+    background-color: var(--secundary-blue);
+}
+
+.navbar-header {
+    justify-content: flex-end;
+}
+
+.navbar-wrapper {
+    position: fixed;
+    width: 0;
+    height: 100vh;
+    background-color: var(--background-color);
+    z-index: 1;
+    overflow-x: hidden;
+    transition: .5s ease;
+    box-shadow: 0px 0px 10px 5px rgba(82,82,82,0.3);
+}
+
+nav ul{
+    list-style: none;
+}
+
+nav li {
+    display: flex;
+    font-size: 1.5rem;
+    align-items: center;
+    padding: 10px 0px 10px 10px;
+    color: #5A6C79;
+}
+
+nav li:hover{
+    color: var(--primary-white);
+    background-color: #5A6C79;
+}
+
+nav a {
+    font-weight: 500;
+    margin-left: 10px;
+    font-size: .8em;
+}
+
+.proagua-logo {
+    height: 100%;
+    align-items: center;
+}
+
+.proagua-logo span {
+    font-weight: 400;
+    user-select: none;
+    padding: 10px 0px;
+    text-transform: uppercase;
+}
+
+.proagua-logo img {
+    height: 2.5rem;
+}
+
+main {
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    padding: 2rem;
+    padding-top: calc(clamp(50px, 8vh, 100px) + 2rem);
+    width: clamp(320px, 90vw - 2rem, 1200px);
+}
+
+main h2 {
+    font-weight: 500;
+    font-size: 1.8rem;
+    color: #525252;
+}
+
+.pagination {
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#pagination-prev,
+#pagination-next {
+    background-color: var(--primary-blue);
+    color: var(--primary-white);
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#page-info {
+    font-size: 14px;
+    color: #333;
+    flex-grow: 1;
+    text-align: center;
+}
+
+
+/* Utilitários */
+.flex {
+    display: flex;
+    gap: var(--gap, 1rem);
+}
+

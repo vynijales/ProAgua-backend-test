@@ -1,76 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet"
-            href="../../static/stylesheets/privado/pontos_coletas.css">
+        <link rel="stylesheet" href="../../static/stylesheets/privado/base.css">
+        <link rel="stylesheet" href="../../static/stylesheets/privado/pontos_coletas.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Montserrat:wght@500&display=swap"
-            rel="stylesheet">
-        <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         <title>Pontos de Coleta</title>
     </head>
 
     <body>
-        <div id="header-bar">
-            <button id="menu-button" class="collapsed" onclick="openNav()">
+        <header class="flex">
+            <button class="menu-button" onclick="openNav()">
                 <i class="bi bi-list header-icon"></i>
             </button>
-            <div class="proagua-logo">
-                <span href="/">
-                    <img src="../static/images/Logo.svg" alt="Logo do projeto">
-                    ProÁgua
-                </span>
-            </div>
-        </div>
-        <div id="sidebar" class="navbar-wrapper">
-            <div class="navbar-header">
-                <button id="close-button" class="collapsed" onclick="closeNav()">
+            <a class="flex proagua-logo" href="/">
+                <img src="../static/images/Logo.svg" alt="Logo do projeto">
+                <span>ProÁgua</span>
+            </a>
+            <a class="flex menu-button" href="/">
+                <i class="bi bi-box-arrow-right header-icon"></i>
+            </a>
+        </header>
+
+        <aside class="navbar-wrapper">
+            <div class="flex navbar-header">
+                <button class="menu-button" onclick="closeNav()">
                     <i class="bi bi-chevron-left"></i>
                 </button>
             </div>
-            <div class="navbar-links">
+            <nav class="navbar-links">
                 <ul>
                     <li>
-                        <i class="bi bi-clipboard-data-fill"></i>
-                        <a href="{% url 'sequencia_coletas' %}">Sequência
-                            Coletas</a>
+                        <a href="/sequencia_coletas/">
+                            <i class="bi bi-clipboard-data-fill"></i>
+                            <span>Sequência Coletas</span>
+                        </a>
                     </li>
                     <li>
-                        <i class="bi bi-buildings-fill"></i>
-                        <a href="{% url 'visualizar_edificacoes' %}">Edificações</a>
+                        <a href="/edificacao/">
+                            <i class="bi bi-buildings-fill"></i>
+                            <span>Edificações</span>
+                        </a>
                     </li>
                     <li>
-                        <i class="bi bi-geo-alt-fill"></i>
-                        <a href="{% url 'visualizar_pontos' %}">Pontos de Coleta</a>
+                        <a href="/ponto/">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            <span>Pontos de Coleta</span>
+                        </a>
                     </li>
                     <li>
-                        <i class="bi bi-envelope-fill"></i>
-                        <a href="#solicitacoes">Solicitações</a>
+                        <a href="#solicitacoes">
+                            <i class="bi bi-envelope-fill"></i>
+                            <span>Solicitações</span>
+                        </a>
                     </li>
                     <li>
-                        <i class="bi bi-gear-fill"></i>
-                        <a href="{% url 'configuracoes' %}">Configurações</a>
+                        <a href="/configuracoes/">
+                            <i class="bi bi-gear-fill"></i>
+                            <span>Configurações</span>
+                        </a>
                     </li>
                 </ul>
-            </div>
-        </div>
-        <div class="content">
+            </nav>
+        </aside>
+
+        <main class="flex">
             <h2>Pontos de Coleta</h2>
             <div class="flex wrapper">
-                <div class="flex" style="flex-direction: column;">
+                <search class="flex" style="flex-direction: column;">
                     <div class="flex" style="position: relative;">
                         <i class="bi bi-search"></i>
                         <input type="text" name="search-query" id="search-bar"
                             placeholder="Digite o termo de pesquisa">
                     </div>
-                    <div class="flex"
-                        style="flex-direction: row-reverse; --gap: .75rem;">
+                    <div class="flex" style="margin-left:auto;">
                         <select name="campus" class="select">
                             <option value disabled selected hidden>Campus</option>
                             <option value>Leste/Oeste</option>
@@ -78,35 +86,29 @@
                             <option value="OE">Oeste</option>
                         </select>
                     </div>
-                </div>
-                <div class="result-list" id="result-list">
+                </search>
+                
+                <div id="result-list">
                     <!-- Os resultados da pesquisa serão adicionados aqui -->
                 </div>
-                <div class="pagination">
+
+                <div class="flex pagination">
                     <button id="pagination-prev" style="display: none;">&lt; Anterior</button>
                     <span id="page-info">Página 1 de 1</span>
                     <button id="pagination-next" style="display: none;">Próxima &gt;</button>
                 </div>
                 
-                
             </div>
-        </div>
+        </main>
     </body>
     <script>
-    function openNav() {
-        document.getElementById('sidebar').style.width = '15em';
-    }
-
-    function closeNav() {
-        document.getElementById('sidebar').style.width = '0';
-    }
-
-    function change_modal_state(element) {
+        function change_modal_state(element) {
         var parentCard = element.parentNode;
         var modalZPos = parentCard.querySelector(".modal").style.zIndex;
 
         parentCard.querySelector(".modal").style.zIndex = modalZPos === "1" ? "-1" : "1";
     }
-</script>
+    </script>
+    <script src="../../static/js/base.js"></script>
     <script src="../static/js/pontos_coletas.js"></script>
 </html>
