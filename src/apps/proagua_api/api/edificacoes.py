@@ -40,7 +40,7 @@ def get_edificacao(request, cod_edificacao: str):
     return qs
 
 
-@router.post("/{cod_edificacao}")
+@router.post("/{cod_edificacao}/image")
 def upload_image(request, cod_edificacao: str, imagem: UploadedFile = File(...)):
     edificacao = get_object_or_404(models.Edificacao, codigo=cod_edificacao)
     
