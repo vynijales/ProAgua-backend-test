@@ -18,7 +18,7 @@ function carregarEdificacao() {
     })
         .then(response => {
             if (!response.ok) {
-                window.location.href = "{% url 'visualizar_edificacoes' %}";
+                window.location.href = "/edificacao/";
             }
             return response.json();
         })

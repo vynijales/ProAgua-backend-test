@@ -18,9 +18,9 @@ coleta_urls = [
 
 edificacao_urls = [
     path('', views.edificacoes, name='visualizar_edificacoes'),
+    path('criar/', views.criar_edificacao, name='criar_edificacao'),
     path('<str:cod_edificacao>/', views.edificacao, name='editar_edificacao'),
     path('<str:cod_edificacao>/excluir/', views.excluir_edificacao, name='excluir_edificacao'),
-    path('criar/', views.criar_edificacao, name='criar_edificacao'),
 ]
 
 accounts_urls = [
