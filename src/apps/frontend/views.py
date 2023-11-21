@@ -259,23 +259,11 @@ def excluir_edificacao(request, edificacao_id: int):
 
 
 @login_required
-def edificacao(request, edificacao_id: int):
-    # edificacao = get_object_or_404(Edificacao, id=edificacao_id)
-    # form = FormEdificacao(instance=edificacao)
-    
-    # if request.method == 'POST':
-    #     form = FormEdificacao(request.POST, instance=edificacao)
-    #     form.save()
-
-    #     next_url = request.GET.get('next')
-    #     if next_url:
-    #         return HttpResponseRedirect(next_url)
-
+def edificacao(request, cod_edificacao: str):
     
     return render(
         request=request,
-        template_name='privado/editar_edificacao.html',
-        # context={ 'edificacao': edificacao, 'form': form }
+        template_name='privado/editar_edificacao.html'
     )
 
 @login_required
