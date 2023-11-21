@@ -30,14 +30,10 @@ function search(query) {
                         listItem.id = '' + edificacao.codigo;
 
                         listItem.innerHTML = `
-                    <span class="edification_id">${edificacao.codigo}</span>
-                    <span class="edification_name">${edificacao.nome}</span>
-                    <button class="modal-button" onclick="change_modal_state(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                    <div class="flex modal">
-                        <a href="" style="color: #525252;">Editar</a>
-                        <a href="" style="color: #FC1B44;">Remover</a>
-                    </div>
-                `;
+                            <span class="edification_id">${edificacao.codigo}</span>
+                            <span class="edification_name">${edificacao.nome}</span>
+                            <a class="modal-button" href= "/edificacao/${edificacao.codigo}"><i class="bi bi-pencil-square"></i></a>
+                        `;
                         resultContainer.appendChild(listItem);
                     })
                     .catch((error) => {

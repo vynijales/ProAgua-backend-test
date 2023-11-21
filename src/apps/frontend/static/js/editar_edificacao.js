@@ -1,11 +1,3 @@
-function openNav() {
-    document.getElementById('sidebar').style.width = '15em';
-}
-
-function closeNav() {
-    document.getElementById('sidebar').style.width = '0';
-}
-
 function carregarEdificacao() {
     let target = window.location.pathname.split("/edificacao/")[1];
     target = target.replace(/\/$/, "");
