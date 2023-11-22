@@ -9,8 +9,8 @@ from ... import models
 class PontoColetaIn(Schema):
     codigo_edificacao: str
     ambiente: str
+    tombo: Optional[str]
     tipo: int
-    amontante_id: int = None
 
 
 class PontoColetaOut(Schema):
@@ -18,13 +18,9 @@ class PontoColetaOut(Schema):
     imagem: Optional[str]
     ambiente: str
     tipo: int
-    
-    # Substituir amontante_id por amontante_url ?
     tombo: Optional[str]
-    
     edificacao_url: str
     fluxos_url: str
-    
 
     @staticmethod
     def resolve_edificacao_url(self):
@@ -42,5 +38,4 @@ class FilterPontos(FilterSchema):
     )
     edificacao__campus: Optional[str] = Field(alias="campus")
     tipo: Optional[int]
-    amontante_id: Optional[int]
     fluxos: Optional[int]
