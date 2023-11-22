@@ -7,28 +7,42 @@ Material de referência:
 from typing import List
 
 from django.shortcuts import get_object_or_404
-from ninja import Router, Query
+from ninja import Router, Query, UploadedFile, File
 from ninja.pagination import paginate
 
 from .schemas.ponto_coleta import *
 from .schemas.coleta import ColetaOut
 from .schemas.fluxo import FluxoOut
 from .. import models
+from .utils import save_file
 
-router = Router()
+router = Router(tags=["Pontos"])
 
-@router.get("/", response=List[PontoColetaOut], tags=["Pontos"])
+@router.get("/", response=List[PontoColetaOut])
 @paginate
 def list_ponto(request, filters: FilterPontos = Query(...)):
     qs = models.PontoColeta.objects.all()
     return filters.filter(qs)
 
-@router.get("/{id_ponto}", response=PontoColetaOut, tags=["Pontos"])
+
+@router.get("/{id_ponto}", response=PontoColetaOut)
 def get_ponto(request, id_ponto: int):
     qs = get_object_or_404(models.PontoColeta, id=id_ponto)
     return qs
 
-@router.post("/", tags=["Pontos"])
+
+@router.post("/{id_ponto}/imagem")
+def upload_image(request, id_ponto: str, imagem: UploadedFile = File(...)):
+    ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
+
+    im_path = save_file(f'media/images/pontos/ponto_{ponto.id}.png', imagem)
+    ponto.imagem = im_path
+    ponto.save()
+    
+    return {"success": True}
+
+
+@router.post("/")
 def create_ponto(request, payload: PontoColetaIn):
     edificacao = get_object_or_404(models.Edificacao, codigo=payload.codigo_edificacao)
 
@@ -41,7 +55,8 @@ def create_ponto(request, payload: PontoColetaIn):
 
     return {"success": True}
 
-@router.put("/{id_ponto}", tags=["Pontos"])
+
+@router.put("/{id_ponto}")
 def update_ponto(request, id_ponto: int, payload: PontoColetaIn):
     ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
     for attr, value in payload.dict().items():
@@ -49,13 +64,15 @@ def update_ponto(request, id_ponto: int, payload: PontoColetaIn):
     ponto.save()
     return {"success": True}
 
-@router.delete("/{id_ponto}", tags=["Pontos"])
+
+@router.delete("/{id_ponto}")
 def delete_ponto(request, id_ponto: int):
     ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
     ponto.delete()
     return {"success": True}
 
-@router.get("/{id_ponto}/coletas", response=List[ColetaOut], tags=["Pontos"])
+
+@router.get("/{id_ponto}/coletas", response=List[ColetaOut])
 def list_coletas(request, id_ponto: int):
     """
     Retorna todas as coletas associadas a um ponto de coleta
@@ -63,7 +80,8 @@ def list_coletas(request, id_ponto: int):
     qs = models.Coleta.objects.filter(ponto__id=id_ponto)
     return qs
 
-@router.get("/{id_ponto}/fluxos", response=List[FluxoOut], tags=["Pontos"])
+
+@router.get("/{id_ponto}/fluxos", response=List[FluxoOut])
 def get_fluxos(request, id_ponto: int):
     fluxos = models.Fluxo.objects.filter(pontos__id=id_ponto)
     return fluxos

@@ -14,7 +14,8 @@ class PontoColetaIn(Schema):
 
 
 class PontoColetaOut(Schema):
-    id: int 
+    id: int
+    imagem: Optional[str]
     ambiente: str
     tipo: int
     

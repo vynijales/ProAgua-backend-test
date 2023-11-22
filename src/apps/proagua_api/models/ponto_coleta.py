@@ -11,7 +11,11 @@ TIPOS_PONTOS = (
 
 class PontoColeta(models.Model):
     id = models.AutoField(primary_key=True)
-
+    imagem = models.ImageField(
+        upload_to="media/images/pontos", 
+        blank=True, 
+        null=True
+    )
     edificacao = models.ForeignKey(
         to="Edificacao",
         related_name="PontoColeta",
