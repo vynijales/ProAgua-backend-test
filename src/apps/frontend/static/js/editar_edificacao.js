@@ -63,4 +63,28 @@ function atualizarEdificacao() {
         });
 }
 
+function excluirEdificacao() {
+    console.log("Excluindo edificação...");
+    let target = window.location.pathname.split("/edificacao/")[1];
+    target = target.replace(/\/$/, "");
+
+    var json = {};
+
+    fetch("/api/v1/edificacoes/" + target, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(json)
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            window.location.href = "/edificacao";
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
 carregarEdificacao();
