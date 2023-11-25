@@ -22,12 +22,7 @@ function createCard(item, edificacao) {
     card.id = '' + item.id;
 
     card.innerHTML = `
-        <button class="modal-button" onclick="change_modal_state(this)"><i class="bi bi-three-dots-vertical"></i></button>
-        <div class="flex modal">
-            <a href="" style="color: #525252;">Editar</a>
-            <a href="" style="color: #FC1B44;">Remover</a>
-        </div>
-        <h3>${edificacao.codigo}</h3>
+    <a class="modal-button" href= "/ponto/${item.id}"><i class="bi bi-pencil-square"></i></a>        <h3>${edificacao.codigo}</h3>
         <h2>${edificacao.nome}</h2>
         <p>${item.tipo == 1 ? 'Bebedouro' : 'RPS'}</p>
         <p>${item.ambiente}</p>
