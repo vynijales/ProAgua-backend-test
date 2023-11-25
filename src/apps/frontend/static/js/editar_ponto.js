@@ -36,7 +36,7 @@ function carregarPonto() {
     })
         .then(response => {
             if (!response.ok) {
-                // window.location.href = "/ponto/";
+                window.location.href = "/ponto";
             }
             return response.json();
         })
@@ -47,10 +47,8 @@ function carregarPonto() {
             document.getElementById("tipo").value = data.tipo;
             document.getElementById("tombo").value = data.tombo;
             
-            // URL da imagem
             const imageUrl = data.imagem;
 
-            // Exibir a imagem em um elemento <img>
             const imgElement = document.getElementById("imagePreview");
             imgElement.src = imageUrl;
 
@@ -152,28 +150,29 @@ async function atualizarPonto() {
 
 }
 
-function excluirEdificacao() {
-    console.log("Excluindo edificação...");
-    let target = window.location.pathname.split("/edificacao/")[1];
+async function excluirPonto() {
+    console.log("Excluindo Ponto de Coleta...");
+    let target = window.location.pathname.split("/ponto/")[1];
     target = target.replace(/\/$/, "");
 
     var json = {};
 
-    fetch("/api/v1/edificacoes/" + target, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(json)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            window.location.href = "/edificacao";
-        })
-        .catch((error) => {
-            console.error('Error:', error);
+    try {
+        const responsePonto = await fetch("/api/v1/pontos/" + target, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(json),
         });
+
+        console.log('Ponto atualizado com sucesso:', await responsePonto.json());
+        
+        window.location.href = "/ponto";
+    } catch (error) {
+        console.error('Erro durante a exclusão:', error);
+    }
+
 }
 
 carregarOpcoesEdificacao();
