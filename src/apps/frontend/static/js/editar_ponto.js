@@ -120,7 +120,7 @@ async function atualizarPonto() {
         });
 
         if (!responsePonto.ok) {
-            const errorResponse = await responsePonto.json(); // Adiciona esta linha
+            const errorResponse = await responsePonto.json();
             throw new Error(`Erro ao atualizar o ponto: ${responsePonto.statusText}. Detalhes: ${JSON.stringify(errorResponse)}`);
         }
 

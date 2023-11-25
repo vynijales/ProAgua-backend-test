@@ -53,7 +53,10 @@ def create_ponto(request, payload: PontoColetaIn):
     ponto_coleta = models.PontoColeta.objects.create(**data_dict)
     ponto_coleta.save()
 
-    return {"success": True}
+    return {
+        "id": ponto_coleta.id,
+        "success": True
+        }
 
 
 @router.put("/{id_ponto}")

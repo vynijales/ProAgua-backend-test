@@ -100,3 +100,11 @@
     border: 1px solid #525252;
     outline: none;
 }
+
+#nova-coleta {
+    align-self: center;
+    position: fixed;
+    bottom: 1rem;
+    right: 2.5rem;
+    opacity: 0.8;
+}

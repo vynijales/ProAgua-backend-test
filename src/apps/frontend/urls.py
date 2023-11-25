@@ -5,10 +5,10 @@ from . import views
 ponto_coleta_urls = [
     path('', views.pontos_coletas, name='visualizar_pontos'),
     # path('<int:ponto_id>/', views.ponto_coleta, name='visualizar_ponto'),
+    path('criar/', views.criar_ponto, name='criar_ponto'),
     path('<int:ponto_id>/', views.editar_ponto, name='editar_ponto'),
     path('<int:ponto_id>/amostragem/<int:amostragem>/', views.ponto_coleta_relatorio, name='visualizar_relatorio'),
     path('<int:ponto_id>/amostragem/criar', views.criar_amostragem, name='criar_amostragem'),
-    path('criar/', views.criar_ponto, name='criar_ponto'),
 ]
 
 coleta_urls = [
