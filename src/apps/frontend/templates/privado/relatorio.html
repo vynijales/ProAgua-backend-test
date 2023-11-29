@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/stylesheets/privado/base.css">
+    <link rel="stylesheet" href="../../static/stylesheets/privado/edificacoes.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+    <script 
+        src="https://kit.fontawesome.com/586c659954.js"
+        crossorigin="anonymous"
+    >
+    </script>
+    <script src="/static/js/sidebar.js"></script>
+    <link rel="stylesheet" href="../../static/stylesheets/privado/relatorio.css">
+    <title>ProÁgua</title>
+</head>
+<body>
+    <div id="header-bar">
+        <button id="menu-button" class="collapsed" onclick="openNav()">
+            <i class="bi bi-list header-icon"></i>
+        </button>
+        <div class="proagua-logo">
+            <span href="/">
+                <img src="../static/images/Logo.svg" alt="Logo do projeto">
+                ProÁgua
+            </span>
+        </div>
+    </div>
+    <div id="sidebar" class="navbar-wrapper">
+        <div class="navbar-header">
+            <button id="close-button" class="collapsed" onclick="closeNav()">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+        </div>
+        <div class="navbar-links">
+            <ul>
+                <li>
+                    <i class="bi bi-clipboard-data-fill"></i>
+                    <a href="{% url 'sequencia_coletas' %}">Sequência Coletas</a>
+                </li>
+                <li>
+                    <i class="bi bi-buildings-fill"></i>
+                    <a href="{% url 'visualizar_edificacoes' %}">Edificações</a>
+                </li>
+                <li>
+                    <i class="bi bi-geo-alt-fill"></i>
+                    <a href="{% url 'visualizar_pontos' %}">Pontos de Coleta</a>
+                </li>
+                <li>
+                    <i class="bi bi-envelope-fill"></i>
+                    <a href="#solicitacoes">Solicitações</a>
+                </li>
+                <li>
+                    <i class="bi bi-gear-fill"></i>
+                    <a href="{% url 'configuracoes' %}">Configurações</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="flex content">
+        <span style="font-size: 2.2rem;">Relatório</span>
+        <div class="flex card" style="width: fit-content; max-width: 90%; padding: 2rem; gap: 1rem; height: fit-content;">
+            <h2>Coleta no bebedouro nº4028500</h2>
+            <table>
+                <tr>
+                    <th>Ordem</th>
+                    <th>Temperatura</th>
+                    <th>Cloro residual livre</th>
+                    <th>Turbidez</th>
+                    <th>Coliformes totais</th>
+                    <th>Escherichia coli</th>
+                    <th>Cor</th>
+                    <th>Data</th>
+                    <th>Responsável</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>30º</td>
+                    <td>0.01</td>
+                    <td>0.4</td>
+                    <td>Ausência</td>
+                    <td>Ausência</td>
+                    <td>0.2</td>
+                    <td>07/09/2023</td>
+                    <td>Thiago</td>
+                    <td style="text-align: center;"><i class="bi bi-check2"></i></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>30º</td>
+                    <td>0.01</td>
+                    <td>0.4</td>
+                    <td>Ausência</td>
+                    <td>Ausência</td>
+                    <td>0.2</td>
+                    <td>07/09/2023</td>
+                    <td>Thiago</td>
+                    <td style="text-align: center;"><i class="bi bi-check2"></i></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>30º</td>
+                    <td>0.01</td>
+                    <td>0.4</td>
+                    <td>Ausência</td>
+                    <td>Ausência</td>
+                    <td>0.2</td>
+                    <td>07/09/2023</td>
+                    <td>Thiago</td>
+                    <td style="text-align: center;"><i class="bi bi-x"></i></td>
+                </tr>
+            </table>
+
+            <h2>Coleta no reservatório predial superior (RPS)</h2>
+            <table>
+                <tr>
+                    <th>Ordem</th>
+                    <th>Temperatura</th>
+                    <th>Cloro residual livre</th>
+                    <th>Turbidez</th>
+                    <th>Coliformes totais</th>
+                    <th>Escherichia coli</th>
+                    <th>Cor</th>
+                    <th>Data</th>
+                    <th>Responsável</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>30º</td>
+                    <td>0.01</td>
+                    <td>0.4</td>
+                    <td>Ausência</td>
+                    <td>Ausência</td>
+                    <td>0.2</td>
+                    <td>07/09/2023</td>
+                    <td>Thiago</td>
+                    <td style="text-align: center;"><i class="bi bi-check2"></i></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>30º</td>
+                    <td>0.01</td>
+                    <td>0.4</td>
+                    <td>Ausência</td>
+                    <td>Ausência</td>
+                    <td>0.2</td>
+                    <td>07/09/2023</td>
+                    <td>Thiago</td>
+                    <td style="text-align: center;"><i class="bi bi-check2"></i></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>30º</td>
+                    <td>0.01</td>
+                    <td>0.4</td>
+                    <td>Ausência</td>
+                    <td>Ausência</td>
+                    <td>0.2</td>
+                    <td>07/09/2023</td>
+                    <td>Thiago</td>
+                    <td style="text-align: center;"><i class="bi bi-x"></i></td>
+                </tr>
+            </table>
+
+            <h2>Coleta no reservatório predial inferior (RPI)</h2>
+            <table>
+                <tr>
+                    <th>Ordem</th>
+                    <th>Temperatura</th>
+                    <th>Cloro residual livre</th>
+                    <th>Turbidez</th>
+                    <th>Coliformes totais</th>
+                    <th>Escherichia coli</th>
+                    <th>Cor</th>
+                    <th>Data</th>
+                    <th>Responsável</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>30º</td>
+                    <td>0.01</td>
+                    <td>0.4</td>
+                    <td>Ausência</td>
+                    <td>Ausência</td>
+                    <td>0.2</td>
+                    <td>07/09/2023</td>
+                    <td>Thiago</td>
+                    <td style="text-align: center;"><i class="bi bi-check2"></i></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>30º</td>
+                    <td>0.01</td>
+                    <td>0.4</td>
+                    <td>Ausência</td>
+                    <td>Ausência</td>
+                    <td>0.2</td>
+                    <td>07/09/2023</td>
+                    <td>Thiago</td>
+                    <td style="text-align: center;"><i class="bi bi-check2"></i></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>30º</td>
+                    <td>0.01</td>
+                    <td>0.4</td>
+                    <td>Ausência</td>
+                    <td>Ausência</td>
+                    <td>0.2</td>
+                    <td>07/09/2023</td>
+                    <td>Thiago</td>
+                    <td style="text-align: center;"><i class="bi bi-x"></i></td>
+                </tr>
+            </table>
+        </div>
+        <button class="floating-bt">
+            <i class="bi bi-plus-lg"></i> Adicionar coleta
+        </button>
+    </div>
+</body>
+</html>

@@ -1,30 +1,24 @@
 from django.shortcuts import (
     render,
-    # get_object_or_404,
-    # HttpResponseRedirect,
     redirect
 )
 
-# from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-# from django.db.models import Count, Q
-# from django.forms import ChoiceField
 
-# from .models import (
-#     PontoColeta,
-#     Coleta,
-#     Edificacao,
-#     SequenciaColetas
-# )
 
-# from .forms import (
-#     FormPontoColeta,
-#     FormColeta,
-#     FormEdificacao,
-#     FormSearchPontos,
-# )
+def serve_protected_file(file_name):
+    @login_required
+    def view(request):
+        return render(
+            request=request,
+            template_name=file_name
+        )
+    
+    return view
 
-# from .utils import get_hierarquia
+
+def serve_file(file_name, login_required=False):
+    pass
 
 
 def home(request):

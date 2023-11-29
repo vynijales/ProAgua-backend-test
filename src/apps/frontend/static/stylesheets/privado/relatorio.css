@@ -1,0 +1,71 @@
+@import "./base.css";
+
+.card {
+    align-items: start;
+}
+
+table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+    border-spacing: 0;
+    border-collapse: separate;
+    border-radius: 0.25rem;
+    /* overflow: hidden; */
+    border: 1px solid rgb(168, 168, 168);
+}
+
+td, th {
+    padding: 1rem;
+}
+
+tr:hover {
+    background-color: rgb(213, 223, 233);
+}
+tr:first-child {
+    background-color: rgb(180, 195, 209);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+tr {
+    background-color: aliceblue;
+}
+
+.card h2:not(:first-child) {
+    margin-top: 3rem;
+}
+
+.bi.bi-check2 {
+    color: rgb(25, 185, 0);
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.bi.bi-x {
+    color: rgb(211, 32, 32);
+    font-size: 2rem;
+}
+
+.floating-bt {
+    background-color: var(--primary-blue);
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    box-shadow: 2px 2px 10px 0px rgleftba(0, 0, 0, 0.2);
+    transition: box-shadow, 0.1s;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: fixed;
+    right: 40px;
+    bottom: 20px;
+}
+.floating-bt:hover {
+    background-color: color-mix(in srgb, var(--primary-blue) 60%, rgb(12, 30, 165) 40%);
+    /* background-color: var(--primary-blue); */
+    box-shadow: 4px 4px 15px 0px rgba(0, 0, 0, 0.3);
+}
+.floating-bt .bi.bi-plus-lg {
+    font-size: 1.25rem;
+}
