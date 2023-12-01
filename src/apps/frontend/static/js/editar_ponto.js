@@ -1,3 +1,6 @@
+let isAtualizando = false;
+let isDeletando = false;
+
 async function fetchJson(url) {
     const response = await fetch(url);
     if (!response.ok) {
@@ -90,7 +93,18 @@ function atualizarPreview() {
 }
 
 async function atualizarPonto() {
-    console.log("Atualizando Ponto de Coleta...");
+
+    if (isAtualizando) {
+        console.log("A atualização já está em andamento...");
+        return;
+    }
+
+    isAtualizando = true;
+
+    const bt_atualizar = document.getElementById("atualizar");
+    bt_atualizar.disabled = true;
+    bt_atualizar.innerHTML = "Atualizando...";
+
     let target = window.location.pathname.split("/ponto/")[1];
     target = target.replace(/\/$/, "");
 
@@ -108,7 +122,6 @@ async function atualizarPonto() {
         "tombo": tombo,
         "codigo_edificacao": edificacao,
     };
-    console.log(json)
 
     try {
         const responsePonto = await fetch("/api/v1/pontos/" + target, {
@@ -123,35 +136,46 @@ async function atualizarPonto() {
             const errorResponse = await responsePonto.json();
             throw new Error(`Erro ao atualizar o ponto: ${responsePonto.statusText}. Detalhes: ${JSON.stringify(errorResponse)}`);
         }
-
-        console.log('Ponto atualizado com sucesso:', await responsePonto.json());
         
         let formData = new FormData();
 
         if (imagem.files.length > 0) {
             formData.append("imagem", imagem.files[0]);
+            const responseImagem = await fetch("/api/v1/pontos/" + target + "/imagem", {
+                method: 'POST',
+                body: formData,
+            })
+            
+            if (!responseImagem.ok) {
+                throw new Error('Erro ao enviar a imagem');
+            }
         }
+        ;
 
-        const responseImagem = await fetch("/api/v1/pontos/" + target + "/imagem", {
-            method: 'POST',
-            body: formData,
-        });
+       
 
-        if (!responseImagem.ok) {
-            throw new Error('Erro ao enviar a imagem');
-        }
-
-        console.log('Imagem enviada com sucesso:', await responseImagem.json());
         window.location.href = "/ponto";
 
     } catch (error) {
         console.error('Erro durante a atualização:', error);
+    } finally {
+        isAtualizando = false;
     }
-
 }
 
 async function excluirPonto() {
-    console.log("Excluindo Ponto de Coleta...");
+
+    if (isDeletando) {
+        console.log("A exclusão já está em andamento...");
+        return;
+    }
+
+    isDeletando = true;
+
+    const bt_excluir = document.getElementById("excluir");
+    bt_excluir.disabled = true;
+    bt_excluir.innerHTML = "Excluindo...";
+
     let target = window.location.pathname.split("/ponto/")[1];
     target = target.replace(/\/$/, "");
 
@@ -171,9 +195,15 @@ async function excluirPonto() {
         window.location.href = "/ponto";
     } catch (error) {
         console.error('Erro durante a exclusão:', error);
+    } finally {
+        isAtualizando = false;
+        bt_atualizar.disabled = false;
+        bt_atualizar.innerHTML = "Atualizar";
     }
-
 }
+
+document.getElementById("atualizar").addEventListener("click", atualizarPonto);
+document.getElementById("excluir").addEventListener("click", excluirPonto);
 
 carregarOpcoesEdificacao();
 carregarPonto();

@@ -1,3 +1,5 @@
+let isCriando = false;
+
 async function fetchJson(url) {
     const response = await fetch(url);
     if (!response.ok) {
@@ -40,21 +42,29 @@ function atualizarPreview() {
 }
 
 async function criarPonto() {
-    var ambiente = document.getElementById("ambiente").value;
-    var tipo = document.getElementById("tipo").value;
-    var tombo = document.getElementById("tombo").value;
-    var edificacao = document.getElementById("edificacao_value").value;
-    
-    var imagem = document.getElementById("foto");
+    if (isCriando) {
+        console.log("Já existe uma requisição em andamento");
+        return;
+    }
 
-    var json = {
-        "ambiente": ambiente,
-        "tipo": parseInt(tipo),
-        "tombo": tombo,
-        "codigo_edificacao": edificacao,
-    };
+    isCriando = true;
+    const bt_criar = document.getElementById("criar");
+    bt_criar.disabled = true;
+    bt_criar.innerHTML = "Criando...";
 
     try {
+        const ambiente = document.getElementById("ambiente").value;
+        const tipo = document.getElementById("tipo").value;
+        const tombo = document.getElementById("tombo").value;
+        const edificacao = document.getElementById("edificacao_value").value;
+
+        const json = {
+            "ambiente": ambiente,
+            "tipo": parseInt(tipo),
+            "tombo": tombo,
+            "codigo_edificacao": edificacao,
+        };
+
         const responsePonto = await fetch("/api/v1/pontos/", {
             method: 'POST',
             headers: {
@@ -64,14 +74,15 @@ async function criarPonto() {
         });
 
         if (!responsePonto.ok) {
-            const errorResponse = await responsePonto.json(); 
+            const errorResponse = await responsePonto.json();
             throw new Error(`Erro ao criar o ponto: ${responsePonto.statusText}. Detalhes: ${JSON.stringify(errorResponse)}`);
         }
 
-        responseJson = await responsePonto.json();
-        
-        let formData = new FormData();
+        const responseJson = await responsePonto.json();
 
+        const formData = new FormData();
+
+        const imagem = document.getElementById("foto");
         if (imagem.files.length > 0) {
             formData.append("imagem", imagem.files[0]);
         }
@@ -82,15 +93,22 @@ async function criarPonto() {
         });
 
         if (!responseImagem.ok) {
-            throw new Error('Erro ao enviar a imagem');
+            const errorResponseImagem = await responseImagem.json();
+            throw new Error(`Erro ao enviar a imagem: ${responseImagem.statusText}. Detalhes: ${JSON.stringify(errorResponseImagem)}`);
         }
-        
+
         window.location.href = "/ponto";
 
     } catch (error) {
         console.error('Erro durante a criação:', error);
+    } finally {
+        isCriando = false;
+        bt_criar.disabled = false;
+        bt_criar.innerHTML = "Criar";
     }
-
 }
+
+// Adicionando um event listener ao botão
+document.getElementById("criar").addEventListener("click", criarPonto);
 
 carregarOpcoesEdificacao();

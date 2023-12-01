@@ -1,3 +1,6 @@
+let isAtualizando = false;
+let isExcluindo = false;
+
 function carregarEdificacao() {
     let target = window.location.pathname.split("/edificacao/")[1];
     target = target.replace(/\/$/, "");
@@ -30,7 +33,17 @@ function carregarEdificacao() {
 }
 
 function atualizarEdificacao() {
-    console.log("Atualizando edificação...");
+    if (isAtualizando) {
+        console.log("A atualização já está em andamento...");
+        return;
+    }
+
+    isAtualizando = true;
+
+    const bt_atualizar = document.getElementById("atualizar");
+    bt_atualizar.disabled = true;
+    bt_atualizar.innerHTML = "Atualizando...";
+
     let target = window.location.pathname.split("/edificacao/")[1];
     target = target.replace(/\/$/, "");
 
@@ -46,30 +59,49 @@ function atualizarEdificacao() {
         "cronograma": parseInt(cronograma)
     };
 
-    fetch("/api/v1/edificacoes/" + target, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(json)
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            window.location.href = "/edificacao";
+    try {
+        fetch("/api/v1/edificacoes/" + target, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(json)
         })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                window.location.href = "/edificacao";
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    } catch (error) {
+        console.error('Erro durante a atualização:', error);
+    } finally {
+        isAtualizando = false;
+        bt_atualizar.disabled = false;
+        bt_atualizar.innerHTML = "Atualizar";
+    }
 }
 
 function excluirEdificacao() {
-    console.log("Excluindo edificação...");
+    if (isExcluindo) {
+        console.log("A exclusão já está em andamento...");
+        return;
+    }
+
+    isExcluindo = true;
+
+    const bt_excluir = document.getElementById("excluir");
+    bt_excluir.disabled = true;
+    bt_excluir.innerHTML = "Excluindo...";
+
     let target = window.location.pathname.split("/edificacao/")[1];
     target = target.replace(/\/$/, "");
 
     var json = {};
 
+    try {
     fetch("/api/v1/edificacoes/" + target, {
         method: 'DELETE',
         headers: {
@@ -85,6 +117,16 @@ function excluirEdificacao() {
         .catch((error) => {
             console.error('Error:', error);
         });
+    } catch (error) {
+        console.error('Erro durante a exclusão:', error);
+    } finally {
+        isExcluindo = false;
+        bt_excluir.disabled = false;
+        bt_excluir.innerHTML = "Excluir";
+    }
 }
+
+document.getElementById("atualizar").addEventListener("click", atualizarEdificacao);
+document.getElementById("excluir").addEventListener("click", excluirEdificacao);
 
 carregarEdificacao();
