@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 def serve_protected_file(file_name):
     @login_required
-    def view(request):
+    def view(request, *args, **kwargs):
         return render(
             request=request,
             template_name=file_name

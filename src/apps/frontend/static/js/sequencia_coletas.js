@@ -22,7 +22,7 @@ function createCard(item, edificacao, ponto) {
     const card = document.createElement('div');
     card.className = 'flex card';
     card.id = '' + item.id;
-
+    const BASE_URL = 
     card.innerHTML = `
         <button class="modal-button" onclick="change_modal_state(this)"><i class="bi bi-three-dots-vertical"></i></button>
         <div class="flex modal">
@@ -35,7 +35,10 @@ function createCard(item, edificacao, ponto) {
         <p>${item.tipo == 1 ? 'Bebedouro' : 'RPS'}</p>
         <p>${ponto.ambiente}</p>
         <h5>Amostragem ${item.amostragem}</h5>
-        <button class="filled-button">
+        <button 
+            onclick="window.location.href = window.location.origin + '/sequencia/' + ${item.id}"
+            class="filled-button"
+        >
             <i class="bi bi-eye-fill"></i>
             Detalhes
         </button>

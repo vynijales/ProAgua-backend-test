@@ -39,5 +39,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('users/', include(accounts_urls)),
     path('password_reset', views.password_reset, name='password_reset'),
-    path('relatorio/', views.serve_protected_file('privado/relatorio.html'))
+    path('sequencia/<int:id>/', views.serve_protected_file('privado/sequencia_coletas.html'))
 ]
