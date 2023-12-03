@@ -46,10 +46,10 @@ def lista_pontos(request):
     )
 
 @login_required
-def sequencia_coletas(request):
+def sequencias_coletas(request):
     return render(
         request=request,
-        template_name="privado/sequencia_coletas.html"
+        template_name="privado/sequencias_coletas.html"
     )
 
 @login_required

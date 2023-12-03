@@ -31,7 +31,7 @@ urlpatterns = [
     path('', views.home),
     path('visu_publica', views.visu_publica),
     path('lista_pontos', views.lista_pontos),
-    path('sequencia_coletas/', views.sequencia_coletas, name='sequencia_coletas'),
+    path('sequencias_coletas/', views.sequencias_coletas, name='sequencias_coletas'),
     path('ponto/', include(ponto_coleta_urls)),
     path('coleta/', include(coleta_urls)),
     path('edificacao/', include(edificacao_urls)),
