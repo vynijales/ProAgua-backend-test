@@ -13,7 +13,7 @@ ponto_coleta_urls = [
 
 coleta_urls = [
     path('criar/', views.criar_coleta, name='criar_coleta'),
-    path('<int:coleta_id>/editar/', views.editar_coleta, name='editar_coleta')
+    path('<int:coleta_id>/', views.editar_coleta, name='editar_coleta')
 ]
 
 edificacao_urls = [
