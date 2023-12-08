@@ -7,6 +7,7 @@ class Coleta(models.Model):
     sequencia = models.ForeignKey(
         to="SequenciaColetas",
         verbose_name="sequência de Coletas",
+        related_name="coletas",
         on_delete=models.PROTECT,
         blank=False,
         null=False

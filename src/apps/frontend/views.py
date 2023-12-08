@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 def serve_protected_file(file_name):
     @login_required
-    def view(request):
+    def view(request, *args, **kwargs):
         return render(
             request=request,
             template_name=file_name
@@ -46,10 +46,10 @@ def lista_pontos(request):
     )
 
 @login_required
-def sequencia_coletas(request):
+def sequencias_coletas(request):
     return render(
         request=request,
-        template_name="privado/sequencia_coletas.html"
+        template_name="privado/sequencias_coletas.html"
     )
 
 @login_required

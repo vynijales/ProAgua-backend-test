@@ -5,10 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../../static/stylesheets/privado/base.css">
-        <link rel="stylesheet"
-            href="../../static/stylesheets/privado/pontos_coletas.css">
-        <link rel="stylesheet"
-            href="../../static/stylesheets/privado/form_ponto.css">
+        <link rel="stylesheet" href="../../static/stylesheets/privado/pontos_coletas.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link
@@ -16,7 +13,7 @@
             rel="stylesheet">
         <link rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-        <title>Criar Ponto de Coleta</title>
+        <title>Sequência de Coletas</title>
     </head>
 
     <body>
@@ -25,7 +22,7 @@
                 <i class="bi bi-list header-icon"></i>
             </button>
             <a class="flex proagua-logo" href="/">
-                <img src="../../static/images/Logo.svg" alt="Logo do projeto">
+                <img src="../static/images/Logo.svg" alt="Logo do projeto">
                 <span>ProÁgua</span>
             </a>
             <a class="flex menu-button" href="/">
@@ -74,48 +71,48 @@
                 </ul>
             </nav>
         </aside>
+
         <main class="flex">
-            <h2>Editar Ponto de Coleta</h2>
+            <h2>Sequências de Coletas</h2>
             <div class="flex wrapper">
-                <div id="div-container" class="flex">
-                    <form class="flex" method="post" action="/api/v1/edificacoes/">
-                        <label for="ambiente">Ambiente:</label>
-                        <input type="text" id="ambiente" name="ambiente"
-                            required>
-
-                        <label for="tipo">Tipo:</label>
-                        <select type="text" id="tipo" name="tipo" required>
-                            <option value="1">Bebedouro</option>
-                            <option value="2">RPS</option>
-                            <option value="3">RPI</option>
-                            <option value="4">RDS</option>
-                            <option value="5">RDI</option>
-                            <option value="6">CAERN</option>
+                <div class="flex" style="flex-direction: column;">
+                    <div class="flex" style="position: relative;">
+                        <i class="bi bi-search"></i>
+                        <input type="text" name="search-query" id="search-bar"
+                            placeholder="Digite o termo de pesquisa">
+                    </div>
+                    <div class="flex"
+                        style="flex-direction: row-reverse; --gap: .75rem;">
+                        <select name="campus" class="select">
+                            <option value disabled selected hidden>Campus</option>
+                            <option value>Leste/Oeste</option>
+                            <option value="LE">Leste</option>
+                            <option value="OE">Oeste</option>
                         </select>
-                        <label for="tombo">Tombo:</label>
-                        <input type="text" id="tombo" name="tombo">
-
-                        <label for="edificacao">Edificação:</label>
-
-                        <input list="edificacao" id="edificacao_value" name="edificacao">
-                        <datalist id="edificacao">
-                            <!-- As edificações serão adicionadas aqui -->
-                        </datalist>
-
-                        <label for="foto">Foto:</label>
-                        <img id="imagePreview" alt="Imagem Preview" />
-                        <input type="file" id="foto" name="foto" onchange="atualizarPreview()">
-
-                        <div class="flex button-container">
-                            <button id="criar" type="button">Criar</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
+                <div class="result-list" id="result-list">
+                    <!-- Os resultados da pesquisa serão adicionados aqui -->
+                </div>
+
+                <div class="flex pagination">
+                    <button id="pagination-prev" style="display: none;">&lt; Anterior</button>
+                    <span id="page-info">Página 1 de 1</span>
+                    <button id="pagination-next" style="display: none;">Próxima &gt;</button>
+                </div>
+
             </div>
         </main>
     </body>
 
-    <script src="../../static/js/base.js"></script>
-    <script src="../../static/js/criar_ponto.js"></script>
+    <script>
+    function change_modal_state(element) {
+        var parentCard = element.parentNode;
+        var modalZPos = parentCard.querySelector(".modal").style.zIndex;
 
+        parentCard.querySelector(".modal").style.zIndex = modalZPos === "1" ? "-1" : "1";
+    }
+    </script>
+    <script src="../../static/js/base.js"></script>
+    <script src="../../static/js/sequencia_coletas.js"></script>
 </html>

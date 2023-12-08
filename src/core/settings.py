@@ -129,7 +129,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/sequencia_coletas'
+LOGIN_REDIRECT_URL = '/sequencias_coletas'
 
 # SECURITY WARNING: Não deve ser usado em produção.
 CORS_ALLOW_ALL_ORIGINS = True
