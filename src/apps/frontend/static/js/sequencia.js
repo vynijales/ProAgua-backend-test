@@ -44,7 +44,8 @@ async function createTableColetas(data) {
         'Cor',
         'Data',
         'Responsável',
-        'Status'
+        'Status',
+        'Editar'
     ];
     const table = document.createElement("table");
     const header_row = document.createElement("tr");
@@ -77,7 +78,11 @@ async function createTableColetas(data) {
             <td>${coleta.responsaveis_url}</td>
             <td style="text-align: center;">${coleta.status
             ? '<i class="bi bi-check2"></i>'
-            : '<i class="bi bi-x"></i>'}</td>
+            : '<i class="bi bi-x"></i>'}
+            </td>
+            <td>
+                <a href="#edit/${coleta.id}">Editar</a>
+            </td>
         `;
         body_rows.push(row);
     });

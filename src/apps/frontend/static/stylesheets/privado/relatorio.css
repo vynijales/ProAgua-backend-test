@@ -4,6 +4,11 @@
     align-items: start;
 }
 
+a {
+    color:rgb(18, 18, 189);
+    text-decoration-line: underline;
+}
+
 table {
     width: 100%;
     display: block;
@@ -68,4 +73,8 @@ tr {
 }
 .floating-bt .bi.bi-plus-lg {
     font-size: 1.25rem;
+}
+
+#container h3:not(:first-child) {
+    margin-top: 3rem;
 }
