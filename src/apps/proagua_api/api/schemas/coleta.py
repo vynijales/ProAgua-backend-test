@@ -1,5 +1,5 @@
 from typing import List, Optional
-from datetime import date
+from datetime import date, datetime
 
 from ninja import Schema, FilterSchema, Field
 from django.urls import reverse
@@ -15,7 +15,7 @@ class ColetaIn(Schema):
     coliformes_totais: bool
     escherichia: bool
     cor: float
-    data: date
+    data: datetime
     responsavel: List[int]
     ordem: str
 
@@ -28,7 +28,7 @@ class ColetaOut(Schema):
     coliformes_totais: bool
     escherichia: bool
     cor: float
-    data: date
+    data: datetime
     # responsavel: List[int]
     responsaveis_url: str
     ordem: str
