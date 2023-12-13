@@ -14,6 +14,7 @@
             <p>Ainda não há coletas.</p>
         {% endfor %}
     </table>
-    <button onclick="window.location.href = '{% url 'criar_amostragem' ponto_id=ponto.id %}'">Adicionar amostragem</button>
+    <button onclick="alert('adicionar amostragem')">Adicionar amostragem</button>
+    <!-- url 'criar_amostragem' ponto_id=ponto.id  -->
 </div>
 {% endblock %}

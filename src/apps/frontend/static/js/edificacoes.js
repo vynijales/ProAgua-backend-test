@@ -32,7 +32,7 @@ function search(query) {
                         listItem.innerHTML = `
                             <span class="edification_id">${edificacao.codigo}</span>
                             <span class="edification_name">${edificacao.nome}</span>
-                            <a class="modal-button" href= "/edificacao/${edificacao.codigo}"><i class="bi bi-pencil-square"></i></a>
+                            <a class="modal-button" href= "/edificacoes/${edificacao.codigo}"><i class="bi bi-pencil-square"></i></a>
                         `;
                         resultContainer.appendChild(listItem);
                     })

@@ -22,7 +22,7 @@ function createCard(item, edificacao) {
     card.id = '' + item.id;
 
     card.innerHTML = `
-    <a class="modal-button" href= "/ponto/${item.id}"><i class="bi bi-pencil-square"></i></a>        <h3>${edificacao.codigo}</h3>
+    <a class="modal-button" href= "/pontos/${item.id}"><i class="bi bi-pencil-square"></i></a>        <h3>${edificacao.codigo}</h3>
         <h2>${edificacao.nome}</h2>
         <p>${item.tipo == 1 ? 'Bebedouro' : 'RPS'}</p>
         <p>${item.ambiente}</p>

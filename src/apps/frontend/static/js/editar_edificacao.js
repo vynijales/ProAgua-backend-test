@@ -2,7 +2,7 @@ let isAtualizando = false;
 let isExcluindo = false;
 
 function carregarEdificacao() {
-    let target = window.location.pathname.split("/edificacao/")[1];
+    let target = window.location.pathname.split("/edificacoes/")[1];
     target = target.replace(/\/$/, "");
 
     fetch("/api/v1/edificacoes/" + target, {
@@ -13,7 +13,7 @@ function carregarEdificacao() {
     })
         .then(response => {
             if (!response.ok) {
-                window.location.href = "/edificacao/";
+                window.location.href = "/edificacoes/";
             }
             return response.json();
         })
@@ -44,7 +44,7 @@ function atualizarEdificacao() {
     bt_atualizar.disabled = true;
     bt_atualizar.innerHTML = "Atualizando...";
 
-    let target = window.location.pathname.split("/edificacao/")[1];
+    let target = window.location.pathname.split("/edificacoes/")[1];
     target = target.replace(/\/$/, "");
 
     var codigo = document.getElementById("codigo").value;
@@ -70,7 +70,7 @@ function atualizarEdificacao() {
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
-                window.location.href = "/edificacao";
+                window.location.href = "/edificacoes";
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -96,7 +96,7 @@ function excluirEdificacao() {
     bt_excluir.disabled = true;
     bt_excluir.innerHTML = "Excluindo...";
 
-    let target = window.location.pathname.split("/edificacao/")[1];
+    let target = window.location.pathname.split("/edificacoes/")[1];
     target = target.replace(/\/$/, "");
 
     var json = {};
@@ -112,7 +112,7 @@ function excluirEdificacao() {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
-            window.location.href = "/edificacao";
+            window.location.href = "/edificacoes";
         })
         .catch((error) => {
             console.error('Error:', error);

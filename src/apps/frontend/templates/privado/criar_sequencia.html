@@ -16,7 +16,7 @@
             rel="stylesheet">
         <link rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-        <title>Editar Ponto de Coleta</title>
+        <title>Criar Sequencia de Coletas</title>
     </head>
 
     <body>
@@ -74,52 +74,57 @@
                 </ul>
             </nav>
         </aside>
+
         <main class="flex">
-            <h2>Editar Ponto de Coleta</h2>
+            <h2>Criar Sequencia de Coletas</h2>
             <div class="flex wrapper">
                 <div id="div-container" class="flex">
-                    <form class="flex" method="post" action="/api/v1/edificacoes/">
-                        <label for="id">ID:</label>
-                        <input type="text" id="id" name="id" disabled>
+                    <form class="flex" method="post">
+                        <h3>Selecionar ponto incial da sequencia</h3>
+                        
+                        <label for="input-edificacao">Edificacao:</label>
+                        <input type="text" name="edificacao" id="input-edificacao" />
 
-                        <label for="ambiente">Ambiente:</label>
-                        <input type="text" id="ambiente" name="ambiente"
-                            required>
-
-                        <label for="tipo">Tipo:</label>
-                        <select type="text" id="tipo" name="tipo" required>
-                            <option value="1">Bebedouro</option>
-                            <option value="2">RPS</option>
-                            <option value="3">RPI</option>
-                            <option value="4">RDS</option>
-                            <option value="5">RDI</option>
-                            <option value="6">CAERN</option>
+                        <label for="select-ponto">Ponto:</label>
+                        <select name="ponto" id="select-ponto">
+                            <option>-</option>
+                            <option>Ponto 1</option>
+                            <option>Ponto 2</option>
+                            <option>Ponto 3</option>
+                            <option>Ponto 4</option>
                         </select>
-                        <label for="tombo">Tombo:</label>
-                        <input type="text" id="tombo" name="tombo">
 
-                        <label for="edificacao">Edificação:</label>
-
-                        <input list="edificacao" id="edificacao_value" name="edificacao">
-                        <datalist id="edificacao">
-                            <!-- As edificações serão adicionadas aqui -->
-                        </datalist>
-
-                        <label for="foto">Foto:</label>
-                        <img id="imagePreview" alt="Imagem Preview" />
-                        <input type="file" id="foto" name="foto" onchange="atualizarPreview()">
-
+                        <!-- 
+                            <label for="input-fluxo">Fluxo:</label>
+                            <select name="fluxo" id="select-fluxo" disabled>
+                                <option value="fluxo1">Fluxo 1</option>
+                                <option value="fluxo2">Fluxo 2</option>
+                                <option value="fluxo3">Fluxo 3</option>
+                            </select>
+                        -->
+                        
+                        <label for="input-amostragem">Amostragem:</label>
+                        <input type="number" name="amostragem" id="input-amostragem">
+                        
                         <div class="flex button-container">
-                            <button id="atualizar" type="button">Atualizar</button>
-                            <button id="excluir" type="button">Excluir</button>
+                            <button id="criar" type="button">Criar</button>
                         </div>
                     </form>
                 </div>
             </div>
         </main>
+    
     </body>
 
     <script src="/static/js/base.js"></script>
-    <script src="/static/js/editar_ponto.js"></script>
+    <script>
+        const select_fluxo = document.getElementById("select-fluxo");
+        
+        fetch('/api/v1/fluxos').then(response => {
+            return response.json();
+        }).then(data => {
+            data.items
+        });
+    </script>
 
 </html>

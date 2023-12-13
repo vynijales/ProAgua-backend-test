@@ -37,7 +37,7 @@ async function criarEdificacao() {
             throw new Error(`Erro ao criar a edificação: ${response.statusText}. Detalhes: ${JSON.stringify(errorResponse)}`);
         }
 
-        window.location.href = "/edificacao";
+        window.location.href = "/edificacoes";
 
     } catch (error) {
         console.error('Erro durante a criação:', error);

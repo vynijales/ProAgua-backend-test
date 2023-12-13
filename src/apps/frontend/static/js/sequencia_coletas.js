@@ -36,7 +36,7 @@ function createCard(item, edificacao, ponto) {
         <p>${ponto.ambiente}</p>
         <h5>Amostragem ${item.amostragem}</h5>
         <button 
-            onclick="window.location.href = window.location.origin + '/sequencia/' + ${item.id}"
+            onclick="window.location.href = window.location.origin + '/sequencias_coletas/' + ${item.id}"
             class="filled-button"
         >
             <i class="bi bi-eye-fill"></i>
