@@ -1,7 +1,7 @@
 // Constantes e variáveis globais
 const BASE_URL = window.location.origin;
 let currentPage = 1;
-const itemsPerPage = 20;
+const itemsPerPage = 24;
 let totalItems = 0;
 const pontos = `${BASE_URL}/api/v1/pontos`;
 

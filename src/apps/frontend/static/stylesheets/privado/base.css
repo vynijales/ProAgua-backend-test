@@ -2,9 +2,9 @@
 
 /* Declarando variáveis */
 :root {
-    --font-family-primary: 'Montserrat';
-    --primary-blue:  rgb(2, 123, 208);
-    --secundary-blue: rgb(0, 109, 186);
+    --ff-primary: 'Montserrat';
+    --clr-primary-900: 205 98% 41%;
+    --clr-primary-800: 205, 100%, 36%;
     --primary-red: rgb(226, 3, 44);
     --secundary-red: rgb(252, 27, 68);
     --primary-green: rgb(13, 186, 21);
@@ -17,7 +17,7 @@
 
     --neutral: var(--primary-white);
     --background-color: var(--secundary-white);
-    --header-color: var(--primary-blue);
+    --header-color: var(--clr-primary-900);
 }
 
 /* Resetando estilos padrões */
@@ -45,7 +45,7 @@
 
 body {
     min-height: 100vh;
-    font-family: var(--font-family-primary);
+    font-family: var(--ff-primary);
     background-color: var(--background-color);
 }
 
@@ -64,7 +64,7 @@ header {
 header, .navbar-header {
     align-items: center;
     height: clamp(50px, 8vh, 100px);
-    background-color: var(--header-color);
+    background-color: hsl(var(--clr-primary-900));
     color: var(--primary-white);
     font-size: 1.5rem;
 }
@@ -83,14 +83,18 @@ header a {
 }
 
 .filled-button {
-    border-radius: 1.4rem;
-    background-color: #027BD0;
-    padding: .8rem;
+    padding: .75rem;
+    align-items: center;
     color: #f3f3f3;
+    font-size: .75rem;
+    font-weight: 900;
+    background-color: hsl(var(--clr-primary-900));
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 3px hsl(var(--clr-neutral-400) / .2);
 }
 
 .menu-button:hover, .filled-button:hover {
-    background-color: var(--secundary-blue);
+    background-color: var(--clr-primary-800);
 }
 
 .navbar-header {
@@ -170,7 +174,7 @@ main h2 {
 
 #pagination-prev,
 #pagination-next {
-    background-color: var(--primary-blue);
+    background-color: hsl(var(--clr-primary-900));
     color: var(--primary-white);
     padding: 8px 16px;
     border: none;
