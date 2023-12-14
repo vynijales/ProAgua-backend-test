@@ -148,7 +148,7 @@ nav a {
 }
 
 .proagua-logo img {
-    height: 2.5rem;
+    height: clamp(2rem, 1.8571rem + 0.7143vw, 2.5rem);
 }
 
 main {

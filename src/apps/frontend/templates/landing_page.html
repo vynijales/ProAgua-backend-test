@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/stylesheets/landing_page.css">
-	<link rel="icon" href="../static/images/Logo.svg">
+    <link rel="stylesheet" href="/static/stylesheets/base.css">
+    <link rel="stylesheet" href="/static/stylesheets/landing_page.css">
+	<link rel="icon" href="/static/images/Logo.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,53 +14,53 @@
     <title>ProÁgua</title>
 </head>
 <body>
-    <header>
+    <header class="flex">
+        <a class="flex logo" href="/">
+            <img src="../static/images/Logo.svg" alt="Logo do projeto">
+            ProÁgua
+        </a>
         <nav>
-            <a href="/">
-                <div class="logo">
-                    <img src="../static/images/Logo.svg" alt="Logo do projeto">
-                    ProÁgua
-                </div>
-            </a>
-            <ul class="nav-list">
+            <ul class="flex nav-list">
                 <li><a href="#inicio">Início</a></li>
                 <li><a href="#pesquise">Pesquise</a></li>
                 <li><a href="#sobre">Sobre</a></li>
             </ul>
-            <a href="/accounts/login" class="login-btn">Login</a>
         </nav>
+        <a href="/accounts/login" class="outlined-btn">Login</a>
     </header>
     
-    <section class="section" id="inicio">
+    <section class="flex" id="inicio">
         <p>BOAS-VINDAS AO PROÁGUA</p>
-        <h1>A verificação da sua água<br>simplificada para você</h1>
-        <div class="search-btn">
+        <h1>A verificação da sua água simplificada para você</h1>
+        <div class="flex outlined-btn">
             <i class="fa-solid fa-magnifying-glass"></i>
             <a href="#pesquise">Procure por um ponto</a>
         </div>
     </section>
 
-    <section class="section" id="pesquise">
+    <section class="flex" id="pesquise">
         <p>PESQUISA</p>
         <h1>Deseja verificar a qualidade<br>da água de qual ponto?</h1>
-        <form class="search-field" action="lista_pontos" method="GET">
+        <form class="flex search-field" action="lista_pontos" method="GET" style="position: relative;">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" required name="search-query" placeholder="Laboratório" >
         </form>
     </section>
 
-    <section class="section" id="sobre">
+    <section class="flex" id="sobre">
         <h2>SOBRE NÓS</h2>
-        <h1>Um projeto construído por diversas<br>mãos, sempre buscando melhorar.</h1>
-        <p class="word-wrap">O ProÁgua estuda a qualidade da água para consumo humano da Universidade Federal Rural do Semi-Árido, campus Mossoró (UFERSA campus Mossoró) com o objetivo de obter embasamento para contribuir com a proteção da saúde da comunidade universitária.<br>O projeto foi concebido com três linhas de ação:
+        <h1>Um projeto construído por diversas mãos, sempre buscando melhorar.</h1>
+        <p class="word-wrap">O ProÁgua estuda a qualidade da água para consumo humano da Universidade Federal Rural do Semi-Árido, campus Mossoró (UFERSA campus Mossoró) com o objetivo de obter embasamento para contribuir com a proteção da saúde da comunidade universitária.</p>
+        <p class="word-wrap">O projeto foi concebido com três linhas de ação:
     • conhecer a qualidade da água para consumo humano da UFERSA campus Mossoró
     • divulgar resultados de qualidade da água para os usuários do sistema
-    • orientar o Setor de Manutenção da instituição<br>A metodologia utilizada para monitorar a qualidade da água foi construída levando em conta, dentre outros, a diretriz nacional do plano de amostragem da vigilância da qualidade da água para consumo humano e especificidades do sistema de distribuição da água da UFERSA, incluindo seus sistemas prediais de água fria.
+    • orientar o Setor de Manutenção da instituição</p>
+        <p class="word-wrap">A metodologia utilizada para monitorar a qualidade da água foi construída levando em conta, dentre outros, a diretriz nacional do plano de amostragem da vigilância da qualidade da água para consumo humano e especificidades do sistema de distribuição da água da UFERSA, incluindo seus sistemas prediais de água fria.
         </p>
         <a href="/">Saiba mais</a>
     </section>
 
-    <footer>
+    <footer class="flex">
         <div class="container">
             <h1>ProÁgua</h4>
             <h5>&#169 2023 - Bom dia.</h5>

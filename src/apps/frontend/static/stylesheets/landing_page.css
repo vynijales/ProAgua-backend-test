@@ -1,190 +1,191 @@
+:root {
+    --ff-primary: 'Montserrat';
+    --clr-primary-900: 205 98% 41%;
+    --clr-primary-800: 205, 100%, 36%;
+    --clr-neutral-900: 0 0% 100%;
+    --clr-neutral-800: 0 0% 95%;
+    --clr-neutral-400: 205 15% 41%;
+    --clr-neutral-200: 0 0% 32%;
+    --clr-neutral-100: 0 0% 0%;
+
+    --header-height: clamp(50px, 8vh, 100px);
+}
 * {
     padding: 0;
     margin: 0;
     scroll-behavior: smooth;
-    scroll-padding-top: 8vh;
-    font-family: 'Montserrat';
+    scroll-padding-top: var(--header-height);
+    font-family: var(--ff-primary);
+}
+ul {
+    --gap: 2rem;
+    list-style: none;
+}
+li {
+    display: inherit;
+    height: var(--header-height);
+    padding-inline: .5rem;
+    align-items: center;
 }
 a {
-    color: #fff;
+    color: inherit;
+    font-size: inherit;
     text-decoration: none;
-    transition: 0.3s;
 }
-.nav-list a:hover {
-    opacity: 0.7;
+li:hover {
+    border-bottom: 2px solid hsl(var(--clr-neutral-900));
 }
 
-nav {
-    position: fixed;
-    display: flex;
-    justify-content: space-around;
+header {
+    position: sticky;
+    top: 0;
+    justify-content: space-between;
     align-items: center;
-    background: #027BD0;
-    height: 8vh;
-    width: 100vw;
+    background: hsl(var(--clr-primary-900));
+    height: var(--header-height);
+    width: 100%;
+    padding-inline: clamp(20px, 4vw + 1rem, 100vw - 1200px);
     z-index: 1;
+    color: hsl(var(--clr-neutral-900));
 }
 .logo {
-    display: flex;
     align-items: center;
     text-transform: uppercase;
     font-size: 1.5em;
 }
 .logo img {
-    height: 5.3vh;
-    margin-right: 5px;
+    height: clamp(2rem, 1.8571rem + 0.7143vw, 2.5rem);
 }
-.nav-list {
-    list-style: none;
-    display: flex;
-}
-.nav-list li {
-    margin: 30px;
-}
-.login-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid#fff;
-    border-radius: .4em;
-    padding: .3em .8em .3em .8em;
-    transition: .3s;
-}
-.login-btn a {
-    font-size: 1em;
-}
-
-.section {
-    height: 92vh;
-}
-.search-btn {
-    display: flex;
+.outlined-btn {
+    --gap: .5rem;
     width: fit-content;
     justify-content: center;
     align-items: center;
-    border: 1px solid#fff;
-    border-radius: .4em;
-    padding: .5em .8em .5em .6em;
+    border: 1px solid hsl(var(--clr-neutral-900));
+    border-radius: 4px;
+    padding: .3em .8em .3em .8em;
+    font-size: 1em;
     transition: .3s;
-    column-gap: .2em;
 }
-.search-btn a {
-    font-size: .9em;
-}
-.search-btn i {
-    color: #fff;
+.outlined-btn i {
+    color: hsl(var(--clr-neutral-900));
     font-size: .7em;
 }
 
-#inicio {
-    display: flex;
+section {
+    min-height: calc(100vh - var(--header-height));
     flex-direction: column;
     justify-content: center;
-    height: 100vh;
-    background-color: #027BD0;
-    color: #fff;
-    padding-left: 8vw;
-    row-gap: 1.5em;
+    width: 100%;
+}
+#inicio {
+    --gap: 1.5em;
+    background-color: hsl(var(--clr-primary-900));
+    color: hsl(var(--clr-neutral-900));
+    padding-left: max(30px, 4vw + 1rem);
+    text-wrap: balance;
 }
 #inicio p {
     font-size: .8em;
+    text-transform: uppercase;
 }
 #inicio h1 {
-    font-size: 3em;
+    max-width: 1000px;
+    font-size: clamp(1.75rem, 1.458vw + 1.458rem, 2.625rem);
 }
 
 #pesquise {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    --gap: 2em;
     align-items: center;
-    row-gap: 2em;
-    background-color: #fff;
+    background-color: hsl(var(--clr-neutral-900));
 }
 #pesquise p {
     font-size: .8em;
     font-weight: 700;
-    color: #525252;
+    color: hsl(var(--clr-neutral-400));
 }
 #pesquise h1 {
-    font-size: 2em;
+    font-size: clamp(1.25rem, 1.0357rem + 1.0714vw, 2rem);
     text-align: center;
-    color: #202731;
+    color: hsl(var(--clr-neutral-200));
 }
 #pesquise input {
-    width: 25vw;
-    height: auto;
+    width: clamp(200px, 25vw, 1000px);
     font-size: 1em;
-    background-color: #D9D9D9;
-    border: none;
+    background-color: hsl(var(--clr-neutral-800));
     border-radius: 1em;
     padding: .5em .8em .5em 2.5em;
 }
 #pesquise i {
-    color: #525252;
-    transform: translateX(2em);
+    position: absolute;
+    top: 50%;
+    left: 1em;
+    color: hsl(var(--clr-neutral-200));
+    transform: translateY(-50%);
 }
 
 #sobre {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 8vw;
-    row-gap: 1em;
-    background-color: #fff;
-    color: #202731;
+    padding: 50px 0 50px max(30px, 6vw + 1rem);
+    background-color: hsl(var(--clr-neutral-900));
+    color: hsl(var(--clr-neutral-200));
 }
 #sobre h2 {
     font-size: .8em;
     font-weight: 600;
-    color: #027BD0;
+    color: hsl(var(--clr-primary-900));
 }
 #sobre h1 {
-    font-size: 2em;
+    max-width: 95%;
+    font-size: clamp(1.25rem, 1.0357rem + 1.0714vw, 2rem);
+    text-wrap: balance;
 }
 #sobre p {
     width: 60vw;
     text-align: justify;
+    text-wrap: balance;
 }
 #sobre a {
     font-size: .8em;
     font-weight: 600;
-    color: #027BD0;
+    color: hsl(var(--clr-primary-900));
 }
-#sobre .word-wrap {
+.word-wrap {
     word-wrap: break-word;      /* IE 5.5-7 */
     white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
     white-space: pre-wrap;      /* current browsers */
 }
 
 footer {
-    display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #027BD0;
-    height: 25vh;
+    height: clamp(200px, 25vh, 250px);
     width: 100%;
+    padding-inline: clamp(30px, 4vw + 1rem, 100vw - 1200px);
+    background: hsl(var(--clr-primary-900));
 }
 footer .container {
-    display: flex;
-    flex-direction: column;
+    --gap: .5em;
     justify-content: center;
-    padding-left: 8vw;
-    row-gap: .5em;
 }
 footer .container h1 {
-    color: #fff;
+    color: hsl(var(--clr-neutral-900));
     font-weight: 500;
     font-size: 1.5em;
     margin-bottom: .5em;
 }
 footer .container h5 {
-    color: #fff;
+    color: hsl(var(--clr-neutral-900));
     font-weight: 400;
     font-size: 1em;
 }
 footer .logo-container img {
     width: 100%;
-    max-width: 20rem;
-    /* margin-right: 10rem; */
-    color: #fff;}
+    max-width: 15rem;
+    color: hsl(var(--clr-neutral-900));
+}
+
+@media (max-width: 640px) {
+    nav {
+        display: none;
+    }
+}
