@@ -35,6 +35,7 @@ class ColetaOut(Schema):
     links: dict = {}
     sequencia_url: str
     ponto_url: str
+    status: dict
 
     @staticmethod
     def resolve_responsaveis_url(obj):

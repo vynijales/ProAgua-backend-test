@@ -76,9 +76,10 @@ async function createTableColetas(data) {
             <td>${coleta.cor}</td>
             <td>${coleta.data}</td>
             <td>${coleta.responsaveis_url}</td>
-            <td style="text-align: center;">${coleta.status
+            <td style="text-align: center;">${coleta.status.status
             ? '<i class="bi bi-check2"></i>'
             : '<i class="bi bi-x"></i>'}
+            ${coleta.status.message}
             </td>
             <td>
                 <a href="#edit/${coleta.id}">Editar</a>

@@ -1,6 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+BEBEDOURO = 1
+RPS = 2
+RPI = 3
+RDS = 4
+RDI = 5
+CAERN = 6
 
 class Coleta(models.Model):
     id = models.AutoField(primary_key=True)
@@ -54,6 +60,96 @@ class Coleta(models.Model):
         default=("C", "Coleta"),
     )
 
+    def status(self) -> str:
+        status_temperatura = self.analise_temperatura()
+        status_turbidez = self.analise_turbidez()
+        status_coliformes = self.analise_coliformes()
+        status_escherichia = self.analise_escherichia()
+        
+        if not status_temperatura.get("status"):
+            return status_temperatura
+        
+        if not status_turbidez.get("status"):
+            return status_turbidez
+        
+        if not status_coliformes.get("status"):
+            return status_coliformes
+        
+        if not status_escherichia.get("status"):
+            return status_escherichia
+
+        return {
+            "status": True,
+            "message": "Qualidade adequada para uso"
+        }
+    
+    def analise_temperatura(self):
+        MARGEM_TEMPERATURA = 5
+
+        if self.ponto.tipo == BEBEDOURO:
+            if self.temperatura < 9.5:
+                return {
+                    "status": False,
+                    "message": "Temperatura desconforme"
+                }
+            elif self.temperatura > 10.5:
+                return {
+                    "status": False,
+                    "message": "Temperatura desconforme. Solicitar manutenção"
+                }
+            else:
+                return {
+                    "status": True,
+                    "message": "Bebedouro funcionando"
+                }
+        else:
+            if abs(self.temperatura - 37) > MARGEM_TEMPERATURA:
+                return {
+                    "status": False,
+                    "message": "Temperatura desconforme"
+                }
+            else:
+                return {
+                    "status": True,
+                    "message": "Água adequada para uso"
+                }
+        
+    def analise_turbidez(self):
+        if self.turbidez <= 5:
+            return {
+                "status": True,
+                "message": "Turbidez adequada"
+            }
+        else:
+            return {
+                "status": False,
+                "message": "Turbidez inadequada"
+            }
+    
+    def analise_coliformes(self):
+        if self.coliformes_totais:
+            return {
+                "status": False,
+                "message": "Presença de coliformes"
+            }
+        else:
+            return {
+                "status": True,
+                "message": "Ausencia de coliformes"
+            }
+    
+    def analise_escherichia(self):
+        if self.escherichia:
+            return {
+                "status": False,
+                "message": "Presença de escherichia coli."
+            }
+        else:
+            return {
+                "status": True,
+                "message": "Ausência de escherichia coli."
+            }
+    
     def __str__(self) -> str:
         return f"Coleta {self.id}"
   
