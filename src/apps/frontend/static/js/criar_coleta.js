@@ -8,6 +8,29 @@ async function fetchJson(url) {
     return response.json();
 }
 
+async function carregarOpcoesSequencia() {
+    try {
+        const sequencias = await fetchJson("/api/v1/sequencias");
+        const sequenciaInput = document.querySelector("input[name='sequencia']");
+
+        sequenciaInput.innerHTML = "";
+
+        console.log(sequencias)
+        sequencias.items.forEach(sequencia => {
+            let newOption = document.createElement("option");
+            newOption.value = `${sequencia.id}`;
+            newOption.innerText = `Amostragem ${sequencia.amostragem}`;
+            document.getElementById("sequencia").appendChild(newOption);
+
+            console.log(sequencia);
+        });
+
+    } catch (error) {
+        console.error('Erro ao carregar opções de edificação:', error);
+    }
+}
+
+
 async function carregarOpcoesPonto() {
     try {
         const pontos = await fetchJson("/api/v1/pontos");
@@ -56,7 +79,7 @@ async function criarColeta() {
     bt_criar.disabled = true;
     bt_criar.innerHTML = "Criando...";
 
-    const sequencia = document.getElementById("sequencia").value;
+    const sequencia = document.getElementById("sequencia_value").value;
     const ponto_coleta = document.getElementById("ponto_value").value;
     const ponto_coleta_id = parseInt(ponto_coleta.split(" | ")[0]);
     const temperatura = document.getElementById("temperatura").value;
@@ -99,7 +122,7 @@ async function criarColeta() {
         throw new Error(`Erro ao criar a coleta: ${responseColeta.statusText}. Detalhes: ${JSON.stringify(errorResponse)}`);
     }
 
-    window.location.href = "/ponto";
+    window.location.href = `/sequencias_coletas/${sequencia}`;
     console.log("Coleta criada com sucesso!");
 
 
@@ -112,5 +135,6 @@ async function criarColeta() {
 document.getElementById("criar").addEventListener("click", criarColeta);
 
 
+carregarOpcoesSequencia();
 carregarOpcoesPonto();
 carregarOpcoesResponsaveis();

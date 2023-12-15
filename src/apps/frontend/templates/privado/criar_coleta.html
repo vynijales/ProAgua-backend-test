@@ -78,12 +78,16 @@
                 <div id="div-container" class="flex"
                     style="flex-direction: column;">
                     <form method="post" action="/api/v1/coletas/">
-                        <label for="sequencia">ID da Sequência:</label>
-                        <input type="number" id="sequencia" name="sequencia"
-                            required>
+
+                        <label for="sequencia">ID da Sequência:</label>                        
+                        <input list="sequencia" id="sequencia_value" name="sequencia" required> 
+                        <datalist id="sequencia">
+                            <!-- As sequências serão adicionados aqui -->
+                        </datalist>
+
 
                         <label for="ponto">Ponto de Coleta:</label>                        
-                        <input list="ponto" id="ponto_value" name="ponto">
+                        <input list="ponto" id="ponto_value" name="ponto" required>
                         <datalist id="ponto">
                             <!-- Os pontos serão adicionados aqui -->
                         </datalist>
