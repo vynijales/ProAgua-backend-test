@@ -28,7 +28,7 @@ async function carregarOpcoesEdificacao() {
 }
 
 function carregarPonto() {
-    let target = window.location.pathname.split("/ponto/")[1];
+    let target = window.location.pathname.split("/pontos/")[1];
     target = target.replace(/\/$/, "");
 
     fetch("/api/v1/pontos/" + target, {
@@ -39,7 +39,7 @@ function carregarPonto() {
     })
         .then(response => {
             if (!response.ok) {
-                window.location.href = "/ponto";
+                window.location.href = "/pontos";
             }
             return response.json();
         })
@@ -192,7 +192,7 @@ async function excluirPonto() {
 
         console.log('Ponto atualizado com sucesso:', await responsePonto.json());
         
-        window.location.href = "/ponto";
+        window.location.href = "/pontos";
     } catch (error) {
         console.error('Erro durante a exclusão:', error);
     } finally {

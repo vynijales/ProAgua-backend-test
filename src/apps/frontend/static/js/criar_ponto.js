@@ -97,7 +97,7 @@ async function criarPonto() {
             throw new Error(`Erro ao enviar a imagem: ${responseImagem.statusText}. Detalhes: ${JSON.stringify(errorResponseImagem)}`);
         }
 
-        window.location.href = "/ponto";
+        window.location.href = "/pontos";
 
     } catch (error) {
         console.error('Erro durante a criação:', error);
