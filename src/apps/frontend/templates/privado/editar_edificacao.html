@@ -74,7 +74,7 @@
         <h2>Editar Edificação</h2>
         <div class="flex wrapper">
             <div id="div-container" class="flex" style="flex-direction: column;">
-                <form method="post" action="/api/v1/edificacoes/">
+                <form method="post" action="/api/v1/edificacoes/" class="flex">
                     <label for="codigo">Código:</label>
                     <input type="text" id="codigo" name="codigo" required>
 
@@ -89,6 +89,10 @@
 
                     <label for="cronograma">Cronograma:</label>
                     <input type="number" id="cronograma" name="cronograma" required>
+
+                    <label for="foto">Foto:</label>
+                    <img id="imagePreview" alt="Imagem Preview" />
+                    <input type="file" id="foto" name="foto" onchange="atualizarPreview()">
 
                     <div class="flex button-container">
                         <button id="atualizar" type="button">Atualizar</button>

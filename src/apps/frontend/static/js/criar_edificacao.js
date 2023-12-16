@@ -37,6 +37,21 @@ async function criarEdificacao() {
             throw new Error(`Erro ao criar a edificação: ${response.statusText}. Detalhes: ${JSON.stringify(errorResponse)}`);
         }
 
+        let formData = new FormData();
+        const imagem = document.getElementById("foto");
+
+        if (imagem.files.length > 0) {
+            formData.append("imagem", imagem.files[0]);
+            const responseImagem = await fetch("/api/v1/edificacoes/" + codigo + "/imagem", {
+                method: 'POST',
+                body: formData,
+            })
+
+            if (!responseImagem.ok) {
+                throw new Error('Erro ao enviar a imagem');
+            }
+        }
+
         window.location.href = "/edificacoes";
 
     } catch (error) {
@@ -45,6 +60,21 @@ async function criarEdificacao() {
         isCriandoEdificacao = false;
         bt_criar.disabled = false;
         bt_criar.innerHTML = "Criar";
+    }
+}
+
+function atualizarPreview() {
+    const inputFoto = document.getElementById("foto");
+    const imgElement = document.getElementById("imagePreview");
+
+    if (inputFoto.files && inputFoto.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            imgElement.src = e.target.result;
+        };
+
+        reader.readAsDataURL(inputFoto.files[0]);
     }
 }
 

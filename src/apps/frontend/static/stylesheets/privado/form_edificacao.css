@@ -10,6 +10,7 @@
 }
 
 form {
+    flex-direction: column;
     background-color: var(--primary-white);
     padding: 20px;
     border-radius: 8px;
@@ -19,14 +20,12 @@ form {
 
 label {
     display: block;
-    margin-bottom: 8px;
     font-weight: bold;
 }
 
 input, select {
     width: 100%;
     padding: 8px;
-    margin-bottom: 16px;
     box-sizing: border-box;
     border: 1px solid var(--tertiary-white);
     border-radius: 4px;
@@ -79,4 +78,12 @@ label{
 
 input[type=text], input[type=select]{
     font-weight: 80;
+}
+
+#imagePreview{
+    align-self: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    object-fit: cover;
 }
