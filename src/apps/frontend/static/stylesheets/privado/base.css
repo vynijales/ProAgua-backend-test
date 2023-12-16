@@ -94,7 +94,7 @@ header a {
 }
 
 .menu-button:hover, .filled-button:hover {
-    background-color: var(--clr-primary-800);
+    background-color: hsl(var(--clr-primary-800));
 }
 
 .navbar-header {
@@ -196,3 +196,25 @@ main h2 {
     gap: var(--gap, 1rem);
 }
 
+.floating-bt {
+    background-color: hsl(var(--clr-primary-900));
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    box-shadow: 2px 2px 10px 0px rgleftba(0, 0, 0, 0.2);
+    transition: box-shadow, 0.1s;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: fixed;
+    right: 40px;
+    bottom: 20px;
+}
+.floating-bt:hover {
+    background-color: hsl(var(--clr-primary-800));
+    /* background-color: var(--primary-blue); */
+    box-shadow: 4px 4px 15px 0px rgba(0, 0, 0, 0.3);
+}
+.floating-bt .bi.bi-plus-lg {
+    font-size: 1.25rem;
+}

@@ -52,29 +52,6 @@ tr {
     font-size: 2rem;
 }
 
-.floating-bt {
-    background-color: var(--primary-blue);
-    padding: 1rem 1.25rem;
-    border-radius: 0.5rem;
-    color: white;
-    font-size: 1rem;
-    font-weight: 500;
-    box-shadow: 2px 2px 10px 0px rgleftba(0, 0, 0, 0.2);
-    transition: box-shadow, 0.1s;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    position: fixed;
-    right: 40px;
-    bottom: 20px;
-}
-.floating-bt:hover {
-    background-color: color-mix(in srgb, var(--primary-blue) 60%, rgb(12, 30, 165) 40%);
-    /* background-color: var(--primary-blue); */
-    box-shadow: 4px 4px 15px 0px rgba(0, 0, 0, 0.3);
-}
-.floating-bt .bi.bi-plus-lg {
-    font-size: 1.25rem;
-}
-
 #container h3:not(:first-child) {
     margin-top: 3rem;
 }
