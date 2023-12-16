@@ -57,16 +57,25 @@ async function createTableColetas(data) {
         th.innerText = value.toString();
         header_row.appendChild(th);
     });
-    
+
     // Create table rows
-    data.forEach((coleta) => {
-        const row = document.createElement('tr');
+    for (const coleta of data) {
+        // Gerar string com nome dos responsáveis
+        let response = await fetch(coleta.responsaveis_url);
+        let arr_responsaveis = await response.json();
+        let responsaveis = arr_responsaveis.reduce(
+            (acc, current_value) => (acc ? acc + ', ' : '') + current_value.username,
+            ''
+        );
+
+        // Construir linha da tabela
+        let row = document.createElement('tr');
         row.innerHTML = `
             <td>${coleta.id}</td>
             <td>${coleta.ordem}</td>
-            <td>${coleta.temperatura}</td>
-            <td>${coleta.cloro_residual_livre}</td>
-            <td>${coleta.turbidez}</td>
+            <td>${coleta.temperatura} ºC</td>
+            <td>${coleta.cloro_residual_livre} mg/L</td>
+            <td>${coleta.turbidez} uT </td>
             <td>${coleta.coliformes_totais
             ? 'Presença'
             : 'Ausência'}</td>
@@ -75,23 +84,28 @@ async function createTableColetas(data) {
             : 'Ausência'}</td>
             <td>${coleta.cor}</td>
             <td>${coleta.data}</td>
-            <td>${coleta.responsaveis_url}</td>
+            <td>${responsaveis}</td>
             <td style="text-align: center;">${coleta.status.status
             ? '<i class="bi bi-check2"></i>'
             : '<i class="bi bi-x"></i>'}
             ${coleta.status.message}
             </td>
             <td>
-                <a href="#edit/${coleta.id}">Editar</a>
+                <a href="/coletas/${coleta.id}">Editar</a>
             </td>
         `;
         body_rows.push(row);
-    });
+    };
+
     table.append(header_row, ...body_rows);
     return table;
 }
 
-getSequenciaColetas(1).then(sequencia => {
+
+// Construir tabela de coletas
+const id_sequencia = window.location.pathname.split("/sequencias_coletas/")[1];
+
+getSequenciaColetas(parseInt(id_sequencia)).then(sequencia => {
     let grupos = groupColetaByPonto(sequencia.coletas);
 
     grupos.forEach(grupo => {
