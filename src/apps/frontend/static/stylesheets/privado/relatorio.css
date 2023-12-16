@@ -4,11 +4,6 @@
     align-items: start;
 }
 
-a {
-    color:rgb(18, 18, 189);
-    text-decoration-line: underline;
-}
-
 table {
     width: 100%;
     display: block;
