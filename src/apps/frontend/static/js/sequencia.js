@@ -91,7 +91,11 @@ async function createTableColetas(data) {
     return table;
 }
 
-getSequenciaColetas(1).then(sequencia => {
+
+// Construir tabela de coletas
+const id_sequencia = window.location.pathname.split("/sequencias_coletas/")[1];
+
+getSequenciaColetas(parseInt(id_sequencia)).then(sequencia => {
     let grupos = groupColetaByPonto(sequencia.coletas);
 
     grupos.forEach(grupo => {
