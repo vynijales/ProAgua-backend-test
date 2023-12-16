@@ -82,7 +82,7 @@ async function createTableColetas(data) {
             ${coleta.status.message}
             </td>
             <td>
-                <a href="#edit/${coleta.id}">Editar</a>
+                <a href="/coletas/${coleta.id}">Editar</a>
             </td>
         `;
         body_rows.push(row);
