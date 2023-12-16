@@ -16,7 +16,6 @@ urlpatterns = [
 
     # Pontos de coletas
     path('pontos/', views.pontos_coletas, name='visualizar_pontos'),
-    path('pontos/<int:ponto_id>/', views.ponto_coleta, name='visualizar_ponto'),
     path('pontos/criar/', views.criar_ponto, name='criar_ponto'),
     path('pontos/<int:ponto_id>/', views.editar_ponto, name='editar_ponto'),
     path('pontos/<int:ponto_id>/amostragem/<int:amostragem>/', views.ponto_coleta_relatorio, name='visualizar_relatorio'),
