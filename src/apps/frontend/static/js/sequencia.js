@@ -64,9 +64,9 @@ async function createTableColetas(data) {
         row.innerHTML = `
             <td>${coleta.id}</td>
             <td>${coleta.ordem}</td>
-            <td>${coleta.temperatura}</td>
-            <td>${coleta.cloro_residual_livre}</td>
-            <td>${coleta.turbidez}</td>
+            <td>${coleta.temperatura} ºC</td>
+            <td>${coleta.cloro_residual_livre} mg/L</td>
+            <td>${coleta.turbidez} uT </td>
             <td>${coleta.coliformes_totais
             ? 'Presença'
             : 'Ausência'}</td>
