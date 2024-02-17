@@ -176,7 +176,7 @@ async function excluirPonto() {
     bt_excluir.disabled = true;
     bt_excluir.innerHTML = "Excluindo...";
 
-    let target = window.location.pathname.split("/ponto/")[1];
+    let target = window.location.pathname.split("/pontos/")[1]; 
     target = target.replace(/\/$/, "");
 
     var json = {};
