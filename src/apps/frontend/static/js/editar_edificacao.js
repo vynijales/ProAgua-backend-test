@@ -274,7 +274,7 @@ function atualizarPreview() {
 }
 
 document.getElementById("atualizar").addEventListener("click", atualizarEdificacao);
-document.getElementById("excluir").addEventListener("click", excluirEdificacao);
+document.getElementById("confirmarDelecao").addEventListener("click", excluirEdificacao);
 
 carregarEdificacao();
 

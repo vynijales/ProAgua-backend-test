@@ -45,7 +45,7 @@
     text-align: center;
 }
 
-.modal {
+/* .modal {
     --gap: .2rem;
     position: absolute;
     top: 3em;
@@ -71,7 +71,7 @@
 
 .modal-button:hover {
     background-color: #EFEFEF;
-}
+} */
 
 .select, #search-bar {
     border: 1px solid #ABABAB;
