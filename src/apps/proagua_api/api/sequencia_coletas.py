@@ -44,3 +44,9 @@ def delete_sequencia(request, id_sequencia: int):
     sequencia = get_object_or_404(models.SequenciaColetas, id=id_sequencia)
     sequencia.delete()
     return {"success": True}
+
+
+@router.get("/{id_sequencia}/coletas", response=List[ColetaOut])
+def list_coletas_sequencia(request, id_sequencia: int):
+    qs = models.Coleta.objects.filter(sequencia__id=id_sequencia)
+    return qs
