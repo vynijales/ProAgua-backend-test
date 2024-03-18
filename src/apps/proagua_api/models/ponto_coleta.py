@@ -9,33 +9,40 @@ TIPOS_PONTOS = (
     (6, "CAERN")
 )
 
+
 class PontoColeta(models.Model):
     id = models.AutoField(primary_key=True)
     imagem = models.ImageField(
-        upload_to="media/images/pontos", 
-        blank=True, 
+        upload_to="media/images/pontos",
+        blank=True,
         null=True
     )
+    
     edificacao = models.ForeignKey(
         to="Edificacao",
         related_name="PontoColeta",
-        verbose_name="código da edificação", 
+        verbose_name="código da edificação",
         on_delete=models.PROTECT,
         blank=False
     )
-    
+
     ambiente = models.CharField(
         verbose_name="ambiente",
         max_length=20
     )
-    
+
     tipo = models.IntegerField(
         verbose_name="tipo",
         choices=TIPOS_PONTOS,
         default=(1, "Bebedouro")
     )
-    
-    tombo = models.CharField(max_length=20, verbose_name="tombo", blank=True, null=True)
+
+    tombo = models.CharField(
+        max_length=20,
+        verbose_name="tombo",
+        blank=True,
+        null=True
+    )
 
     amontante = models.ForeignKey(
         to="PontoColeta",

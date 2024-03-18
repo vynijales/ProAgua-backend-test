@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 
 from django.shortcuts import get_object_or_404
 from ninja import Router, Query, UploadedFile, File, Form
@@ -61,7 +61,7 @@ def delete_edificacao(request, cod_edificacao: str):
     return {"success": True}
 
 
-@router.get("/{cod_edificacao}/pontos", response=List[PontoColetaOut])
+@router.get("/{cod_edificacao}/pontos", response=Dict[str, List[PontoColetaOut]])
 def list_pontos(request, cod_edificacao: str):
     qs = models.PontoColeta.objects.filter(edificacao__codigo=cod_edificacao)
-    return qs
+    return {"items": list(qs)}
