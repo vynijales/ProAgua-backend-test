@@ -2,7 +2,11 @@ from typing import List
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
+from django.http import FileResponse
 from ninja import Router, Query
+
+from io import BytesIO
+from io import StringIO
 
 from .schemas.coleta import *
 from .schemas.usuario import UsuarioOut
@@ -82,3 +86,15 @@ def delete_coleta(request, id_coleta: int):
 def get_responsaveis_coleta(request, id_coleta: int):
     coleta = get_object_or_404(models.Coleta, id=id_coleta)
     return coleta.responsavel
+
+
+@router.get("/{id_coleta}/csv")
+def get_coleta_csv(request, id_coleta: int):
+    coleta = get_object_or_404(models.Coleta, id=id_coleta)
+    csv_data = coleta.get_csv()
+
+    csv_file = BytesIO(csv_data.encode())
+
+    response = FileResponse(
+        csv_file, as_attachment=True, filename='coleta.csv')
+    return response

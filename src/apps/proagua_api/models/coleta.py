@@ -1,12 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+import csv
+from io import StringIO
+
 BEBEDOURO = 1
 RPS = 2
 RPI = 3
 RDS = 4
 RDI = 5
 CAERN = 6
+
 
 class Coleta(models.Model):
     id = models.AutoField(primary_key=True)
@@ -65,16 +69,16 @@ class Coleta(models.Model):
         status_turbidez = self.analise_turbidez()
         status_coliformes = self.analise_coliformes()
         status_escherichia = self.analise_escherichia()
-        
+
         if not status_temperatura.get("status"):
             return status_temperatura
-        
+
         if not status_turbidez.get("status"):
             return status_turbidez
-        
+
         if not status_coliformes.get("status"):
             return status_coliformes
-        
+
         if not status_escherichia.get("status"):
             return status_escherichia
 
@@ -82,7 +86,7 @@ class Coleta(models.Model):
             "status": True,
             "message": "Qualidade adequada para uso"
         }
-    
+
     def analise_temperatura(self):
         MARGEM_TEMPERATURA = 5
 
@@ -113,7 +117,7 @@ class Coleta(models.Model):
                     "status": True,
                     "message": "Água adequada para uso"
                 }
-        
+
     def analise_turbidez(self):
         if self.turbidez <= 5:
             return {
@@ -125,7 +129,7 @@ class Coleta(models.Model):
                 "status": False,
                 "message": "Turbidez inadequada"
             }
-    
+
     def analise_coliformes(self):
         if self.coliformes_totais:
             return {
@@ -137,7 +141,7 @@ class Coleta(models.Model):
                 "status": True,
                 "message": "Ausencia de coliformes"
             }
-    
+
     def analise_escherichia(self):
         if self.escherichia:
             return {
@@ -149,7 +153,17 @@ class Coleta(models.Model):
                 "status": True,
                 "message": "Ausência de escherichia coli."
             }
-    
+
+    def get_csv(self):
+        field_names = [field.name for field in self._meta.fields]
+
+        output = StringIO()
+        writer = csv.DictWriter(output, fieldnames=field_names)
+
+        writer.writeheader()
+        writer.writerow({field: getattr(self, field) for field in field_names})
+
+        return output.getvalue()
+
     def __str__(self) -> str:
         return f"Coleta {self.id}"
-  
