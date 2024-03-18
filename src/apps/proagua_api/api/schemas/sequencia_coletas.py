@@ -13,15 +13,11 @@ class SequenciaColetasIn(Schema):
 class SequenciaColetasOut(Schema):
     id: int
     amostragem: int
-    ponto_url: Optional[str]
+    ponto: Optional[PontoColetaOut]
     coletas: List[ColetaOut]
 
     @staticmethod
-    def resolve_ponto_url(obj):
+    def resolve_ponto(obj):
         pontos = PontoColeta.objects.filter(coletas__sequencia=obj.id)
-        ponto = pontos.order_by('tipo').first()
-        
-        if ponto:
-            return reverse("api-1.0.0:get_ponto", kwargs={"id_ponto": ponto.id})
-        
-        return None
+        return pontos.order_by('tipo').first()
+
