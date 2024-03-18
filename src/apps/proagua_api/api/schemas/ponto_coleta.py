@@ -2,9 +2,7 @@ from typing import Optional
 
 from ninja import Schema, FilterSchema, Field
 from django.urls import reverse
-
-from ... import models
-
+from .edficacao import EdificacaoOut
 
 class PontoColetaIn(Schema):
     codigo_edificacao: str
@@ -19,6 +17,7 @@ class PontoColetaOut(Schema):
     ambiente: str
     tipo: int
     tombo: Optional[str]
+    edificacao: EdificacaoOut
     edificacao_url: str
     fluxos_url: str
 
@@ -29,7 +28,6 @@ class PontoColetaOut(Schema):
     @staticmethod
     def resolve_fluxos_url(self):
         return reverse("api-1.0.0:get_fluxos", kwargs={"id_ponto": self.id})
-
 
 class FilterPontos(FilterSchema):
     q: Optional[str] = Field(
