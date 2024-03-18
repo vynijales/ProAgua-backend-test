@@ -21,6 +21,23 @@ def list_coleta(request, filter: FilterColeta = Query(...)):
     return filter.filter(qs)
 
 
+@router.get("/csv", response=List[ColetaOut])
+def get_coletas_csv(request, filter: FilterColeta = Query(...)):
+    coletas = filter.filter(models.Coleta.objects.all())
+    csv_headers = [
+        "id", "temperatura", "cloro_residual_livre", "turbidez", "coliformes_totais",
+        "escherichia", "cor", "data", "responsaveis", "ordem", "sequencia_id", "ponto_id"
+    ]
+    csv_file = StringIO()
+    csv_file.write(",".join(csv_headers) + "\n")
+    for coleta in coletas:
+        csv_file.write(
+            f"{coleta.id},{coleta.temperatura},{coleta.cloro_residual_livre},{coleta.turbidez},{coleta.coliformes_totais},{coleta.escherichia},{coleta.cor},{coleta.data},{'/'.join([str(r.username) for r in coleta.responsavel.all()])},{coleta.ordem},{coleta.sequencia.id},{coleta.ponto.id}\n"
+        )
+    csv_file.seek(0)
+    return FileResponse(BytesIO(csv_file.getvalue().encode()), as_attachment=True, filename="coletas.csv")
+
+
 @router.get("/{id_coleta}", response=ColetaOut)
 def get_coleta(request, id_coleta: int):
     qs = get_object_or_404(models.Coleta, id=id_coleta)
@@ -86,15 +103,3 @@ def delete_coleta(request, id_coleta: int):
 def get_responsaveis_coleta(request, id_coleta: int):
     coleta = get_object_or_404(models.Coleta, id=id_coleta)
     return coleta.responsavel
-
-
-@router.get("/{id_coleta}/csv")
-def get_coleta_csv(request, id_coleta: int):
-    coleta = get_object_or_404(models.Coleta, id=id_coleta)
-    csv_data = coleta.get_csv()
-
-    csv_file = BytesIO(csv_data.encode())
-
-    response = FileResponse(
-        csv_file, as_attachment=True, filename='coleta.csv')
-    return response

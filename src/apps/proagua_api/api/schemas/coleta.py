@@ -64,7 +64,8 @@ class ColetaOut(Schema):
 
 
 class FilterColeta(FilterSchema):
-    q: Optional[str] = Field(q=["responsavel__username__contains"])
+    responsavel__username__contains: Optional[str] = Field(q=["responsavel__username__contains"])
     data__gte: Optional[date] = Field(alias="data_minima")
     data__lte: Optional[date] = Field(alias="data_maxima")
+    sequencia_id: Optional[int] = Field(alias="sequencia__id")
     

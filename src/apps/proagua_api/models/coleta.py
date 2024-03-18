@@ -153,17 +153,14 @@ class Coleta(models.Model):
                 "status": True,
                 "message": "Ausência de escherichia coli."
             }
-
-    def get_csv(self):
-        field_names = [field.name for field in self._meta.fields]
-
-        output = StringIO()
-        writer = csv.DictWriter(output, fieldnames=field_names)
-
-        writer.writeheader()
-        writer.writerow({field: getattr(self, field) for field in field_names})
-
-        return output.getvalue()
+   
+    @classmethod
+    def get_csv(cls, coletas):
+        field_names = [field.name for field in cls._meta.fields]
+        csv_data = ""
+        for coleta in coletas:
+            csv_data += ",".join([str(getattr(coleta, field)) for field in field_names]) + "\n"
+        return csv_data
 
     def __str__(self) -> str:
         return f"Coleta {self.id}"
