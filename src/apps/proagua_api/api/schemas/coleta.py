@@ -68,4 +68,17 @@ class FilterColeta(FilterSchema):
     data__gte: Optional[date] = Field(alias="data_minima")
     data__lte: Optional[date] = Field(alias="data_maxima")
     sequencia_id: Optional[int] = Field(alias="sequencia__id")
+    temperatura__gte: Optional[float] = Field(alias="temperatura_minima")
+    temperatura__lte: Optional[float] = Field(alias="temperatura_maxima")
+    cloro_residual_livre__gte: Optional[float] = Field(alias="cloro_residual_livre_minimo")
+    cloro_residual_livre__lte: Optional[float] = Field(alias="cloro_residual_livre_maximo")
+    turbidez__gte: Optional[float] = Field(alias="turbidez_minima")
+    turbidez__lte: Optional[float] = Field(alias="turbidez_maxima")
+    coliformes_totais: Optional[bool] = Field(alias="coliformes_totais")
+    escherichia: Optional[bool] = Field(alias="escherichia")
+    cor__gte: Optional[float] = Field(alias="cor_minima")
+    cor__lte: Optional[float] = Field(alias="cor_maxima")
+    ordem: Optional[str] = Field(alias="ordem")
+    
+
     
