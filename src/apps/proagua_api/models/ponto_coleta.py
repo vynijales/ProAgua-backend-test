@@ -1,4 +1,5 @@
 from django.db import models
+from .coleta import Coleta
 
 TIPOS_PONTOS = (
     (1, "Bebedouro"),
@@ -51,6 +52,16 @@ class PontoColeta(models.Model):
         blank=True,
         null=True
     )
+
+    def status(self) -> bool | None:
+        coleta = Coleta.objects.filter(ponto=self).last()
+        if coleta:
+            return coleta.status
+
+    def status_message(self) -> str | None:
+        coleta = Coleta.objects.filter(ponto=self).last()
+        if coleta:
+            return coleta.status_message
 
     def __str__(self) -> str:
         return f"Ponto {self.id} - {self.get_tipo_display()}"

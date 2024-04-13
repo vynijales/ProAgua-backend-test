@@ -6,6 +6,7 @@ Material de referência:
 
 from typing import List
 
+from django.db.models import Q, Subquery, OuterRef
 from django.shortcuts import get_object_or_404
 from ninja import Router, Query, UploadedFile, File
 from ninja.pagination import paginate
@@ -21,8 +22,26 @@ router = Router(tags=["Pontos"])
 @router.get("/", response=List[PontoColetaOut])
 @paginate
 def list_ponto(request, filters: FilterPontos = Query(...)):
-    qs = models.PontoColeta.objects.all()
-    return filters.filter(qs)
+    qs = models.PontoColeta.objects
+
+    if filters.q:
+        qs = qs.filter(
+            Q(ambiente__contains=filters.q) | Q(edificacao__nome__contains=filters.q)
+        )
+        
+    if filters.edificacao__campus:
+        qs = qs.filter(edificacao__campus=filters.edificacao__campus)
+
+    if filters.tipo:
+        qs = qs.filter(tipo=filters.tipo)
+
+    if filters.fluxos:
+        qs = qs.filter(fluxos=filters.fluxos)
+
+    if filters.status:
+        pass
+
+    return qs.all()
 
 
 @router.get("/{id_ponto}", response=PontoColetaOut)

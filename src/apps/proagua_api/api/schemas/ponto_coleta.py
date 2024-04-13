@@ -20,6 +20,8 @@ class PontoColetaOut(Schema):
     edificacao: EdificacaoOut
     edificacao_url: str
     fluxos_url: str
+    status: Optional[bool]
+    status_message: Optional[str]
 
     @staticmethod
     def resolve_edificacao_url(self):
@@ -37,3 +39,5 @@ class FilterPontos(FilterSchema):
     edificacao__campus: Optional[str] = Field(alias="campus")
     tipo: Optional[int]
     fluxos: Optional[int]
+    # status: Optional[bool]
+    status: Optional[bool] = Field("coletas__last")

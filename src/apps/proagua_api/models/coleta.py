@@ -63,8 +63,20 @@ class Coleta(models.Model):
         ),
         default=("C", "Coleta"),
     )
+    status = models.BooleanField(
+        verbose_name="status",
+        default=None,
+        null=True,
+    )
 
-    def status(self) -> str:
+    status_message = models.CharField(
+        verbose_name="status message",
+        max_length=200,
+        default=None,
+        null=True
+    )
+
+    def analise(self):
         status_temperatura = self.analise_temperatura()
         status_turbidez = self.analise_turbidez()
         status_coliformes = self.analise_coliformes()
@@ -161,6 +173,14 @@ class Coleta(models.Model):
         for coleta in coletas:
             csv_data += ",".join([str(getattr(coleta, field)) for field in field_names]) + "\n"
         return csv_data
+
+    def save(self, *args, **kwargs):
+        analise = self.analise()
+        
+        self.status = analise.get("status")
+        self.status_message = analise.get("message")
+
+        super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return f"Coleta {self.id}"
