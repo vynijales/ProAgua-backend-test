@@ -12,6 +12,8 @@ from .schemas.coleta import *
 from .schemas.usuario import UsuarioOut
 from .. import models
 
+import pandas as pd
+
 router = Router(tags=["Coletas"])
 
 
@@ -36,6 +38,81 @@ def get_coletas_csv(request, filter: FilterColeta = Query(...)):
         )
     csv_file.seek(0)
     return FileResponse(BytesIO(csv_file.getvalue().encode()), as_attachment=True, filename="coletas.csv")
+
+
+@router.get("/excel", response=List[ColetaOut])
+def get_coletas_excel(request, filter: FilterColeta = Query(...)):
+    coletas = filter.filter(models.Coleta.objects.all())
+    df = pd.DataFrame(list(coletas.values()))
+    df["data"] = df["data"].dt.tz_localize(None)  # Remove timezone information from the "data" column    
+    rename = lambda x: "Presença" if x else "Ausência"
+    df["escherichia"] = df["escherichia"].apply(rename)
+    df["coliformes_totais"] = df["coliformes_totais"].apply(rename)
+
+    df = df.rename(columns={
+        "id": "ID",
+        "temperatura": "Temperatura",
+        "cloro_residual_livre": "Cloro Residual Livre",
+        "turbidez": "Turbidez",
+        "coliformes_totais": "Coliformes Totais",
+        "escherichia": "Escherichia coli",
+        "cor": "Cor Aparente",
+        "data": "Data",
+        "ordem": "Ordem",
+        "sequencia_id": "ID Sequência",
+        "ponto_id": "ID Ponto",
+        "status": "Status",
+        "status_message": "Mensagem de Status"
+    })
+
+    # Criar colunas de Edificacao
+    
+    df.insert(1, "Código da Edificação", "DEFAULT")
+    df.insert(2, "Nome da Edificação", "DEFAULT")
+    df.insert(3, "Campus", "DEFAULT")
+
+    # Criar colunas de Ponto
+    df.insert(4, "Tipo", "DEFAULT")
+    df.insert(5, "Ambiente", "DEFAULT")
+    df.insert(6, "Tombo", "DEFAULT")
+
+    # Inserindo os valores correspondentes nas colunas criadas
+    for index, row in df.iterrows():
+        ponto = models.PontoColeta.objects.filter(id=row["ID Ponto"]).first()
+        if ponto:
+            edificacao = models.Edificacao.objects.filter(id=ponto.edificacao_id).first()
+            if edificacao:
+                df.at[index, "Código da Edificação"] = str(edificacao.codigo)  # Explicitly convert to string
+                df.at[index, "Nome da Edificação"] = str(edificacao.nome)  # Explicitly convert to string
+                df.at[index, "Campus"] = edificacao.campus
+            df.at[index, "Tipo"] = ponto.get_tipo_display()
+            df.at[index, "Ambiente"] = ponto.ambiente
+            df.at[index, "Tombo"] = ponto.tombo
+
+    # Renomeando campus
+    rename_campus = lambda x: "Leste" if str(x) == "LE" else "Oeste" if str(x) == "OE" else "Null"
+    df["Campus"] = df["Campus"].apply(rename_campus)
+
+    # Removendo as colunas ID Sequência e ID Ponto
+    df = df.drop(columns=["ID Sequência", "ID Ponto", "Status", "Mensagem de Status"])
+    
+    excel_file = BytesIO()
+    writer = pd.ExcelWriter(excel_file, engine="xlsxwriter")
+    df.to_excel(writer, sheet_name="Coletas", index=False)
+
+    # Ajustando a largura das colunas
+    for column in df:
+        if column != "ID":
+            column_min_width = 10
+        else:
+            column_min_width = 5
+        column_length = max(df[column].astype(str).map(len).max(), len(column), column_min_width)
+        col_idx = df.columns.get_loc(column)
+        writer.sheets['Coletas'].set_column(col_idx, col_idx, column_length)
+
+    writer.close()
+    excel_file.seek(0)
+    return FileResponse(excel_file, as_attachment=True, filename="coletas.xlsx")
 
 
 @router.get("/{id_coleta}", response=ColetaOut)
