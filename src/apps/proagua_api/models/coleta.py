@@ -81,22 +81,34 @@ class Coleta(models.Model):
         status_turbidez = self.analise_turbidez()
         status_coliformes = self.analise_coliformes()
         status_escherichia = self.analise_escherichia()
+        
+        status = {
+            "status": True,
+            "messages": []
+        }
 
-        if not status_temperatura.get("status"):
-            return status_temperatura
+        if not status_coliformes["status"]:
+            status["status"] = False
+            status["messages"].append(status_coliformes["message"])
 
-        if not status_turbidez.get("status"):
-            return status_turbidez
+        if not status_escherichia["status"]:
+            status["status"] = False
+            status["messages"].append(status_escherichia["message"])
 
-        if not status_coliformes.get("status"):
-            return status_coliformes
+        if not status_turbidez["status"]:
+            status["status"] = False
+            status["messages"].append(status_turbidez["message"])
 
-        if not status_escherichia.get("status"):
-            return status_escherichia
+        if not status_temperatura["status"]:
+            status["status"] = False
+            status["messages"].append(status_temperatura["message"])
+
+        if not status["status"]:
+            return status
 
         return {
             "status": True,
-            "message": "Qualidade adequada para uso"
+            "messages": ["Qualidade adequada para uso"]
         }
 
     def analise_temperatura(self):
@@ -178,7 +190,7 @@ class Coleta(models.Model):
         analise = self.analise()
         
         self.status = analise.get("status")
-        self.status_message = analise.get("message")
+        self.status_message = ', '.join(analise.get("messages"))
 
         super().save(*args, **kwargs)
 

@@ -3,6 +3,7 @@ from typing import Optional
 from ninja import Schema, FilterSchema, Field
 from django.urls import reverse
 from .edficacao import EdificacaoOut
+from ... import models
 
 class PontoColetaIn(Schema):
     codigo_edificacao: str
@@ -30,6 +31,17 @@ class PontoColetaOut(Schema):
     @staticmethod
     def resolve_fluxos_url(self):
         return reverse("api-1.0.0:get_fluxos", kwargs={"id_ponto": self.id})
+    
+    @staticmethod
+    def resolve_status_message(obj: models.PontoColeta):
+        messages = []
+        for coleta in obj.coletas.all():
+            messages.extend(coleta.analise()["messages"])
+
+        if len(messages) > 0:
+            return ', '.join(messages)
+        
+        return "Não há coletas nesse ponto"
 
 class FilterPontos(FilterSchema):
     q: Optional[str] = Field(

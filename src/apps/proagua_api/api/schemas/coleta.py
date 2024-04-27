@@ -35,9 +35,8 @@ class ColetaOut(Schema):
     links: dict = {}
     sequencia_url: str
     ponto_url: str
-    # status: dict
-    status: bool | None
-    status_message: str | None
+    status: Optional[bool]
+    status_messages: Optional[List[str]]
 
     @staticmethod
     def resolve_responsaveis_url(obj):
@@ -52,7 +51,7 @@ class ColetaOut(Schema):
         return reverse("api-1.0.0:get_ponto", kwargs={"id_ponto": obj.ponto.id})
 
     @staticmethod
-    def resolve_links(obj: models.PontoColeta):
+    def resolve_links(obj: models.Coleta):
         return {
             "sequencia": {
                 "id_sequencia": obj.sequencia.id,
@@ -64,6 +63,9 @@ class ColetaOut(Schema):
              }
         }
 
+    @staticmethod
+    def resolve_status_messages(obj: models.Coleta):
+        return obj.analise()["messages"]
 
 class FilterColeta(FilterSchema):
     responsavel__username__contains: Optional[str] = Field(q=["responsavel__username__contains"])
