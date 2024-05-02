@@ -100,7 +100,7 @@ class Coleta(models.Model):
             status["messages"].append(status_turbidez["message"])
 
         if not status_temperatura["status"]:
-            status["status"] = False
+            # status["status"] = False
             status["messages"].append(status_temperatura["message"])
 
         if not status["status"]:
@@ -117,12 +117,12 @@ class Coleta(models.Model):
         if self.ponto.tipo == BEBEDOURO:
             if self.temperatura < 9.5:
                 return {
-                    "status": False,
+                    "status": True,
                     "message": "Temperatura desconforme"
                 }
             elif self.temperatura > 10.5:
                 return {
-                    "status": False,
+                    "status": True,
                     "message": "Temperatura desconforme. Solicitar manutenção"
                 }
             else:
@@ -133,7 +133,7 @@ class Coleta(models.Model):
         else:
             if abs(self.temperatura - 37) > MARGEM_TEMPERATURA:
                 return {
-                    "status": False,
+                    "status": True,
                     "message": "Temperatura desconforme"
                 }
             else:
