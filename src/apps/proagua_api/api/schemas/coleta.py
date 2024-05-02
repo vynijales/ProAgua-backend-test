@@ -5,6 +5,7 @@ from ninja import Schema, FilterSchema, Field
 from django.urls import reverse
 
 from ... import models
+from .ponto_coleta import PontoColetaOut
 
 class ColetaIn(Schema):
     sequencia_id: int
@@ -35,6 +36,7 @@ class ColetaOut(Schema):
     links: dict = {}
     sequencia_url: str
     ponto_url: str
+    ponto: PontoColetaOut
     status: Optional[bool]
     status_messages: Optional[List[str]]
 
