@@ -85,6 +85,5 @@ class FilterColeta(FilterSchema):
     cor__gte: Optional[float] = Field(alias="cor_minima")
     cor__lte: Optional[float] = Field(alias="cor_maxima")
     ordem: Optional[str] = Field(alias="ordem")
-    
-
-    
+    ponto__edificacao__codigo__exact: Optional[str] = Field(alias="codigo_edificacao")
+    ponto__id: Optional[int] = Field(alias="ponto_id")
