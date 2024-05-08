@@ -11,6 +11,7 @@ RDS = 4
 RDI = 5
 CAERN = 6
 
+# TODO: Pensar em uma melhor forma de armazenar os status de coletas e pontos de coletas
 
 class Coleta(models.Model):
     id = models.AutoField(primary_key=True)
