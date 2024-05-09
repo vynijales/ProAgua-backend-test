@@ -53,6 +53,12 @@ class PontoColeta(models.Model):
         null=True
     )
 
+    imagem = models.ImageField(
+        upload_to="media/images/edificacoes",
+        blank=False,
+        null=False
+    )
+
     def status(self) -> bool | None:
         coleta = Coleta.objects.filter(ponto=self).last()
         if coleta:
