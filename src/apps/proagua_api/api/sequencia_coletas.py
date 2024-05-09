@@ -25,7 +25,13 @@ def get_sequencia(request, id_sequencia: int):
 
 @router.post("/")
 def create_sequencia(request, payload: SequenciaColetasIn):
-    sequencia = models.SequenciaColetas.objects.create(**payload.dict())
+    id_ponto = payload.dict().get("ponto")
+    ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
+
+    payload_dict = payload.dict()
+    payload_dict["ponto"] = ponto
+
+    sequencia = models.SequenciaColetas.objects.create(**payload_dict)
     sequencia.save()
     return {"success": True}
 

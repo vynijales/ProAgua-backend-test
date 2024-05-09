@@ -9,17 +9,13 @@ from .ponto_coleta import PontoColetaOut
 
 class SequenciaColetasIn(Schema):
     amostragem: int
+    ponto: int
 
 class SequenciaColetasOut(Schema):
     id: int
     amostragem: int
-    ponto: Optional[PontoColetaOut]
+    ponto: PontoColetaOut
     coletas_url: str
-    
-    @staticmethod
-    def resolve_ponto(obj):
-        pontos = PontoColeta.objects.filter(coletas__sequencia=obj.id)
-        return pontos.order_by('tipo').first()
 
     @staticmethod
     def resolve_coletas_url(obj):
