@@ -64,11 +64,12 @@ def upload_image(request, id_ponto: str, imagem: UploadedFile = File(...)):
 @router.post("/")
 def create_ponto(request, payload: PontoColetaIn):
     edificacao = get_object_or_404(models.Edificacao, codigo=payload.codigo_edificacao)
+    amontante = get_object_or_404(models.PontoColeta, id=payload.amontante) if payload.amontante else None
 
     data_dict = payload.dict()
     data_dict.pop("codigo_edificacao")
     data_dict["edificacao"] = edificacao
-
+    data_dict["amontante"] = amontante
     ponto_coleta = models.PontoColeta.objects.create(**data_dict)
     ponto_coleta.save()
 

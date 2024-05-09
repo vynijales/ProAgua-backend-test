@@ -1,15 +1,19 @@
-from typing import Optional
+from typing import Optional, ForwardRef
 
 from ninja import Schema, FilterSchema, Field
 from django.urls import reverse
 from .edficacao import EdificacaoOut
 from ... import models
 
+PontoColetaInRef = ForwardRef('PontoColetaIn')
+PontoColetaOutRef = ForwardRef('PontoColetaOut')
+
 class PontoColetaIn(Schema):
     codigo_edificacao: str
     ambiente: str
     tombo: Optional[str]
     tipo: int
+    amontante: Optional[int]
 
 
 class PontoColetaOut(Schema):
@@ -23,6 +27,7 @@ class PontoColetaOut(Schema):
     fluxos_url: str
     status: Optional[bool]
     status_message: Optional[str]
+    amontante: Optional[PontoColetaOutRef] # type: ignore
 
     @staticmethod
     def resolve_edificacao_url(self):
@@ -53,3 +58,7 @@ class FilterPontos(FilterSchema):
     fluxos: Optional[int]
     # status: Optional[bool]
     status: Optional[bool] = Field("coletas__last")
+
+
+PontoColetaIn.update_forward_refs()
+PontoColetaOut.update_forward_refs()
