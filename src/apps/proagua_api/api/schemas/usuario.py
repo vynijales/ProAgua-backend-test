@@ -10,7 +10,16 @@ class UsuarioIn(ModelSchema):
             "first_name",
             "last_name",
             "password",
-            "is_staff",
+            "email"
+        ]
+
+class UsuarioUpdate(ModelSchema):
+    class Config:
+        model = User
+        model_fields = [
+            "username",
+            "first_name",
+            "last_name",
             "email"
         ]
 

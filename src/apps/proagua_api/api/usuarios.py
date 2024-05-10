@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from ninja import Router
 from ninja.pagination import paginate
 
-from .schemas.usuario import UsuarioOut, UsuarioIn
+from .schemas.usuario import UsuarioOut, UsuarioIn, UsuarioUpdate
 
 router = Router()
 
@@ -31,7 +31,7 @@ def create_usuario(request, payload: UsuarioIn):
 
 
 @router.put("/{username}", tags=["Usuarios"])
-def update_usuario(request, username: str, payload: UsuarioIn):
+def update_usuario(request, username: str, payload: UsuarioUpdate):
     user = get_object_or_404(User, username=username)
     for attr, value in payload.dict().items():
         setattr(user, attr, value)
