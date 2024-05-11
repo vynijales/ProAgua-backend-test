@@ -81,8 +81,13 @@ def create_ponto(request, payload: PontoColetaIn):
 
 @router.put("/{id_ponto}")
 def update_ponto(request, id_ponto: int, payload: PontoColetaIn):
+
+    print(payload.dict())
     ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
-    amontante = get_object_or_404(models.PontoColeta, id=payload.amontante)
+
+    amontante = None
+    if payload.amontante is not None:
+        amontante = get_object_or_404(models.PontoColeta, id=payload.amontante)
 
     edificacao = get_object_or_404(models.Edificacao, codigo=payload.codigo_edificacao)
 
