@@ -55,8 +55,8 @@ class PontoColeta(models.Model):
 
     imagem = models.ImageField(
         upload_to="media/images/edificacoes",
-        blank=False,
-        null=False
+        blank=True,
+        null=True
     )
 
     def status(self) -> bool | None:
