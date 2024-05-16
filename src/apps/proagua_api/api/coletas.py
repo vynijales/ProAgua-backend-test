@@ -44,8 +44,9 @@ def get_coletas_csv(request, filter: FilterColeta = Query(...)):
 def get_coletas_excel(request, filter: FilterColeta = Query(...)):
     coletas = filter.filter(models.Coleta.objects.all())
     df = pd.DataFrame(list(coletas.values()))
-    df["data"] = df["data"].dt.tz_localize(None)  # Remove timezone information from the "data" column    
-    rename = lambda x: "Presença" if x else "Ausência"
+    # Remove timezone information from the "data" column
+    df["data"] = df["data"].dt.tz_localize(None)
+    def rename(x): return "Presença" if x else "Ausência"
     df["escherichia"] = df["escherichia"].apply(rename)
     df["coliformes_totais"] = df["coliformes_totais"].apply(rename)
 
@@ -66,7 +67,7 @@ def get_coletas_excel(request, filter: FilterColeta = Query(...)):
     })
 
     # Criar colunas de Edificacao
-    
+
     df.insert(1, "Código da Edificação", "DEFAULT")
     df.insert(2, "Nome da Edificação", "DEFAULT")
     df.insert(3, "Campus", "DEFAULT")
@@ -80,22 +81,27 @@ def get_coletas_excel(request, filter: FilterColeta = Query(...)):
     for index, row in df.iterrows():
         ponto = models.PontoColeta.objects.filter(id=row["ID Ponto"]).first()
         if ponto:
-            edificacao = models.Edificacao.objects.filter(id=ponto.edificacao_id).first()
+            edificacao = models.Edificacao.objects.filter(
+                id=ponto.edificacao_id).first()
             if edificacao:
-                df.at[index, "Código da Edificação"] = str(edificacao.codigo)  # Explicitly convert to string
-                df.at[index, "Nome da Edificação"] = str(edificacao.nome)  # Explicitly convert to string
+                df.at[index, "Código da Edificação"] = str(
+                    edificacao.codigo)  # Explicitly convert to string
+                df.at[index, "Nome da Edificação"] = str(
+                    edificacao.nome)  # Explicitly convert to string
                 df.at[index, "Campus"] = edificacao.campus
             df.at[index, "Tipo"] = ponto.get_tipo_display()
             df.at[index, "Ambiente"] = ponto.ambiente
             df.at[index, "Tombo"] = ponto.tombo
 
     # Renomeando campus
-    rename_campus = lambda x: "Leste" if str(x) == "LE" else "Oeste" if str(x) == "OE" else "Null"
+    def rename_campus(x): return "Leste" if str(
+        x) == "LE" else "Oeste" if str(x) == "OE" else "Null"
     df["Campus"] = df["Campus"].apply(rename_campus)
 
     # Removendo as colunas ID Sequência e ID Ponto
-    df = df.drop(columns=["ID Sequência", "ID Ponto", "Status", "Mensagem de Status"])
-    
+    df = df.drop(columns=["ID Sequência", "ID Ponto",
+                 "Status", "Mensagem de Status"])
+
     excel_file = BytesIO()
     writer = pd.ExcelWriter(excel_file, engine="xlsxwriter")
     df.to_excel(writer, sheet_name="Coletas", index=False)
@@ -106,7 +112,8 @@ def get_coletas_excel(request, filter: FilterColeta = Query(...)):
             column_min_width = 10
         else:
             column_min_width = 5
-        column_length = max(df[column].astype(str).map(len).max(), len(column), column_min_width)
+        column_length = max(df[column].astype(str).map(
+            len).max(), len(column), column_min_width)
         col_idx = df.columns.get_loc(column)
         writer.sheets['Coletas'].set_column(col_idx, col_idx, column_length)
 
@@ -131,6 +138,9 @@ def create_coleta(request, payload: ColetaIn):
 
     obj_seq = get_object_or_404(
         models.SequenciaColetas, id=data_dict.get("sequencia_id"))
+
+    data_dict["status"] = None
+    data_dict["status_message"] = None
 
     # Criando a instância da Coleta sem os responsáveis
     obj_coleta = models.Coleta.objects.create(**data_dict, sequencia=obj_seq)

@@ -138,11 +138,11 @@ class Command(BaseCommand):
                     for nome in nomes:
                         self.create_user(nome)
 
-    def create_sequencia(self, amostragem):
-        ponto = models.SequenciaColetas.objects.create(amostragem=amostragem)
+    def create_sequencia(self, amostragem, ponto=None):
+        object = models.SequenciaColetas.objects.create(amostragem=amostragem, ponto=ponto)
 
-        if ponto:
-            self.stdout.write(self.style.SUCCESS(f"{ponto} criado com sucesso."))
+        if object:
+            self.stdout.write(self.style.SUCCESS(f"{object} criado com sucesso."))
         else:
             self.stdout.write(self.style.ERROR("Erro ao criar o {ponto}.")) 
 
