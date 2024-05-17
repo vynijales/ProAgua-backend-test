@@ -40,8 +40,8 @@ class PontoColetaOut(Schema):
     @staticmethod
     def resolve_status_message(obj: models.PontoColeta):
         messages = []
-        for coleta in obj.coletas.all():
-            messages.extend(coleta.analise()["messages"])
+        if obj.coletas.last():
+            messages.extend(obj.coletas.last().analise()["messages"])
 
         if len(messages) > 0:
             return ', '.join(messages)
@@ -57,7 +57,7 @@ class FilterPontos(FilterSchema):
     tipo: Optional[int]
     fluxos: Optional[int]
     # status: Optional[bool]
-    status: Optional[bool] = Field("coletas__last")
+    status: Optional[bool] = Field(default=None)
 
 
 PontoColetaIn.update_forward_refs()
