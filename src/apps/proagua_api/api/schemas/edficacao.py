@@ -1,10 +1,11 @@
-from typing import Optional
+from typing import Optional, List
 import os
 
 from ninja import Schema, FilterSchema, Field, UploadedFile
 from django.urls import reverse_lazy
 from django.conf import settings
 from apps.proagua_api import models
+from .image import ImageOut, ImageIn
 
 class EdificacaoIn(Schema):
     codigo: str
@@ -20,16 +21,12 @@ class EdificacaoOut(Schema):
     campus: str 
     cronograma: int
     pontos_url: str
+    imagens: List[ImageOut]
     
     @staticmethod
     def resolve_pontos_url(obj):
         return str(reverse_lazy("api-1.0.0:list_pontos", kwargs={"cod_edificacao": obj.codigo}))
-
-    @staticmethod
-    def resolve_imagem(obj: models.Edificacao):
-        if obj.imagem:
-            img_path = os.path.relpath(obj.imagem.path, settings.MEDIA_ROOT)
-            return os.path.join(settings.MEDIA_URL, img_path)
+    
 
 
 class FilterEdificacao(FilterSchema):
