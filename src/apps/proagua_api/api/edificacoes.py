@@ -1,4 +1,5 @@
 from typing import List, Dict
+import uuid
 
 from django.shortcuts import get_object_or_404
 from ninja import Router, Query, UploadedFile, File, Form
@@ -25,12 +26,14 @@ def get_edificacao(request, cod_edificacao: str):
 
 
 @router.post("/{cod_edificacao}/imagem")
-def upload_image(request, cod_edificacao: str, imagem: UploadedFile = File(...)):
+def upload_image(request, cod_edificacao: str, description: str = Form(...), file: UploadedFile = File(...)):
     edificacao = get_object_or_404(models.Edificacao, codigo=cod_edificacao)
     
-    im_path = save_file(f'media/images/edificacoes/edificacao_{edificacao.codigo}.png', imagem)
-    
-    edificacao.imagem = im_path
+    img_path = save_file(f'media/images/edificacoes/edificacao_{edificacao.codigo}_{uuid.uuid4()}.png', file)
+    image = models.Image.objects.create(file=img_path, description=description)
+    image.save()
+
+    edificacao.imagens.add(image)
     edificacao.save()
     
     return {"success": True}
