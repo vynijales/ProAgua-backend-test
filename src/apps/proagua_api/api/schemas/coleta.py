@@ -30,7 +30,7 @@ class ColetaOut(Schema):
     escherichia: bool
     cor: float
     data: datetime
-    # responsavel: List[int]
+    responsaveis_id: List[int]
     responsaveis_url: str
     ordem: str
     links: dict = {}
@@ -39,6 +39,10 @@ class ColetaOut(Schema):
     ponto: PontoColetaOut
     status: Optional[bool]
     status_messages: Optional[List[str]]
+
+    @staticmethod
+    def resolve_responsaveis_id(obj: models.Coleta):
+        return [r.id for r in obj.responsavel.all()]
 
     @staticmethod
     def resolve_responsaveis_url(obj):
