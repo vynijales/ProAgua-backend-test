@@ -34,6 +34,9 @@ class ParametrosReferencia(models.Model):
     )
     max_cloro_residual_livre = models.FloatField(
         verbose_name="cloro residual livre máximo",
+        blank=True,
+        null=True,
+        default=5.0
     )
 
     # Está adequada se estiver for ≤ 5 uT

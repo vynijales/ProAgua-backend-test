@@ -44,7 +44,7 @@ class PontoColetaOut(Schema):
             messages.extend(obj.coletas.last().analise()["messages"])
 
         if len(messages) > 0:
-            return ', '.join(messages)
+            return ', '.join(messages) + "."
         
         return "Não há coletas nesse ponto"
 

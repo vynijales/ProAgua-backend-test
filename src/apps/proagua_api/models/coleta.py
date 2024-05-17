@@ -82,6 +82,7 @@ class Coleta(models.Model):
 
     def analise(self):
         status_temperatura = self.analise_temperatura()
+        status_cloro_residual_livre = self.analise_cloro_residual_livre()
         status_turbidez = self.analise_turbidez()
         status_coliformes = self.analise_coliformes()
         status_escherichia = self.analise_escherichia()
@@ -91,6 +92,14 @@ class Coleta(models.Model):
             "messages": []
         }
 
+        if not status_cloro_residual_livre["status"]:
+            status["status"] = False
+            status["messages"].append(status_cloro_residual_livre["message"])
+
+        if not status_turbidez["status"]:
+            status["status"] = False
+            status["messages"].append(status_turbidez["message"])
+
         if not status_coliformes["status"]:
             status["status"] = False
             status["messages"].append(status_coliformes["message"])
@@ -98,10 +107,6 @@ class Coleta(models.Model):
         if not status_escherichia["status"]:
             status["status"] = False
             status["messages"].append(status_escherichia["message"])
-
-        if not status_turbidez["status"]:
-            status["status"] = False
-            status["messages"].append(status_turbidez["message"])
 
         if not status_temperatura["status"]:
             # status["status"] = False
@@ -116,49 +121,66 @@ class Coleta(models.Model):
         }
 
     def analise_temperatura(self):
-        MARGEM_TEMPERATURA = 5
+        referencia = ParametrosReferencia.objects.last()
 
-        if self.ponto.tipo == BEBEDOURO:
-            if self.temperatura < 9.5:
+        if referencia.min_temperatura:
+            if self.temperatura < referencia.min_temperatura:
                 return {
                     "status": True,
-                    "message": "Temperatura desconforme"
+                    "message": f"Temperatura {(referencia.min_temperatura - self.temperatura):.2f} °C abaixo do mínimo"
                 }
-            elif self.temperatura > 10.5:
+        if referencia.max_temperatura:
+            if self.temperatura > referencia.max_temperatura:
                 return {
                     "status": True,
-                    "message": "Temperatura desconforme. Solicitar manutenção"
+                    "message": f"Temperatura {(self.temperatura - referencia.max_temperatura):.2f} °C acima do máximo"
                 }
-            else:
+        return {
+            "status": True,
+            "message": "Temperatura adequada"
+        }
+
+    def analise_cloro_residual_livre(self):
+        referencia = ParametrosReferencia.objects.last()
+
+        if referencia.min_cloro_residual_livre:
+            if self.cloro_residual_livre < referencia.min_cloro_residual_livre:
                 return {
-                    "status": True,
-                    "message": "Bebedouro funcionando"
+                    "status": False,
+                    "message": f"Cloro residual livre {(referencia.min_cloro_residual_livre - self.cloro_residual_livre):.2f} mg/L abaixo do mínimo"
                 }
-        else:
-            if abs(self.temperatura - 37) > MARGEM_TEMPERATURA:
+        if referencia.max_cloro_residual_livre:
+            if self.cloro_residual_livre > referencia.max_cloro_residual_livre:
                 return {
-                    "status": True,
-                    "message": "Temperatura desconforme"
+                    "status": False,
+                    "message": f"Cloro residual livre {(self.cloro_residual_livre - referencia.max_cloro_residual_livre):.2f} mg/L acima do máximo"
                 }
-            else:
-                return {
-                    "status": True,
-                    "message": "Água adequada para uso"
-                }
+
+        return {
+            "status": True,
+            "message": "Cloro residual livre adequado"
+        }
 
     def analise_turbidez(self):
         referencia = ParametrosReferencia.objects.last()
 
-        if referencia.min_turbidez <= self.turbidez <= referencia.max_turbidez:
-            return {
-                "status": True,
-                "message": "Turbidez adequada"
-            }
-        else:
-            return {
-                "status": False,
-                "message": "Turbidez inadequada"
-            }
+        if referencia.min_turbidez:
+            if self.turbidez < referencia.min_turbidez:
+                return {
+                    "status": False,
+                    "message": f"Turbidez {(referencia.min_turbidez - self.turbidez):.2f} uT abaixo do mínimo"
+                }
+        if referencia.max_turbidez:
+            if self.turbidez > referencia.max_turbidez:
+                return {
+                    "status": False,
+                    "message": f"Turbidez {(self.turbidez - referencia.max_turbidez):.2f} uT acima do máximo"
+                }
+
+        return {
+            "status": True,
+            "message": "Turbidez adequada"
+        }
 
     def analise_coliformes(self):
         referencia = ParametrosReferencia.objects.last()
@@ -166,13 +188,13 @@ class Coleta(models.Model):
         if self.coliformes_totais == referencia.coliformes_totais:
             return {
                 "status": True,
-                "message": "Ausência de coliformes totais."
+                "message": "Ausência de coliformes totais"
             }
         else:
 
             return {
                 "status": False,
-                "message": "Presença de coliformes totais."
+                "message": "Presença de coliformes totais"
             }
 
     def analise_escherichia(self):
@@ -181,12 +203,12 @@ class Coleta(models.Model):
         if self.escherichia == referencia.escherichia:
             return {
                 "status": True,
-                "message": "Ausência de escherichia coli."
+                "message": "Ausência de escherichia coli"
             }
         else:
             return {
                 "status": False,
-                "message": "Presença de escherichia coli."
+                "message": "Presença de escherichia coli"
             }
 
     @classmethod
@@ -202,7 +224,7 @@ class Coleta(models.Model):
         analise = self.analise()
 
         self.status = analise.get("status")
-        self.status_message = ', '.join(analise.get("messages"))
+        self.status_message = ', '.join(analise.get("messages")) + "."
 
         super().save(*args, **kwargs)
 
