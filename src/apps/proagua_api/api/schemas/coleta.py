@@ -35,6 +35,7 @@ class ColetaOut(Schema):
     ordem: str
     links: dict = {}
     sequencia_url: str
+    sequencia_id: int
     ponto_url: str
     ponto: PontoColetaOut
     status: Optional[bool]
