@@ -82,7 +82,6 @@ def create_ponto(request, payload: PontoColetaIn):
 @router.put("/{id_ponto}")
 def update_ponto(request, id_ponto: int, payload: PontoColetaIn):
 
-    print(payload.dict())
     ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
 
     amontante = None
@@ -97,7 +96,6 @@ def update_ponto(request, id_ponto: int, payload: PontoColetaIn):
     data_dict["amontante"] = amontante
 
     for attr, value in data_dict.items():
-        print(f'UPDATE {attr} -> {value}')
         setattr(ponto, attr, value)
     ponto.save()
     return {"success": True}
