@@ -38,6 +38,11 @@ def update_parametros_referencia(request, payload: ParametrosReferenciaIn):
 
     obj_parametros_referencia.save()
 
+    coletas = models.Coleta.objects.all()
+    for coleta in coletas:
+        coleta.analise()
+        coleta.save()
+
     return obj_parametros_referencia
 
 @router.delete("/")

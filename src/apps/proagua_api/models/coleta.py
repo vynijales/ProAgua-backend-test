@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 import csv
 from io import StringIO
 
+from .parametros_referencia import ParametrosReferencia
+
 BEBEDOURO = 1
 RPS = 2
 RPI = 3
@@ -12,6 +14,7 @@ RDI = 5
 CAERN = 6
 
 # TODO: Pensar em uma melhor forma de armazenar os status de coletas e pontos de coletas
+
 
 class Coleta(models.Model):
     id = models.AutoField(primary_key=True)
@@ -82,7 +85,7 @@ class Coleta(models.Model):
         status_turbidez = self.analise_turbidez()
         status_coliformes = self.analise_coliformes()
         status_escherichia = self.analise_escherichia()
-        
+
         status = {
             "status": True,
             "messages": []
@@ -144,7 +147,9 @@ class Coleta(models.Model):
                 }
 
     def analise_turbidez(self):
-        if self.turbidez <= 5:
+        referencia = ParametrosReferencia.objects.last()
+
+        if referencia.min_turbidez <= self.turbidez <= referencia.max_turbidez:
             return {
                 "status": True,
                 "message": "Turbidez adequada"
@@ -156,40 +161,46 @@ class Coleta(models.Model):
             }
 
     def analise_coliformes(self):
-        if self.coliformes_totais:
-            return {
-                "status": False,
-                "message": "Presença de coliformes"
-            }
-        else:
+        referencia = ParametrosReferencia.objects.last()
+
+        if self.coliformes_totais == referencia.coliformes_totais:
             return {
                 "status": True,
-                "message": "Ausencia de coliformes"
+                "message": "Ausência de coliformes totais."
+            }
+        else:
+
+            return {
+                "status": False,
+                "message": "Presença de coliformes totais."
             }
 
     def analise_escherichia(self):
-        if self.escherichia:
-            return {
-                "status": False,
-                "message": "Presença de escherichia coli."
-            }
-        else:
+        referencia = ParametrosReferencia.objects.last()
+
+        if self.escherichia == referencia.escherichia:
             return {
                 "status": True,
                 "message": "Ausência de escherichia coli."
             }
-   
+        else:
+            return {
+                "status": False,
+                "message": "Presença de escherichia coli."
+            }
+
     @classmethod
     def get_csv(cls, coletas):
         field_names = [field.name for field in cls._meta.fields]
         csv_data = ""
         for coleta in coletas:
-            csv_data += ",".join([str(getattr(coleta, field)) for field in field_names]) + "\n"
+            csv_data += ",".join([str(getattr(coleta, field))
+                                 for field in field_names]) + "\n"
         return csv_data
 
     def save(self, *args, **kwargs):
         analise = self.analise()
-        
+
         self.status = analise.get("status")
         self.status_message = ', '.join(analise.get("messages"))
 
