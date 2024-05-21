@@ -20,12 +20,12 @@ router = Router(tags=["Coletas"])
 @router.get("/", response=List[ColetaOut])
 def list_coleta(request, filter: FilterColeta = Query(...)):
     qs = models.Coleta.objects.all()
-    return filter.filter(qs)
+    return filter.filter(qs).order_by("data")
 
 
 @router.get("/csv", response=List[ColetaOut])
 def get_coletas_csv(request, filter: FilterColeta = Query(...)):
-    coletas = filter.filter(models.Coleta.objects.all())
+    coletas = filter.filter(models.Coleta.objects.all().order_by("data"))
     csv_headers = [
         "id", "temperatura", "cloro_residual_livre", "turbidez", "coliformes_totais",
         "escherichia", "cor", "data", "responsaveis", "ordem", "sequencia_id", "ponto_id"
@@ -42,7 +42,7 @@ def get_coletas_csv(request, filter: FilterColeta = Query(...)):
 
 @router.get("/excel", response=List[ColetaOut])
 def get_coletas_excel(request, filter: FilterColeta = Query(...)):
-    coletas = filter.filter(models.Coleta.objects.all())
+    coletas = filter.filter(models.Coleta.objects.all().order_by("data"))
     df = pd.DataFrame(list(coletas.values()))
     # Remove timezone information from the "data" column
     df["data"] = df["data"].dt.tz_localize(None)

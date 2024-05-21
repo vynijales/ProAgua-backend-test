@@ -25,7 +25,7 @@ class SequenciaColetasOut(Schema):
 
     @staticmethod
     def resolve_coletas(obj: SequenciaColetas):
-        return Coleta.objects.filter(sequencia=obj.id)
+        return Coleta.objects.filter(sequencia=obj.id).order_by("data")
 
     @staticmethod
     def resolve_coletas_url(obj):
