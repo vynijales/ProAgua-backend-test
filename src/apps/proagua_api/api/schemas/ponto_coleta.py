@@ -5,6 +5,8 @@ from django.urls import reverse
 from .edficacao import EdificacaoOut
 from ... import models
 
+from typing import List
+
 PontoColetaInRef = ForwardRef('PontoColetaIn')
 PontoColetaOutRef = ForwardRef('PontoColetaOut')
 
@@ -54,11 +56,10 @@ class FilterPontos(FilterSchema):
         description="Campo de pesquisa por ambiente ou nome de edificação"
     )
     edificacao__campus: Optional[str] = Field(alias="campus")
-    tipo: Optional[int]
+    tipo: List[int] = Field(alias="tipo", default=[1, 2, 3, 4, 5, 6])
     fluxos: Optional[int]
     # status: Optional[bool]
     status: Optional[bool] = Field(default=None)
-
 
 PontoColetaIn.update_forward_refs()
 PontoColetaOut.update_forward_refs()

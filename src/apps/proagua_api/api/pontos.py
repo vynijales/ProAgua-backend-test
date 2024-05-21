@@ -26,14 +26,13 @@ def list_ponto(request, filters: FilterPontos = Query(...)):
 
     if filters.q:
         qs = qs.filter(
-            Q(ambiente__contains=filters.q) | Q(edificacao__nome__contains=filters.q) | Q(edificacao__codigo__contains=filters.q)
-        )
+            Q(ambiente__contains=filters.q) | Q(edificacao__nome__contains=filters.q) | Q(edificacao__codigo__contains=filters.q))
         
     if filters.edificacao__campus:
         qs = qs.filter(edificacao__campus=filters.edificacao__campus)
 
     if filters.tipo:
-        qs = qs.filter(tipo=filters.tipo)
+        qs = qs.filter(tipo__in=filters.tipo)
 
     if filters.fluxos:
         qs = qs.filter(fluxos=filters.fluxos)
