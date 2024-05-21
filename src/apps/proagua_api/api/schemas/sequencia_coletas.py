@@ -34,7 +34,6 @@ class SequenciaColetasOut(Schema):
     @staticmethod
     def resolve_status(obj) -> Optional[bool]:
         if obj.coletas.last():
-            print("Status: ", obj.coletas.last().analise()["status"])
             return obj.coletas.last().analise()["status"]
 
     @staticmethod
