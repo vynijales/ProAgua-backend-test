@@ -1,4 +1,5 @@
 from typing import Optional, List
+from datetime import date, datetime
 
 from ninja import Schema
 from django.urls import reverse
@@ -22,6 +23,7 @@ class SequenciaColetasOut(Schema):
     coletas_url: str
     status: Optional[bool]
     status_message: Optional[str]
+    ultima_coleta: Optional[datetime]
 
     @staticmethod
     def resolve_coletas(obj: SequenciaColetas):
@@ -43,3 +45,9 @@ class SequenciaColetasOut(Schema):
             messages.extend(obj.coletas.last().analise()["messages"])
             return ', '.join(messages) + "."
         return "Coleta pendente."
+
+    @staticmethod
+    def resolve_ultima_coleta(obj: SequenciaColetas):
+        if obj.coletas.order_by("data").last():
+            return obj.coletas.last().data
+        return None
