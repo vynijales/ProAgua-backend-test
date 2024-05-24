@@ -1,8 +1,7 @@
 from ninja import NinjaAPI
-from ninja.security import django_auth
-import requests
 
 from . import (
+    auth,
     csrf,
     edificacoes,
     pontos,
@@ -14,9 +13,13 @@ from . import (
     solicitacoes
 )
 
-# api = NinjaAPI(auth=django_auth, csrf=True)
-api = NinjaAPI(auth=None, csrf=False)
+api = NinjaAPI(auth=auth.JWTBearer(), csrf=False)
+
+# Public routes
+api.add_router("/auth", auth.router)
 api.add_router("/csrf", csrf.router)
+
+# Private routes
 api.add_router("/edificacoes", edificacoes.router)
 api.add_router("/pontos", pontos.router)
 api.add_router("/sequencias", sequencia_coletas.router)

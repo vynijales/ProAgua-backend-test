@@ -21,6 +21,11 @@ MEDIA_URL = 'files/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
+JWT_SECRET_KEY = 'my-super-secret'
+JWT_ALGORITHM = 'HS256'
+# ACCESS_TOKEN_EXPIRE_MINUTES = 5
+# REFRESH_TOKEN_EXPIRE_DAYS = 1
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-@wdcz01ob76mp2-w#ikk6^6_2n517i8pv-cwz7fv$i(m(3o!-q'
 
