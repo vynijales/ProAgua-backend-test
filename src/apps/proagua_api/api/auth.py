@@ -35,3 +35,38 @@ class JWTBearer(HttpBearer):
 
 router = Router(tags=["Authentication"])
 
+class LoginCredentialsSchema(Schema):
+    username: str
+    password: str
+
+
+def generate_auth_token(user: User) -> str | None:
+    if user is None:
+        return None
+    
+    issued_at = datetime.datetime.now()
+    expiration_time = issued_at + datetime.timedelta(days=1)
+
+    token = jwt.encode(
+        payload={
+            "id": user.id,
+            "username": user.username,
+            "iat": int(issued_at.timestamp()),
+            "exp": int(expiration_time.timestamp())
+        },
+        key=settings.JWT_SECRET_KEY,
+        headers={
+            "alg": settings.JWT_ALGORITHM,
+            "typ": "JWT"
+        }
+    )
+
+    return token
+
+
+@router.post("/login", auth=None)
+def login(request, credentials: LoginCredentialsSchema):
+    user = authenticate(request, **credentials.dict())
+    if user is not None:
+        token = generate_auth_token(user)
+        return {"access_token": token}
