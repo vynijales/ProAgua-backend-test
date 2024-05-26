@@ -1,7 +1,8 @@
 from typing import List
 
 from django.shortcuts import get_object_or_404
-from ninja import Router
+from django.db.models import Q
+from ninja import Router, Query
 from ninja.pagination import paginate
 
 from .schemas.sequencia_coletas import *
@@ -12,9 +13,22 @@ router = Router(tags=["Sequencias"])
 
 @router.get("/", response=List[SequenciaColetasOut])
 @paginate
-def list_sequencia(request):
-    qs = models.SequenciaColetas.objects.all()
-    return qs
+def list_sequencia(request, filter: FilterSequenciaColetas = Query(...)):
+    qs = models.SequenciaColetas.objects
+
+    if filter.q:
+        qs = qs.filter(
+            Q(ponto__ambiente__contains=filter.q) | Q(ponto__edificacao__nome__contains=filter.q) | 
+            Q(ponto__edificacao__codigo__contains=filter.q)
+        )
+
+    if filter.ponto__edificacao__campus:
+        qs = qs.filter(ponto__edificacao__campus=filter.ponto__edificacao__campus)
+
+    if filter.amostragem:
+        qs = qs.filter(amostragem=filter.amostragem)
+
+    return filter.filter(qs)
 
 
 @router.get("/{id_sequencia}", response=SequenciaColetasOut)

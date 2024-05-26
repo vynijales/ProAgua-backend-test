@@ -1,7 +1,7 @@
 from typing import Optional, List
 from datetime import date, datetime
 
-from ninja import Schema
+from ninja import Field, FilterSchema, Schema
 from django.urls import reverse
 
 from .coleta import ColetaOut
@@ -51,3 +51,15 @@ class SequenciaColetasOut(Schema):
         if obj.coletas.order_by("data").last():
             return obj.coletas.last().data
         return None
+
+
+class FilterSequenciaColetas(FilterSchema):
+
+    q: Optional[str] = Field(
+        q=["ponto__ambiente__contains", "ponto__edificacao__nome__contains", "ponto__edificacao__codigo__contains"],
+        description="Campo de pesquisa por ambiente ou nome de edificação"
+    )
+    amostragem: Optional[int] = Field(alias="amostragem")
+    ponto__id: Optional[int] = Field(alias="ponto_id")
+    ponto__edificacao__campus: Optional[str] = Field(alias="campus")
+    status: Optional[bool] = Field(alias="status")
