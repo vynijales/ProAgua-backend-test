@@ -7,7 +7,6 @@ from .ponto_coleta import PontoColetaOut
 
 class SolicitacaoIn(Schema):
     ponto_id: int
-    data: datetime
     tipo: str
     objetivo: Optional[str] = None
     justificativa: Optional[str] = None
