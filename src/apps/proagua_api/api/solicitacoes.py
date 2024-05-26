@@ -7,7 +7,7 @@ from ninja import Router, Query, UploadedFile, File, Form
 from ninja.pagination import paginate
 
 from .schemas.solicitacao import (
-    SolicitacaoIn, SolicitacaoOut, FilterSolicitacao)
+    SolicitacaoIn, SolicitacaoOut, FilterSolicitacao, SolicitacaoUpdate)
 from .schemas.ponto_coleta import (PontoColetaIn, PontoColetaOut)
 from .. import models
 from .utils import save_file
@@ -39,7 +39,7 @@ def create_solicitacao(request, payload: SolicitacaoIn):
     return solicitacao
 
 @router.put("/{id}", response=SolicitacaoOut)
-def update_solicitacao(request, id: int, payload: SolicitacaoIn):
+def update_solicitacao(request, id: int, payload: SolicitacaoUpdate):
     data = payload.dict()
 
     solicitacao = get_object_or_404(models.Solicitacao, id=id)

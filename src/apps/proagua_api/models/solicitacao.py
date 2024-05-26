@@ -2,14 +2,18 @@ from django.db import models
 
 from enum import Enum
 
+
 class Status(Enum):
     PENDENTE = "Pendente"
-    ENVIADO = "Enviado"
+    EM_ANDAMENTO = "Em andamento"
+    CONCLUIDO = "Concluido"
+
 
 class TipoSolicitacao(Enum):
     LIMPEZA_RESERVATORIO = "Limpeza de reservatório"
     INSTALACAO_PONTO = "Instalação de ponto de coleta"
     CONSERTO_RESERVATORIO = "Conserto de reservatório"
+
 
 class Solicitacao(models.Model):
     ponto = models.ForeignKey(
@@ -23,21 +27,30 @@ class Solicitacao(models.Model):
         verbose_name="data da solicitação",
         auto_now_add=True
     )
-    status = models.CharField(
-        verbose_name="status",
-        max_length=50,
-        choices=[(tag, tag.value) for tag in Status],
-        default=Status.PENDENTE
-    )
-    observacao = models.TextField(
-        verbose_name="observação",
+
+    objetivo = models.TextField(
+        verbose_name="objetivo da solicitação",
         max_length=1250,
         blank=True,
         null=True
     )
     justificativa = models.TextField(
-        verbose_name="justificativa",
+        verbose_name="justificativa da solicitação",
         max_length=1250,
         blank=True,
         null=True
+    )
+
+    tipo = models.CharField(
+        verbose_name="tipo de solicitação",
+        max_length=50,
+        choices=[(tag.value, tag.value) for tag in TipoSolicitacao],
+        default=TipoSolicitacao.LIMPEZA_RESERVATORIO.value
+    )
+
+    status = models.CharField(
+        verbose_name="status",
+        max_length=50,
+        choices=[(tag.value, tag.value) for tag in Status],
+        default=Status.PENDENTE
     )
