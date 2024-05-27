@@ -13,7 +13,8 @@ from . import (
     solicitacoes
 )
 
-api = NinjaAPI(auth=auth.JWTBearer(), csrf=False)
+# api = NinjaAPI(auth=auth.JWTBearer(), csrf=False)
+api = NinjaAPI(auth=None, csrf=False)
 
 # Public routes
 api.add_router("/auth", auth.router)

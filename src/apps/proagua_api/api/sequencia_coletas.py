@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from ninja import Router, Query
 from ninja.pagination import paginate
+from ninja.errors import HttpError
 
 from .schemas.sequencia_coletas import *
 from .. import models
@@ -62,6 +63,10 @@ def update_sequencia(request, id_sequencia: int, payload: SequenciaColetasIn):
 @router.delete("/{id_sequencia}")
 def delete_sequencia(request, id_sequencia: int):
     sequencia = get_object_or_404(models.SequenciaColetas, id=id_sequencia)
+    
+    if models.SequenciaColetas.has_dependent_objects(sequencia):
+        raise HttpError(409, "Conflict: Related objects exist")
+
     sequencia.delete()
     return {"success": True}
 

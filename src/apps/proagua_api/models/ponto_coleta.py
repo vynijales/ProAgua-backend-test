@@ -69,5 +69,14 @@ class PontoColeta(models.Model):
         if coleta:
             return coleta.status_message
 
+
+    def has_dependent_objects(instance):
+        for related_object in instance._meta.related_objects:
+            related_name = related_object.get_accessor_name()
+            related_manager = getattr(instance, related_name)
+            if related_manager.exists():
+                return True
+        return False
+
     def __str__(self) -> str:
         return f"Ponto {self.id} - {self.get_tipo_display()}"

@@ -61,11 +61,9 @@ def update_edificacoes(request, cod_edificacao: str, payload: EdificacaoIn):
 @router.delete("/{cod_edificacao}")
 def delete_edificacao(request, cod_edificacao: str):
     edificacao = get_object_or_404(models.Edificacao, codigo=cod_edificacao)
-    related_pontos = models.PontoColeta.objects.filter(edificacao=edificacao)
 
-    if related_pontos.exists():
-        related_pontos = [ponto.id for ponto in related_pontos]
-        raise HttpError(409, f"Conflict: Related objects exist: Pontos_id {related_pontos}")
+    if models.Edificacao.has_dependent_objects(edificacao):
+        raise HttpError(409, "Conflict: Related objects exist")
 
     edificacao.delete()
     return {"success": True}

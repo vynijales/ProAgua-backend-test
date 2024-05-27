@@ -10,6 +10,7 @@ from django.db.models import Q, Subquery, OuterRef
 from django.shortcuts import get_object_or_404
 from ninja import Router, Query, UploadedFile, File
 from ninja.pagination import paginate
+from ninja.errors import HttpError
 
 from .schemas.ponto_coleta import *
 from .schemas.coleta import ColetaOut
@@ -103,6 +104,10 @@ def update_ponto(request, id_ponto: int, payload: PontoColetaIn):
 @router.delete("/{id_ponto}")
 def delete_ponto(request, id_ponto: int):
     ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
+
+    if models.PontoColeta.has_dependent_objects(ponto):
+        raise HttpError(409, "Conflict: Related objects exist")
+    
     ponto.delete()
     return {"success": True}
 
