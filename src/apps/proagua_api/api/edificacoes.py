@@ -69,7 +69,7 @@ def delete_edificacao(request, cod_edificacao: str):
     return {"success": True}
 
 
-@router.get("/{cod_edificacao}/pontos", response=Dict[str, List[PontoColetaOut]])
+@router.get("/{cod_edificacao}/pontos")
 def list_pontos(request, cod_edificacao: str):
     qs = models.PontoColeta.objects.filter(edificacao__codigo=cod_edificacao).values()
     return {"items": list(qs)}
