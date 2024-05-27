@@ -1,6 +1,8 @@
+from enum import Enum
+
 from django.db import models
 
-from enum import Enum
+from .image import Image
 
 
 class Status(Enum):
@@ -54,3 +56,7 @@ class Solicitacao(models.Model):
         choices=[(tag.value, tag.value) for tag in Status],
         default=Status.PENDENTE
     )
+
+    imagens = models.ManyToManyField(to=Image)
+
+

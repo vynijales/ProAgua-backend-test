@@ -4,6 +4,8 @@ from datetime import date, datetime
 from ninja import Schema, FilterSchema
 
 from .ponto_coleta import PontoColetaOut
+from .image import ImageOut, ImageIn
+
 
 class SolicitacaoIn(Schema):
     ponto_id: int
@@ -19,6 +21,7 @@ class SolicitacaoOut(Schema):
     tipo: str
     objetivo: Optional[str] = None
     justificativa: Optional[str] = None
+    imagens: List[ImageOut]
     status: str
 
 class SolicitacaoUpdate(Schema):
