@@ -3,6 +3,7 @@ import uuid
 
 from django.shortcuts import get_object_or_404
 from ninja import Router, Query, UploadedFile, File, Form
+from ninja.errors import HttpError
 from ninja.pagination import paginate
 
 from .schemas.edficacao import *
@@ -60,11 +61,17 @@ def update_edificacoes(request, cod_edificacao: str, payload: EdificacaoIn):
 @router.delete("/{cod_edificacao}")
 def delete_edificacao(request, cod_edificacao: str):
     edificacao = get_object_or_404(models.Edificacao, codigo=cod_edificacao)
+    related_pontos = models.PontoColeta.objects.filter(edificacao=edificacao)
+
+    if related_pontos.exists():
+        related_pontos = [ponto.id for ponto in related_pontos]
+        raise HttpError(409, f"Conflict: Related objects exist: Pontos_id {related_pontos}")
+
     edificacao.delete()
     return {"success": True}
 
 
 @router.get("/{cod_edificacao}/pontos", response=Dict[str, List[PontoColetaOut]])
 def list_pontos(request, cod_edificacao: str):
-    qs = models.PontoColeta.objects.filter(edificacao__codigo=cod_edificacao)
+    qs = models.PontoColeta.objects.filter(edificacao__codigo=cod_edificacao).values()
     return {"items": list(qs)}
