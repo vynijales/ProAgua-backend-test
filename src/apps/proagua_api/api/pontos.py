@@ -60,33 +60,38 @@ def upload_image(request, id_ponto: str, imagem: UploadedFile = File(...)):
     
     return {"success": True}
 
-
 @router.post("/")
 def create_ponto(request, payload: PontoColetaIn):
     edificacao = get_object_or_404(models.Edificacao, codigo=payload.codigo_edificacao)
     amontante = get_object_or_404(models.PontoColeta, id=payload.amontante) if payload.amontante else None
-
+    associados = [get_object_or_404(models.PontoColeta, id=assoc) for assoc in payload.associados] if payload.associados else None
+    
     data_dict = payload.dict()
     data_dict.pop("codigo_edificacao")
+    data_dict.pop("associados", None)
     data_dict["edificacao"] = edificacao
     data_dict["amontante"] = amontante
     ponto_coleta = models.PontoColeta.objects.create(**data_dict)
+    
+    if associados:
+        ponto_coleta.associados.set(associados)
+
     ponto_coleta.save()
 
     return {
         "id": ponto_coleta.id,
         "success": True
-        }
-
+    }
 
 @router.put("/{id_ponto}")
 def update_ponto(request, id_ponto: int, payload: PontoColetaIn):
-
     ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
 
     amontante = None
     if payload.amontante is not None:
         amontante = get_object_or_404(models.PontoColeta, id=payload.amontante)
+
+    associados = [get_object_or_404(models.PontoColeta, id=assoc) for assoc in payload.associados] if payload.associados else None
 
     edificacao = get_object_or_404(models.Edificacao, codigo=payload.codigo_edificacao)
 
@@ -96,7 +101,10 @@ def update_ponto(request, id_ponto: int, payload: PontoColetaIn):
     data_dict["amontante"] = amontante
 
     for attr, value in data_dict.items():
-        setattr(ponto, attr, value)
+        if attr == "associados":
+            ponto.associados.set(value)
+        else:
+            setattr(ponto, attr, value)
     ponto.save()
     return {"success": True}
 
