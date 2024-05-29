@@ -31,7 +31,11 @@ class PontoColetaOut(Schema):
     status: Optional[bool]
     status_message: Optional[str]
     amontante: Optional[PontoColetaOutRef] # type: ignore
-    associados: Optional[List[PontoColetaOutRef]] # type: ignore
+    associados: Optional[List[int]] # type: ignore
+
+    @staticmethod
+    def resolve_associados(self):
+        return [ponto.id for ponto in self.associados.all()]
 
     @staticmethod
     def resolve_edificacao_url(self):
