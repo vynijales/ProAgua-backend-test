@@ -16,6 +16,7 @@ class PontoColetaIn(Schema):
     tombo: Optional[str]
     tipo: int
     amontante: Optional[int]
+    associados: Optional[List[int]]
 
 
 class PontoColetaOut(Schema):
@@ -30,6 +31,7 @@ class PontoColetaOut(Schema):
     status: Optional[bool]
     status_message: Optional[str]
     amontante: Optional[PontoColetaOutRef] # type: ignore
+    associados: Optional[List[PontoColetaOutRef]] # type: ignore
 
     @staticmethod
     def resolve_edificacao_url(self):

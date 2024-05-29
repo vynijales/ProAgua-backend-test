@@ -48,7 +48,16 @@ class PontoColeta(models.Model):
     amontante = models.ForeignKey(
         to="PontoColeta",
         verbose_name="ponto amontante",
+        related_name="ponto_amontante",
         on_delete=models.PROTECT,
+        blank=True,
+        null=True
+    )
+
+    associados = models.ManyToManyField(
+        to="PontoColeta",
+        verbose_name="reservatorios associados",
+        related_name="ponto_associado",
         blank=True,
         null=True
     )
