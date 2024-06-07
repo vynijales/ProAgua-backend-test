@@ -3,16 +3,19 @@ import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.conf import settings
+from django.http import JsonResponse
 
-from ninja.security import HttpBearer
+from ninja.security import APIKeyCookie
 from ninja import Router
 from ninja import Schema
 
 import jwt
 from jwt import DecodeError, ExpiredSignatureError
 
-class JWTBearer(HttpBearer):
+class JWTBearer(APIKeyCookie):
+    param_name = "access_token"
     def authenticate(self, request, token):
+        print("------> TOKEN:", token)
         try:
             # Try to decode the token
             payload = jwt.decode(
@@ -69,4 +72,12 @@ def login(request, credentials: LoginCredentialsSchema):
     user = authenticate(request, **credentials.dict())
     if user is not None:
         token = generate_auth_token(user)
-        return {"access_token": token}
+        response = JsonResponse({"success": True})
+        response.set_cookie(
+            key="access_token",
+            value=token,
+            httponly=True,
+            secure=True, 
+            samesite='Strict'
+        )
+        return response
