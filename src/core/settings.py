@@ -34,7 +34,7 @@ DEBUG = True
 
 # SECURITY WARNING: Uso somente durante fase de desenvolvimento.
 # informe somente os hosts de sua aplicação.
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', 'localhost:3000', 'http://localhost:3000', 'http://localhost:8000']
 
 # Application definition
 
