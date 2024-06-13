@@ -23,6 +23,13 @@ MEDIA_URL = 'files/'
 
 JWT_SECRET_KEY = 'my-super-secret'
 JWT_ALGORITHM = 'HS256'
+JWT_EXPIRATION_TIME = {
+    'days': 1,
+    'hours': 0,
+    'minutes': 0,
+    'seconds': 0
+}
+
 # ACCESS_TOKEN_EXPIRE_MINUTES = 5
 # REFRESH_TOKEN_EXPIRE_DAYS = 1
 

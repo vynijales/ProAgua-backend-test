@@ -47,7 +47,12 @@ def generate_auth_token(user: User) -> str | None:
         return None
     
     issued_at = datetime.datetime.now()
-    expiration_time = issued_at + datetime.timedelta(seconds=20)
+    expiration_time = issued_at + datetime.timedelta(
+        days=settings.JWT_EXPIRATION_TIME['days'],
+        hours=settings.JWT_EXPIRATION_TIME['hours'],
+        minutes=settings.JWT_EXPIRATION_TIME['minutes'],
+        seconds=settings.JWT_EXPIRATION_TIME['seconds']
+    )
 
     token = jwt.encode(
         payload={
