@@ -3,8 +3,7 @@ import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.conf import settings
-from django.http import JsonResponse
-
+from django.http import JsonResponse, HttpResponse
 from ninja.security import APIKeyCookie
 from ninja import Router
 from ninja import Schema
@@ -12,10 +11,17 @@ from ninja import Schema
 import jwt
 from jwt import DecodeError, ExpiredSignatureError
 
+router = Router(tags=["Authentication"])
+
+
 class JWTBearer(APIKeyCookie):
     param_name = "access_token"
+    
     def authenticate(self, request, token):
-        print("------> TOKEN:", token)
+        return JWTBearer.check_token(token)
+    
+    @classmethod
+    def check_token(cls, token):
         try:
             # Try to decode the token
             payload = jwt.decode(
@@ -27,7 +33,7 @@ class JWTBearer(APIKeyCookie):
             # Do not authorize if there is a decode error
             print("Ops! There is a DecodeError:", str(e))
             return False
-    
+
         except ExpiredSignatureError as e:
             # Do not authorize if the token is expired
             print("Ops! The token is expired")
@@ -36,19 +42,12 @@ class JWTBearer(APIKeyCookie):
         return payload
 
 
-router = Router(tags=["Authentication"])
-
-class LoginCredentialsSchema(Schema):
-    username: str
-    password: str
-
-
 def generate_auth_token(user: User) -> str | None:
     if user is None:
         return None
     
     issued_at = datetime.datetime.now()
-    expiration_time = issued_at + datetime.timedelta(days=1)
+    expiration_time = issued_at + datetime.timedelta(seconds=20)
 
     token = jwt.encode(
         payload={
@@ -67,6 +66,11 @@ def generate_auth_token(user: User) -> str | None:
     return token
 
 
+class LoginCredentialsSchema(Schema):
+    username: str
+    password: str
+
+
 @router.post("/login", auth=None)
 def login(request, credentials: LoginCredentialsSchema):
     user = authenticate(request, **credentials.dict())
@@ -81,3 +85,15 @@ def login(request, credentials: LoginCredentialsSchema):
             samesite='Strict'
         )
         return response
+
+
+class TokenSchema(Schema):
+    access_token: str
+
+
+@router.post("/verify_token", auth=None)
+def verify_token(request, data: TokenSchema):
+    is_valid = JWTBearer.check_token(data.access_token)
+    
+    if not is_valid:
+        return HttpResponse("Unauthorized", status=401)
