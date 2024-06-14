@@ -1,7 +1,7 @@
 import datetime
 
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from django.conf import settings
 from django.http import JsonResponse, HttpResponse
 from ninja.security import APIKeyCookie
@@ -102,3 +102,12 @@ def verify_token(request, data: TokenSchema):
     
     if not is_valid:
         return HttpResponse("Unauthorized", status=401)
+
+
+@router.get('/logout')
+def logout_api(request):
+    logout(request)
+    r = HttpResponse("Logged out")
+    r.delete_cookie('csrftoken')
+    r.delete_cookie('access_token')
+    return r
