@@ -32,10 +32,9 @@ def create_fluxo(request, data: FluxoIn):
 
 
 @router.put("/{id_fluxo}", tags=["Fluxos"])
-def update_fluxo(request, id_fluxo: int, payload: FluxoIn):
+def update_fluxo(request, id_fluxo: int, data: FluxoIn):
     fluxo = get_object_or_404(Fluxo, id=id_fluxo)
-    for attr, value in payload.dict().items():
-        setattr(fluxo, attr, value)
+    fluxo.pontos.set(data.pontos)
     fluxo.save()
     return {"status": "success"}
 

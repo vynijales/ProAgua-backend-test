@@ -15,9 +15,23 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+MEDIA_ROOT = BASE_DIR / 'files'
+MEDIA_URL = 'files/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+
+JWT_SECRET_KEY = 'my-super-secret'
+JWT_ALGORITHM = 'HS256'
+JWT_EXPIRATION_TIME = {
+    'days': 1,
+    'hours': 0,
+    'minutes': 0,
+    'seconds': 0
+}
+
+# ACCESS_TOKEN_EXPIRE_MINUTES = 5
+# REFRESH_TOKEN_EXPIRE_DAYS = 1
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-@wdcz01ob76mp2-w#ikk6^6_2n517i8pv-cwz7fv$i(m(3o!-q'
@@ -27,7 +41,7 @@ DEBUG = True
 
 # SECURITY WARNING: Uso somente durante fase de desenvolvimento.
 # informe somente os hosts de sua aplicação.
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
 
 # Application definition
 
@@ -39,7 +53,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'apps.frontend',
     'apps.proagua_api',
 ]
 
@@ -127,7 +140,27 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/ponto'
+LOGIN_REDIRECT_URL = '/sequencias_coletas/'
 
 # SECURITY WARNING: Não deve ser usado em produção.
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://localhost:8000',
+    ".vercel.app",
+]
+
+CORS_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    'http://localhost:8000',
+    ".vercel.app",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000', 
+    'http://localhost:8000',
+    ".vercel.app",
+]
+
+CORS_ALLOW_CREDENTIALS = True

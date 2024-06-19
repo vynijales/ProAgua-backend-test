@@ -138,11 +138,29 @@ class Command(BaseCommand):
                     for nome in nomes:
                         self.create_user(nome)
 
-    def create_sequencia(self, amostragem):
-        ponto = models.SequenciaColetas.objects.create(amostragem=amostragem)
+    def create_parametros_referencia(self):
+        referencia = models.ParametrosReferencia.objects.create(
+            min_temperatura=9.5,
+            max_temperatura=10.5,
+            min_cloro_residual_livre=0.2,
+            max_cloro_residual_livre=5.0,
+            min_turbidez=None,
+            max_turbidez=5.0,
+            coliformes_totais=False,
+            escherichia=False
+        )
 
-        if ponto:
-            self.stdout.write(self.style.SUCCESS(f"{ponto} criado com sucesso."))
+        if referencia:
+            self.stdout.write(self.style.SUCCESS(f"Parâmetros de referência criados com sucesso."))
+        else:
+            self.stdout.write(self.style.ERROR("Erro ao criar os parâmetros de referência."))
+
+
+    def create_sequencia(self, amostragem, ponto=None):
+        object = models.SequenciaColetas.objects.create(amostragem=amostragem, ponto=ponto)
+
+        if object:
+            self.stdout.write(self.style.SUCCESS(f"{object} criado com sucesso."))
         else:
             self.stdout.write(self.style.ERROR("Erro ao criar o {ponto}.")) 
 
@@ -243,6 +261,7 @@ class Command(BaseCommand):
         self.create_edificacoes()
         self.create_pontos()
         self.create_responsaveis()
+        self.create_parametros_referencia()
         self.create_sequencias()
         self.create_coletas()
         self.stdout.write(self.style.SUCCESS('Seed data created successfully.'))
