@@ -3,7 +3,7 @@ from typing import Optional
 from ninja import Schema
 
 class ImageOut(Schema):
-    file: str
+    src: str
     description: Optional[str]
 
 class ImageIn(Schema):

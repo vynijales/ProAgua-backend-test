@@ -31,7 +31,7 @@ def upload_image(request, cod_edificacao: str, description: str = Form(...), fil
     edificacao = get_object_or_404(models.Edificacao, codigo=cod_edificacao)
     
     img_path = save_file(f'media/images/edificacoes/edificacao_{edificacao.codigo}_{uuid.uuid4()}.png', file)
-    image = models.Image.objects.create(file=img_path, description=description)
+    image = models.Image.objects.create(src=img_path, description=description)
     image.save()
 
     edificacao.imagens.add(image)

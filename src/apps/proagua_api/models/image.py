@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Image(models.Model):
-    file = models.ImageField(
+    src = models.ImageField(
         upload_to="media/images", 
     )
     description = models.TextField(
