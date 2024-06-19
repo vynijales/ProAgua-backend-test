@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Instalando bibliotecas..."
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 
 echo "Migrando banco de dados..."
 python3 src/manage.py makemigrations --noinput
