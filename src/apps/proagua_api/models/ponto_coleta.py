@@ -1,5 +1,6 @@
 from django.db import models
 from .coleta import Coleta
+from .image import Image
 
 TIPOS_PONTOS = (
     (1, "Bebedouro"),
@@ -13,11 +14,7 @@ TIPOS_PONTOS = (
 
 class PontoColeta(models.Model):
     id = models.AutoField(primary_key=True)
-    imagem = models.ImageField(
-        upload_to="media/images/pontos",
-        blank=True,
-        null=True
-    )
+    imagens = models.ManyToManyField(to=Image)
     
     edificacao = models.ForeignKey(
         to="Edificacao",

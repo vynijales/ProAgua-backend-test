@@ -3,6 +3,8 @@ from typing import Optional, ForwardRef
 from ninja import Schema, FilterSchema, Field
 from django.urls import reverse
 from .edficacao import EdificacaoOut
+from .image import ImageOut
+
 from ... import models
 
 from typing import List
@@ -21,7 +23,7 @@ class PontoColetaIn(Schema):
 
 class PontoColetaOut(Schema):
     id: int
-    imagem: Optional[str]
+    imagens: List[ImageOut]
     ambiente: str
     tipo: int
     tombo: Optional[str]
