@@ -7,7 +7,7 @@ Material de referência:
 from typing import List
 import uuid
 
-from django.db.models import Q, Subquery, OuterRef
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from ninja import Router, Query, UploadedFile, File, Form
 from ninja.pagination import paginate
@@ -63,6 +63,20 @@ def upload_image(request, id_ponto: str, description: str = Form(...), file: Upl
     ponto.save()
     
     return {"success": True}
+
+
+@router.delete('/{id_ponto}/imagem/{id_imagem}')
+def delete_image(request, id_ponto: str, id_imagem: uuid.UUID):
+    ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
+    image: models.Image = ponto.imagens.filter(id=id_imagem).first()
+    
+    if image is None:
+        return HttpError(404, "Not found")
+    
+    image.src.delete()
+    image.delete()
+    return {"success": True}
+
 
 @router.post("/")
 def create_ponto(request, payload: PontoColetaIn):
