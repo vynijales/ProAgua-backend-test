@@ -48,6 +48,7 @@ def delete_image(request, cod_edificacao: str, id_imagem: uuid.UUID):
     if image is None:
         return HttpError(404, "Not found")
     
+    image.src.delete()
     image.delete()
     return {"success": True}
 
