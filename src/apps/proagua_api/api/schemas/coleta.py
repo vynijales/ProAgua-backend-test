@@ -38,8 +38,8 @@ class ColetaOut(Schema):
     sequencia_id: int
     ponto_url: str
     ponto: PontoColetaOut
-    status: Optional[bool]
-    status_messages: Optional[List[str]]
+    status: Optional[bool] = None
+    status_messages: Optional[List[str]] = None
 
     @staticmethod
     def resolve_responsaveis_id(obj: models.Coleta):
@@ -74,21 +74,89 @@ class ColetaOut(Schema):
     def resolve_status_messages(obj: models.Coleta):
         return obj.analise()["messages"]
 
+
 class FilterColeta(FilterSchema):
-    responsavel__username__contains: Optional[str] = Field(q=["responsavel__username__contains"])
-    data__gte: Optional[date] = Field(alias="data_minima")
-    data__lte: Optional[date] = Field(alias="data_maxima")
-    sequencia_id: Optional[int] = Field(alias="sequencia__id")
-    temperatura__gte: Optional[float] = Field(alias="temperatura_minima")
-    temperatura__lte: Optional[float] = Field(alias="temperatura_maxima")
-    cloro_residual_livre__gte: Optional[float] = Field(alias="cloro_residual_livre_minimo")
-    cloro_residual_livre__lte: Optional[float] = Field(alias="cloro_residual_livre_maximo")
-    turbidez__gte: Optional[float] = Field(alias="turbidez_minima")
-    turbidez__lte: Optional[float] = Field(alias="turbidez_maxima")
-    coliformes_totais: Optional[bool] = Field(alias="coliformes_totais")
-    escherichia: Optional[bool] = Field(alias="escherichia")
-    cor__gte: Optional[float] = Field(alias="cor_minima")
-    cor__lte: Optional[float] = Field(alias="cor_maxima")
-    ordem: Optional[str] = Field(alias="ordem")
-    ponto__edificacao__codigo__exact: Optional[str] = Field(alias="codigo_edificacao")
-    ponto__id: Optional[int] = Field(alias="ponto_id")
+    responsavel__username__contains: str = Field(
+        default=None,
+        q=["responsavel__username__contains"]
+    )
+    
+    data__gte: date = Field(
+        default=None,
+        alias="data_minima"
+    )
+    
+    data__lte: date = Field(
+        default=None,
+        alias="data_maxima"
+    )
+    
+    sequencia_id: int = Field(
+        default=None,
+        alias="sequencia__id"
+    )
+    
+    temperatura__gte: float = Field(
+        default=None,
+        alias="temperatura_minima"
+    )
+    
+    temperatura__lte: float = Field(
+        default=None,
+        alias="temperatura_maxima"
+    )
+    
+    cloro_residual_livre__gte: float = Field(
+        default=None,
+        alias="cloro_residual_livre_minimo"
+    )
+    
+    cloro_residual_livre__lte: float = Field(
+        default=None,
+        alias="cloro_residual_livre_maximo"
+    )
+    
+    turbidez__gte: float = Field(
+        default=None,
+        alias="turbidez_minima"
+    )
+    
+    turbidez__lte: float = Field(
+        default=None,
+        alias="turbidez_maxima"
+    )
+    
+    coliformes_totais: bool = Field(
+        default=None,
+        alias="coliformes_totais"
+    )
+    
+    escherichia: bool = Field(
+        default=None,
+        alias="escherichia"
+    )
+    
+    cor__gte: float = Field(
+        default=None,
+        alias="cor_minima"
+    )
+    
+    cor__lte: float = Field(
+        default=None,
+        alias="cor_maxima"
+    )
+    
+    ordem: str = Field(
+        default=None,
+        alias="ordem"
+    )
+
+    ponto__edificacao__codigo__exact: str = Field(
+        default=None,
+        alias="codigo_edificacao"
+    )
+    
+    ponto__id: Optional[int] = Field(
+        default=None,
+        alias="ponto_id"
+    )

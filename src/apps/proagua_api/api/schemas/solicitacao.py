@@ -4,7 +4,7 @@ from datetime import date, datetime
 from ninja import Schema, FilterSchema
 
 from .ponto_coleta import PontoColetaOut
-from .image import ImageOut, ImageIn
+from .image import ImageOut
 
 
 class SolicitacaoIn(Schema):
@@ -32,8 +32,8 @@ class SolicitacaoUpdate(Schema):
     status: str
 
 class FilterSolicitacao(FilterSchema):
-    ponto_id__exact: Optional[int]
-    tipo__exact: Optional[str]
-    status__exact: Optional[str]
-    data__gte: Optional[date]
-    data__lte: Optional[date]
+    ponto_id__exact: Optional[int] = None
+    tipo__exact: Optional[str] = None
+    status__exact: Optional[str] = None
+    data__gte: Optional[date] = None
+    data__lte: Optional[date] = None

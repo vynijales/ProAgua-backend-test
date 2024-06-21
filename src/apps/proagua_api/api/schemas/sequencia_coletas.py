@@ -21,13 +21,9 @@ class SequenciaColetasOut(Schema):
     ponto: PontoColetaOut
     coletas: List[ColetaOut]
     coletas_url: str
-    status: Optional[bool]
-    status_message: Optional[str]
-    ultima_coleta: Optional[datetime]
-
-    @staticmethod
-    def resolve_coletas(obj: SequenciaColetas):
-        return Coleta.objects.filter(sequencia=obj.id).order_by("data")
+    status: Optional[bool] = None
+    status_message: Optional[str] = None
+    ultima_coleta: Optional[datetime] = None
 
     @staticmethod
     def resolve_coletas_url(obj):
@@ -54,12 +50,28 @@ class SequenciaColetasOut(Schema):
 
 
 class FilterSequenciaColetas(FilterSchema):
-
-    q: Optional[str] = Field(
+    q: str = Field(
+        default=None,
         q=["ponto__ambiente__contains", "ponto__edificacao__nome__contains", "ponto__edificacao__codigo__contains"],
         description="Campo de pesquisa por ambiente ou nome de edificação"
     )
-    amostragem: Optional[int] = Field(alias="amostragem")
-    ponto__id: Optional[int] = Field(alias="ponto_id")
-    ponto__edificacao__campus: Optional[str] = Field(alias="campus")
-    status: Optional[bool] = Field(alias="status")
+
+    amostragem: int = Field(
+        default=None,
+        alias="amostragem"
+    )
+
+    ponto__id: int = Field(
+        default=None,
+        alias="ponto_id"
+    )
+
+    ponto__edificacao__campus: str = Field(
+        default=None,
+        alias="campus"
+    )
+
+    status: bool = Field(
+        default=None,
+        alias="status"
+    )
