@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.http import FileResponse
 from ninja import Router, Query
+from ninja.pagination import paginate
 
 from io import BytesIO
 from io import StringIO
@@ -18,6 +19,7 @@ router = Router(tags=["Coletas"])
 
 
 @router.get("/", response=List[ColetaOut])
+@paginate
 def list_coleta(request, filter: FilterColeta = Query(...)):
     qs = models.Coleta.objects.all()
     return filter.filter(qs).order_by("data")

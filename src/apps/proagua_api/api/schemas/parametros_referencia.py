@@ -1,26 +1,24 @@
-from ninja import Schema, Field
+from ninja import Schema
 
 from typing import Optional
 
-from ... import models
 
 class ParametrosReferenciaIn(Schema):
-    min_temperatura: Optional[float]
-    max_temperatura: Optional[float]
-    min_cloro_residual_livre: Optional[float]
-    max_cloro_residual_livre: Optional[float]
-    min_turbidez: Optional[float]
-    max_turbidez: Optional[float]
+    min_temperatura: Optional[float] = None
+    max_temperatura: Optional[float] = None
+    min_cloro_residual_livre: Optional[float] = None
+    max_cloro_residual_livre: Optional[float] = None
+    min_turbidez: Optional[float] = None
+    max_turbidez: Optional[float] = None
     coliformes_totais: bool
     escherichia: bool
 
 class ParametrosReferenciaOut(Schema):
-    min_temperatura: Optional[float]
-    max_temperatura: Optional[float]
-    min_cloro_residual_livre: Optional[float]
-    max_cloro_residual_livre: Optional[float]
-    min_turbidez: Optional[float]
-    max_turbidez: Optional[float]
-    coliformes_totais: Optional[bool]
-    escherichia: Optional[bool]
-
+    min_temperatura: Optional[float] = None
+    max_temperatura: Optional[float] = None
+    min_cloro_residual_livre: Optional[float] = None
+    max_cloro_residual_livre: Optional[float] = None
+    min_turbidez: Optional[float] = None
+    max_turbidez: Optional[float] = None
+    coliformes_totais: Optional[bool] = None
+    escherichia: Optional[bool] = None

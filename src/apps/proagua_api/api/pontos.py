@@ -5,10 +5,11 @@ Material de referência:
 """
 
 from typing import List
+import uuid
 
-from django.db.models import Q, Subquery, OuterRef
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
-from ninja import Router, Query, UploadedFile, File
+from ninja import Router, Query, UploadedFile, File, Form
 from ninja.pagination import paginate
 from ninja.errors import HttpError
 
@@ -51,14 +52,31 @@ def get_ponto(request, id_ponto: int):
 
 
 @router.post("/{id_ponto}/imagem")
-def upload_image(request, id_ponto: str, imagem: UploadedFile = File(...)):
+def upload_image(request, id_ponto: str, description: str = Form(...), file: UploadedFile = File(...)):
     ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
 
-    im_path = save_file(f'media/images/pontos/ponto_{ponto.id}.png', imagem)
-    ponto.imagem = im_path
+    img_path = save_file(f'media/images/pontos/ponto_{ponto.id}_{uuid.uuid4()}.png', file)
+    image = models.Image.objects.create(src=img_path, description=description)
+    image.save()
+
+    ponto.imagens.add(image)
     ponto.save()
     
     return {"success": True}
+
+
+@router.delete('/{id_ponto}/imagem/{id_imagem}')
+def delete_image(request, id_ponto: str, id_imagem: uuid.UUID):
+    ponto = get_object_or_404(models.PontoColeta, id=id_ponto)
+    image: models.Image = ponto.imagens.filter(id=id_imagem).first()
+    
+    if image is None:
+        return HttpError(404, "Not found")
+    
+    image.src.delete()
+    image.delete()
+    return {"success": True}
+
 
 @router.post("/")
 def create_ponto(request, payload: PontoColetaIn):

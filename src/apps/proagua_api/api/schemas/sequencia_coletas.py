@@ -1,13 +1,12 @@
 from typing import Optional, List
-from datetime import date, datetime
+from datetime import datetime
 
 from ninja import Field, FilterSchema, Schema
 from django.urls import reverse
 
 from .coleta import ColetaOut
 from .ponto_coleta import PontoColetaOut
-
-from ...models import SequenciaColetas, Coleta, PontoColeta
+from ...models import SequenciaColetas
 
 
 class SequenciaColetasIn(Schema):
@@ -19,47 +18,61 @@ class SequenciaColetasOut(Schema):
     id: int
     amostragem: int
     ponto: PontoColetaOut
-    coletas: List[ColetaOut]
+    quantidade_coletas: int = None
     coletas_url: str
-    status: Optional[bool]
-    status_message: Optional[str]
-    ultima_coleta: Optional[datetime]
-
-    @staticmethod
-    def resolve_coletas(obj: SequenciaColetas):
-        return Coleta.objects.filter(sequencia=obj.id).order_by("data")
+    status: Optional[bool] = None
+    status_message: Optional[str] = None
+    ultima_coleta: Optional[datetime] = None
 
     @staticmethod
     def resolve_coletas_url(obj):
         return reverse("api-1.0.0:list_coletas_sequencia", kwargs={"id_sequencia": obj.id})
-
+    
     @staticmethod
     def resolve_status(obj) -> Optional[bool]:
-        if obj.coletas.last():
-            return obj.coletas.last().analise()["status"]
+        last = obj.coletas.last()
+        if last:
+            return last.analise()["status"]
 
     @staticmethod
     def resolve_status_message(obj: SequenciaColetas):
         messages = []
-        if obj.coletas.last():
-            messages.extend(obj.coletas.last().analise()["messages"])
+        last = obj.coletas.last()
+        if last:
+            messages.extend(last.analise()["messages"])
             return ', '.join(messages) + "."
         return "Coleta pendente."
 
     @staticmethod
     def resolve_ultima_coleta(obj: SequenciaColetas):
-        if obj.coletas.order_by("data").last():
-            return obj.coletas.last().data
-        return None
+        last = obj.coletas.order_by("data").last()
+        if last:
+            return last.data
 
 
 class FilterSequenciaColetas(FilterSchema):
-
-    q: Optional[str] = Field(
+    q: str = Field(
+        default=None,
         q=["ponto__ambiente__contains", "ponto__edificacao__nome__contains", "ponto__edificacao__codigo__contains"],
         description="Campo de pesquisa por ambiente ou nome de edificação"
     )
-    amostragem: Optional[int] = Field(alias="amostragem")
-    ponto__id: Optional[int] = Field(alias="ponto_id")
-    ponto__edificacao__campus: Optional[str] = Field(alias="campus")
-    status: Optional[bool] = Field(alias="status")
+
+    amostragem: int = Field(
+        default=None,
+        alias="amostragem"
+    )
+
+    ponto__id: int = Field(
+        default=None,
+        alias="ponto_id"
+    )
+
+    ponto__edificacao__campus: str = Field(
+        default=None,
+        alias="campus"
+    )
+
+    status: bool = Field(
+        default=None,
+        alias="status"
+    )

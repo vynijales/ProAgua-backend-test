@@ -41,7 +41,7 @@ DEBUG = True
 
 # SECURITY WARNING: Uso somente durante fase de desenvolvimento.
 # informe somente os hosts de sua aplicação.
-ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
+ALLOWED_HOSTS = ["127.0.0.1", 'localhost', '*']
 
 # Application definition
 
@@ -93,8 +93,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
@@ -148,19 +152,16 @@ LOGIN_REDIRECT_URL = '/sequencias_coletas/'
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:8000',
-    ".vercel.app",
 ]
 
 CORS_TRUSTED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:8000',
-    ".vercel.app",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000', 
     'http://localhost:8000',
-    ".vercel.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True

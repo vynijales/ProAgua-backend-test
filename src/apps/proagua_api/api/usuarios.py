@@ -26,8 +26,7 @@ def get_usuario(request, username: str):
 @router.post("/", response=UsuarioOut, tags=["Usuarios"])
 def create_usuario(request, payload: UsuarioIn):
     user_data = payload.dict()
-    user_data["is_superuser"] = True
-    user = User.objects.create(**user_data)
+    user = User.objects.create_user(**user_data)
     user.save()
     return user
 

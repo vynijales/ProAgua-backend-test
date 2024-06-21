@@ -1,11 +1,8 @@
 from typing import Optional, List
-import os
 
-from ninja import Schema, FilterSchema, Field, UploadedFile
+from ninja import Schema, FilterSchema, Field
 from django.urls import reverse_lazy
-from django.conf import settings
-from apps.proagua_api import models
-from .image import ImageOut, ImageIn
+from .image import ImageOut
 
 class EdificacaoIn(Schema):
     codigo: str
@@ -15,7 +12,7 @@ class EdificacaoIn(Schema):
 
 
 class EdificacaoOut(Schema):
-    imagem: Optional[str]
+    imagem: Optional[str] = None
     codigo: str
     nome: str
     campus: str 
@@ -30,7 +27,7 @@ class EdificacaoOut(Schema):
 
 
 class FilterEdificacao(FilterSchema):
-    q: Optional[str] = Field(q=['nome__contains', 'codigo__contains'])
-    cronograma__gte: Optional[int]
-    cronograma__lte: Optional[int]
-    campus: Optional[str]
+    q: Optional[str] = Field(None, q=['nome__contains', 'codigo__contains'])
+    cronograma__gte: Optional[int] = None
+    cronograma__lte: Optional[int] = None
+    campus: Optional[str] = None

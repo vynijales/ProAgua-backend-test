@@ -40,6 +40,19 @@ def upload_image(request, cod_edificacao: str, description: str = Form(...), fil
     return {"success": True}
 
 
+@router.delete("/{cod_edificacao}/imagem/{id_imagem}")
+def delete_image(request, cod_edificacao: str, id_imagem: uuid.UUID):
+    edificacao = get_object_or_404(models.Edificacao, codigo=cod_edificacao)
+    image: models.Image = edificacao.imagens.filter(id=id_imagem).first()
+
+    if image is None:
+        return HttpError(404, "Not found")
+    
+    image.src.delete()
+    image.delete()
+    return {"success": True}
+
+
 @router.post("/", response=EdificacaoOut)
 def create_edificacao(request, payload: EdificacaoIn):
     data = payload.dict()
