@@ -1,13 +1,12 @@
 from typing import Optional, List
-from datetime import date, datetime
+from datetime import datetime
 
 from ninja import Field, FilterSchema, Schema
 from django.urls import reverse
 
 from .coleta import ColetaOut
 from .ponto_coleta import PontoColetaOut
-
-from ...models import SequenciaColetas, Coleta, PontoColeta
+from ...models import SequenciaColetas
 
 
 class SequenciaColetasIn(Schema):
@@ -28,25 +27,27 @@ class SequenciaColetasOut(Schema):
     @staticmethod
     def resolve_coletas_url(obj):
         return reverse("api-1.0.0:list_coletas_sequencia", kwargs={"id_sequencia": obj.id})
-
+    
     @staticmethod
     def resolve_status(obj) -> Optional[bool]:
-        if obj.coletas.last():
-            return obj.coletas.last().analise()["status"]
+        last = obj.coletas.last()
+        if last:
+            return last.analise()["status"]
 
     @staticmethod
     def resolve_status_message(obj: SequenciaColetas):
         messages = []
-        if obj.coletas.last():
-            messages.extend(obj.coletas.last().analise()["messages"])
+        last = obj.coletas.last()
+        if last:
+            messages.extend(last.analise()["messages"])
             return ', '.join(messages) + "."
         return "Coleta pendente."
 
     @staticmethod
     def resolve_ultima_coleta(obj: SequenciaColetas):
-        if obj.coletas.order_by("data").last():
-            return obj.coletas.last().data
-        return None
+        last = obj.coletas.order_by("data").last()
+        if last:
+            return last.data
 
 
 class FilterSequenciaColetas(FilterSchema):

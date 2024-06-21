@@ -51,8 +51,10 @@ class PontoColetaOut(Schema):
     @staticmethod
     def resolve_status_message(obj: models.PontoColeta):
         messages = []
-        if obj.coletas.order_by("data").last():
-            messages.extend(obj.coletas.last().analise()["messages"])
+        last = obj.coletas.order_by("data").last()
+        
+        if last:
+            messages.extend(last.analise()["messages"])
 
         if len(messages) > 0:
             return ', '.join(messages) + "."
