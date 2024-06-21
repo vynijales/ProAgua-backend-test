@@ -18,7 +18,7 @@ class SequenciaColetasOut(Schema):
     id: int
     amostragem: int
     ponto: PontoColetaOut
-    coletas: List[ColetaOut]
+    quantidade_coletas: int = None
     coletas_url: str
     status: Optional[bool] = None
     status_message: Optional[str] = None

@@ -1,7 +1,7 @@
 from typing import List
 
 from django.shortcuts import get_object_or_404
-from django.db.models import Q
+from django.db.models import Q, Count
 from ninja import Router, Query
 from ninja.pagination import paginate
 from ninja.errors import HttpError
@@ -15,8 +15,9 @@ router = Router(tags=["Sequencias"])
 @router.get("/", response=List[SequenciaColetasOut])
 @paginate
 def list_sequencia(request, filter: FilterSequenciaColetas = Query(...)):
-    qs = models.SequenciaColetas.objects.select_related('ponto', 'ponto__edificacao')
-    qs = qs.prefetch_related('coletas', 'ponto__imagens')
+    qs = models.SequenciaColetas.objects.select_related('ponto', 'ponto__edificacao', 'ponto__amontante')
+    qs = qs.prefetch_related('ponto__imagens', 'ponto__associados', 'ponto__edificacao__imagens')
+    qs = qs.annotate(quantidade_coletas=Count('coletas'))
 
     if filter.q:
         qs = qs.filter(
