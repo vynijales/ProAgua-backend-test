@@ -15,7 +15,8 @@ router = Router(tags=["Sequencias"])
 @router.get("/", response=List[SequenciaColetasOut])
 @paginate
 def list_sequencia(request, filter: FilterSequenciaColetas = Query(...)):
-    qs = models.SequenciaColetas.objects
+    qs = models.SequenciaColetas.objects.select_related('ponto', 'ponto__edificacao')
+    qs = qs.prefetch_related('coletas', 'ponto__imagens')
 
     if filter.q:
         qs = qs.filter(
